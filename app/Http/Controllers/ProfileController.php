@@ -15,6 +15,12 @@ class ProfileController extends Controller
         return view('admin.profile', compact('user'));
     }
 
+    public function settings()
+    {
+        $user = Auth::user();
+        return view('admin.pengaturan', compact('user'));
+    }
+
     public function update(Request $request)
     {
         $user = Auth::user();
@@ -39,7 +45,6 @@ class ProfileController extends Controller
             'foto.max' => 'Ukuran foto maksimal 2 MB.',
         ]);
 
-        // Upload foto baru
         if ($request->hasFile('foto')) {
             if ($user->foto && Storage::disk('public')->exists($user->foto)) {
                 Storage::disk('public')->delete($user->foto);
@@ -49,7 +54,6 @@ class ProfileController extends Controller
             $user->foto = $path;
         }
 
-        // Update data
         $user->name = $request->name;
         $user->username = $request->username;
         $user->email = $request->email;
@@ -58,7 +62,7 @@ class ProfileController extends Controller
         $user->alamat = $request->alamat;
         $user->save();
 
-        return redirect()->route('admin.profile')->with('success', 'Profil berhasil diperbarui.');
+        return redirect()->route('admin.settings')->with('success', 'Profil berhasil diperbarui.');
     }
 
     public function updatePassword(Request $request)
@@ -78,12 +82,12 @@ class ProfileController extends Controller
         if (!Hash::check($request->current_password, $user->password)) {
             return back()->withErrors([
                 'current_password' => 'Password lama tidak sesuai.'
-            ]);
+            ])->withInput();
         }
 
         $user->password = Hash::make($request->password);
         $user->save();
 
-        return redirect()->route('admin.profile')->with('success_password', 'Password berhasil diganti.');
+        return redirect()->route('admin.settings')->with('success_password', 'Password berhasil diganti.');
     }
 }

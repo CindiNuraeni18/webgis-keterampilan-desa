@@ -789,12 +789,12 @@
                     <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-2" style="border-radius: 16px; min-width: 220px;">
                         <li>
                             <a class="dropdown-item rounded-3 py-2" href="{{ route('admin.profile') }}">
-                                <i class="bi bi-person me-2"></i> Profile
+                                <i class="bi bi-person me-2"></i> Profil
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item rounded-3 py-2" href="#">
-                                <i class="bi bi-gear me-2"></i> Settings
+                            <a class="dropdown-item rounded-3 py-2" href="{{ route('admin.settings') }}">
+                                <i class="bi bi-gear me-2"></i> Pengaturan
                             </a>
                         </li>
                         
@@ -803,7 +803,7 @@
                             <a class="dropdown-item rounded-3 py-2 text-danger"
                                href="{{ route('logout') }}"
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <i class="bi bi-power me-2"></i> Sign Out
+                                <i class="bi bi-power me-2"></i> Keluar
                             </a>
                         </li>
                     </ul>
