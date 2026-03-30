@@ -28,6 +28,7 @@
 
         html, body {
             height: 100%;
+            margin: 0;
         }
 
         body {
@@ -57,9 +58,11 @@
             flex: 1;
             min-width: 0;
             min-height: 0;
+            height: 100%;
             display: flex;
             flex-direction: column;
             gap: 1rem;
+            overflow: hidden;
         }
 
         /* Sidebar */
@@ -112,44 +115,6 @@
             font-weight: 500;
             color: rgba(255,255,255,0.55);
             margin-top: 2px;
-        }
-
-        .sidebar-user {
-            margin: 1.25rem 1rem 0;
-            padding: 1rem;
-            border-radius: 18px;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255,255,255,0.06);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-shrink: 0;
-        }
-
-        .sidebar-user-avatar {
-            width: 44px;
-            height: 44px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        .sidebar-user-info h6 {
-            margin: 0;
-            font-size: 0.92rem;
-            color: #fff;
-            font-weight: 600;
-        }
-
-        .sidebar-user-info p {
-            margin: 2px 0 0;
-            font-size: 0.76rem;
-            color: rgba(255,255,255,0.58);
         }
 
         .sidebar-menu-wrapper {
@@ -247,39 +212,6 @@
             color: #fff;
         }
 
-        .sidebar-footer {
-            padding: 1rem;
-            flex-shrink: 0;
-        }
-
-        .support-card {
-            border-radius: 20px;
-            padding: 1rem;
-            background: linear-gradient(135deg, rgba(37,99,235,0.16), rgba(96,165,250,0.12));
-            border: 1px solid rgba(59,130,246,0.16);
-            color: #fff;
-        }
-
-        .support-card h6 {
-            margin: 0 0 0.35rem;
-            font-weight: 700;
-        }
-
-        .support-card p {
-            margin: 0 0 0.8rem;
-            color: rgba(255,255,255,0.68);
-            font-size: 0.82rem;
-        }
-
-        .support-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: #93c5fd;
-            font-weight: 600;
-            font-size: 0.85rem;
-        }
-
         /* Topbar */
         .topbar {
             height: 80px;
@@ -294,6 +226,7 @@
             justify-content: space-between;
             padding: 0 1.4rem;
             box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+            overflow: visible;
         }
 
         .topbar-left {
@@ -327,12 +260,14 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 10px 18px rgba(15, 23, 42, 0.18);
+            flex-shrink: 0;
         }
 
         .topbar-actions {
             display: flex;
             align-items: center;
             gap: 12px;
+            flex-shrink: 0;
         }
 
         .search-box {
@@ -383,6 +318,7 @@
             color: #334155;
             position: relative;
             transition: all 0.25s ease;
+            flex-shrink: 0;
         }
 
         .icon-btn:hover {
@@ -418,6 +354,12 @@
             transform: translateY(-1px);
         }
 
+        .profile-btn:focus,
+        .profile-btn:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.15);
+        }
+
         .profile-meta {
             text-align: right;
             line-height: 1.2;
@@ -445,6 +387,8 @@
             justify-content: center;
             font-weight: 700;
             box-shadow: 0 10px 20px rgba(37, 99, 235, 0.22);
+            object-fit: cover;
+            flex-shrink: 0;
         }
 
         /* Content */
@@ -456,7 +400,9 @@
             border-radius: 24px;
             padding: 1.5rem;
             overflow-y: auto;
+            overflow-x: hidden;
             box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+            -webkit-overflow-scrolling: touch;
         }
 
         /* Tablet */
@@ -468,14 +414,27 @@
 
         /* Mobile / Tablet */
         @media (max-width: 991.98px) {
+            html, body {
+                height: 100%;
+                overflow: hidden;
+            }
+
             body {
-                overflow: auto;
+                overflow: hidden;
             }
 
             .app-container {
+                height: 100vh;
                 min-height: 100vh;
-                height: auto;
                 padding: 0.75rem;
+                gap: 0.75rem;
+                overflow: hidden;
+            }
+
+            .main-wrapper {
+                height: calc(100vh - 1.5rem);
+                min-height: 0;
+                overflow: hidden;
             }
 
             .sidebar {
@@ -526,15 +485,32 @@
             }
 
             .content-container {
+                flex: 1;
+                min-height: 0;
+                height: auto;
                 padding: 1rem;
                 border-radius: 20px;
+                overflow-y: auto;
+                overflow-x: hidden;
             }
         }
 
         @media (max-width: 575.98px) {
+            html, body {
+                overflow: hidden;
+            }
+
             .app-container {
+                height: 100vh;
+                min-height: 100vh;
                 padding: 0.5rem;
                 gap: 0.75rem;
+                overflow: hidden;
+            }
+
+            .main-wrapper {
+                height: calc(100vh - 1rem);
+                overflow: hidden;
             }
 
             .topbar {
@@ -553,6 +529,7 @@
             .content-container {
                 padding: 0.9rem;
                 border-radius: 18px;
+                overflow-y: auto;
             }
         }
 
@@ -620,8 +597,6 @@
                 </div>
             </a>
         </div>
-
-       
 
         <div class="sidebar-menu-wrapper">
             <ul class="nav-list">
@@ -768,8 +743,6 @@
                 </li>
             </ul>
         </div>
-
-        
     </aside>
 
     <div class="main-wrapper">
@@ -781,7 +754,6 @@
 
                 <div class="page-info">
                     <h1>@yield('title', 'Dashboard')</h1>
-                    
                 </div>
             </div>
 
@@ -796,32 +768,55 @@
                     <span class="badge-dot"></span>
                 </button>
 
-                
-
                 <div class="dropdown">
-                    <div class="profile-btn" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+                    <button class="profile-btn border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="profile-meta d-none d-sm-block">
-                            <div class="name">Alexandre</div>
-                            <div class="role">Super Admin</div>
+                            <div class="name">{{ auth()->user()->name }}</div>
+                            <div class="role">{{ auth()->user()->jabatan ?? 'Admin Desa' }}</div>
                         </div>
-                        <div class="avatar-small">A</div>
-                    </div>
+
+                        @if(auth()->user()->foto)
+                            <img src="{{ asset('storage/' . auth()->user()->foto) }}"
+                                 alt="Foto Profil"
+                                 class="avatar-small">
+                        @else
+                            <div class="avatar-small">
+                                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                            </div>
+                        @endif
+                    </button>
 
                     <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-2" style="border-radius: 16px; min-width: 220px;">
-                        <li><a class="dropdown-item rounded-3 py-2" href="#"><i class="bi bi-person me-2"></i> Profile</a></li>
-                        <li><a class="dropdown-item rounded-3 py-2" href="#"><i class="bi bi-gear me-2"></i> Settings</a></li>
-                        <li><a class="dropdown-item rounded-3 py-2" href="#"><i class="bi bi-shield-check me-2"></i> Role & Access</a></li>
+                        <li>
+                            <a class="dropdown-item rounded-3 py-2" href="{{ route('admin.profile') }}">
+                                <i class="bi bi-person me-2"></i> Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item rounded-3 py-2" href="#">
+                                <i class="bi bi-gear me-2"></i> Settings
+                            </a>
+                        </li>
+                        
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item rounded-3 py-2 text-danger" href="#"><i class="bi bi-power me-2"></i> Sign Out</a></li>
+                        <li>
+                            <a class="dropdown-item rounded-3 py-2 text-danger"
+                               href="{{ route('logout') }}"
+                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <i class="bi bi-power me-2"></i> Sign Out
+                            </a>
+                        </li>
                     </ul>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
                 </div>
             </div>
         </header>
 
         <main class="content-container">
             @yield('content')
-
-           
         </main>
     </div>
 </div>
@@ -841,159 +836,156 @@
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
 
-    
-        <div class="sidebar-menu-wrapper">
-            <ul class="nav-list mt-2">
-                <li class="nav-section-title">Main Menu</li>
+    <div class="sidebar-menu-wrapper">
+        <ul class="nav-list mt-2">
+            <li class="nav-section-title">Main Menu</li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link active">
-                        <span class="icon-wrap"><i class="bi bi-grid-fill"></i></span>
-                        <span class="nav-text">Dashboard</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link active">
+                    <span class="icon-wrap"><i class="bi bi-grid-fill"></i></span>
+                    <span class="nav-text">Dashboard</span>
+                    <i class="bi bi-chevron-right nav-arrow"></i>
+                </a>
+            </li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-people-fill"></i></span>
-                        <span class="nav-text">Data Warga</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <span class="icon-wrap"><i class="bi bi-people-fill"></i></span>
+                    <span class="nav-text">Data Warga</span>
+                    <i class="bi bi-chevron-right nav-arrow"></i>
+                </a>
+            </li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-stars"></i></span>
-                        <span class="nav-text">Keterampilan</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <span class="icon-wrap"><i class="bi bi-stars"></i></span>
+                    <span class="nav-text">Keterampilan</span>
+                    <i class="bi bi-chevron-right nav-arrow"></i>
+                </a>
+            </li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-geo-alt-fill"></i></span>
-                        <span class="nav-text">Wilayah Dusun</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <span class="icon-wrap"><i class="bi bi-geo-alt-fill"></i></span>
+                    <span class="nav-text">Wilayah Dusun</span>
+                    <i class="bi bi-chevron-right nav-arrow"></i>
+                </a>
+            </li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-person-badge-fill"></i></span>
-                        <span class="nav-text">Data RT / RW</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <span class="icon-wrap"><i class="bi bi-person-badge-fill"></i></span>
+                    <span class="nav-text">Data RT / RW</span>
+                    <i class="bi bi-chevron-right nav-arrow"></i>
+                </a>
+            </li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-house-door-fill"></i></span>
-                        <span class="nav-text">Data Rumah</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <span class="icon-wrap"><i class="bi bi-house-door-fill"></i></span>
+                    <span class="nav-text">Data Rumah</span>
+                    <i class="bi bi-chevron-right nav-arrow"></i>
+                </a>
+            </li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-briefcase-fill"></i></span>
-                        <span class="nav-text">Pekerjaan</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <span class="icon-wrap"><i class="bi bi-briefcase-fill"></i></span>
+                    <span class="nav-text">Pekerjaan</span>
+                    <i class="bi bi-chevron-right nav-arrow"></i>
+                </a>
+            </li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-mortarboard-fill"></i></span>
-                        <span class="nav-text">Pendidikan</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <span class="icon-wrap"><i class="bi bi-mortarboard-fill"></i></span>
+                    <span class="nav-text">Pendidikan</span>
+                    <i class="bi bi-chevron-right nav-arrow"></i>
+                </a>
+            </li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-heart-pulse-fill"></i></span>
-                        <span class="nav-text">Kesehatan Warga</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <span class="icon-wrap"><i class="bi bi-heart-pulse-fill"></i></span>
+                    <span class="nav-text">Kesehatan Warga</span>
+                    <i class="bi bi-chevron-right nav-arrow"></i>
+                </a>
+            </li>
 
-                <li class="nav-section-title mt-2">Laporan</li>
+            <li class="nav-section-title mt-2">Laporan</li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-bar-chart-steps"></i></span>
-                        <span class="nav-text">Statistik</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <span class="icon-wrap"><i class="bi bi-bar-chart-steps"></i></span>
+                    <span class="nav-text">Statistik</span>
+                    <i class="bi bi-chevron-right nav-arrow"></i>
+                </a>
+            </li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-file-earmark-text-fill"></i></span>
-                        <span class="nav-text">Laporan Bulanan</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <span class="icon-wrap"><i class="bi bi-file-earmark-text-fill"></i></span>
+                    <span class="nav-text">Laporan Bulanan</span>
+                    <i class="bi bi-chevron-right nav-arrow"></i>
+                </a>
+            </li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-file-bar-graph-fill"></i></span>
-                        <span class="nav-text">Laporan Tahunan</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <span class="icon-wrap"><i class="bi bi-file-bar-graph-fill"></i></span>
+                    <span class="nav-text">Laporan Tahunan</span>
+                    <i class="bi bi-chevron-right nav-arrow"></i>
+                </a>
+            </li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-archive-fill"></i></span>
-                        <span class="nav-text">Arsip Laporan</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <span class="icon-wrap"><i class="bi bi-archive-fill"></i></span>
+                    <span class="nav-text">Arsip Laporan</span>
+                    <i class="bi bi-chevron-right nav-arrow"></i>
+                </a>
+            </li>
 
-                <li class="nav-section-title mt-2">Pengaturan</li>
+            <li class="nav-section-title mt-2">Pengaturan</li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-person-gear"></i></span>
-                        <span class="nav-text">Manajemen Admin</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <span class="icon-wrap"><i class="bi bi-person-gear"></i></span>
+                    <span class="nav-text">Manajemen Admin</span>
+                    <i class="bi bi-chevron-right nav-arrow"></i>
+                </a>
+            </li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-shield-lock-fill"></i></span>
-                        <span class="nav-text">Hak Akses</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <span class="icon-wrap"><i class="bi bi-shield-lock-fill"></i></span>
+                    <span class="nav-text">Hak Akses</span>
+                    <i class="bi bi-chevron-right nav-arrow"></i>
+                </a>
+            </li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-gear-wide-connected"></i></span>
-                        <span class="nav-text">Pengaturan Sistem</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <span class="icon-wrap"><i class="bi bi-gear-wide-connected"></i></span>
+                    <span class="nav-text">Pengaturan Sistem</span>
+                    <i class="bi bi-chevron-right nav-arrow"></i>
+                </a>
+            </li>
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-database-fill-gear"></i></span>
-                        <span class="nav-text">Backup Data</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="sidebar-footer pt-0">
-           
-        </div>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <span class="icon-wrap"><i class="bi bi-database-fill-gear"></i></span>
+                    <span class="nav-text">Backup Data</span>
+                    <i class="bi bi-chevron-right nav-arrow"></i>
+                </a>
+            </li>
+        </ul>
     </div>
+
+    <div class="sidebar-footer pt-0"></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+@stack('scripts')
 </body>
 </html>

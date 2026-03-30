@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ __('Login') }}</title>
 
-    <!-- Bootstrap CSS -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
 
-    <!-- Bootstrap Icons -->
     <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
@@ -98,7 +96,6 @@
             animation: fadeUp 0.45s ease;
         }
 
-        /* Tombol close pojok kanan */
         .close-login {
             position: absolute;
             top: 16px;
@@ -180,6 +177,37 @@
             box-shadow: 0 0 0 0.22rem rgba(47, 133, 90, 0.13) !important;
         }
 
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper .form-control {
+            padding-right: 48px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 16px;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            font-size: 1rem;
+            z-index: 3;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .toggle-password:focus {
+            outline: none;
+        }
+
         .form-check-input {
             border-radius: 6px;
         }
@@ -192,12 +220,6 @@
         .form-check-label {
             color: var(--text-muted);
             font-size: 0.94rem;
-        }
-
-        .invalid-feedback {
-            display: block;
-            font-size: 0.88rem;
-            margin-top: 8px;
         }
 
         .btn-login {
@@ -265,116 +287,147 @@
 </head>
 <body>
 
-    <!-- Wrapper halaman login -->
-    <main class="login-page">
-        <div class="login-container">
-            <div class="login-card">
+<main class="login-page">
+    <div class="login-container">
+        <div class="login-card">
 
-                <!-- Tombol X kembali ke welcome -->
-                <a href="{{ url('/') }}" class="close-login" title="Kembali ke halaman utama">
-                    <i class="bi bi-x-lg"></i>
-                </a>
+            <a href="{{ url('/') }}" class="close-login" title="Kembali ke halaman utama">
+                <i class="bi bi-x-lg"></i>
+            </a>
 
-                <!-- Header card -->
-                <div class="login-header">
-                    <h2 class="login-title">
-                        <i class="bi bi-person-lock"></i>{{ __('Login') }}
-                    </h2>
-                </div>
+            <div class="login-header">
+                <h2 class="login-title">
+                    <i class="bi bi-person-lock"></i>{{ __('Login') }}
+                </h2>
+            </div>
 
-                <!-- Body card -->
-                <div class="login-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+            <div class="login-body">
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
 
-                        <!-- Email -->
-                        <div class="mb-3">
-                            <label for="email" class="form-label">
-                                {{ __('Email Address') }}
-                            </label>
-                            <div class="input-group-custom">
-                                <i class="bi bi-envelope input-icon"></i>
-                                <input
-                                    id="email"
-                                    type="email"
-                                    class="form-control @error('email') is-invalid @enderror"
-                                    name="email"
-                                    value="{{ old('email') }}"
-                                    required
-                                    autocomplete="email"
-                                    autofocus
-                                    placeholder="Masukkan email Anda"
-                                >
-                            </div>
-
-                            @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                    <div class="mb-3">
+                        <label for="email" class="form-label">
+                            {{ __('Email Address') }}
+                        </label>
+                        <div class="input-group-custom">
+                            <i class="bi bi-envelope input-icon"></i>
+                            <input
+                                id="email"
+                                type="email"
+                                class="form-control"
+                                name="email"
+                                value="{{ old('email') }}"
+                                required
+                                autocomplete="email"
+                                autofocus
+                                placeholder="Masukkan email Anda"
+                            >
                         </div>
+                    </div>
 
-                        <!-- Password -->
-                        <div class="mb-3">
-                            <label for="password" class="form-label">
-                                {{ __('Password') }}
-                            </label>
-                            <div class="input-group-custom">
-                                <i class="bi bi-lock input-icon"></i>
-                                <input
-                                    id="password"
-                                    type="password"
-                                    class="form-control @error('password') is-invalid @enderror"
-                                    name="password"
-                                    required
-                                    autocomplete="current-password"
-                                    placeholder="Masukkan password Anda"
-                                >
-                            </div>
-
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-
-                        <!-- Remember me -->
-                        <div class="mb-4">
-                            <div class="form-check">
-                                <input
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    name="remember"
-                                    id="remember"
-                                    {{ old('remember') ? 'checked' : '' }}
-                                >
-                                <label class="form-check-label" for="remember">
-                                    {{ __('Remember Me') }}
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Tombol login -->
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-login">
-                                <i class="bi bi-box-arrow-in-right me-2"></i>
-                                {{ __('Login') }}
+                    <div class="mb-3">
+                        <label for="password" class="form-label">
+                            {{ __('Password') }}
+                        </label>
+                        <div class="input-group-custom password-wrapper">
+                            <i class="bi bi-lock input-icon"></i>
+                            <input
+                                id="password"
+                                type="password"
+                                class="form-control"
+                                name="password"
+                                required
+                                autocomplete="current-password"
+                                placeholder="Masukkan password Anda"
+                            >
+                            <button type="button" class="toggle-password" id="togglePassword">
+                                <i class="bi bi-eye"></i>
                             </button>
                         </div>
-                    </form>
-
-                    <!-- Catatan bawah -->
-                    <div class="bottom-note">
-                        <span>*Akses hanya untuk Perangkat Desa.*</span>
                     </div>
+
+                    <div class="mb-4">
+                        <div class="form-check">
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                name="remember"
+                                id="remember"
+                                {{ old('remember') ? 'checked' : '' }}
+                            >
+                            <label class="form-check-label" for="remember">
+                                {{ __('Remember Me') }}
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-login">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>
+                            {{ __('Login') }}
+                        </button>
+                    </div>
+                </form>
+
+                <div class="bottom-note">
+                    <span>*Akses hanya untuk Perangkat Desa.*</span>
                 </div>
-
             </div>
-        </div>
-    </main>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        </div>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if($errors->has('email') || $errors->has('password'))
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    Swal.fire({
+        icon: 'error',
+        title: 'Login Gagal',
+        html: `
+            <div style="text-align:center; font-size:15px; line-height:1.6;">
+                @if($errors->has('email') && $errors->has('password'))
+                    <div>email dan password salah</div>
+                @elseif($errors->has('email'))
+                    <div>{{ $errors->first('email') }}</div>
+                @elseif($errors->has('password'))
+                    <div>{{ $errors->first('password') }}</div>
+                @endif
+            </div>
+        `,
+        confirmButtonText: 'Tutup',
+        customClass: {
+            popup: 'rounded-4'
+        }
+    });
+});
+</script>
+@endif
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+
+    if (togglePassword && passwordInput) {
+        togglePassword.addEventListener('click', function () {
+            const icon = this.querySelector('i');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('bi-eye');
+                icon.classList.add('bi-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('bi-eye-slash');
+                icon.classList.add('bi-eye');
+            }
+        });
+    }
+});
+</script>
 </body>
 </html>
