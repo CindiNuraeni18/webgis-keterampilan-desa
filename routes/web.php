@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WargaController;
+use App\Http\Controllers\DusunController;
+use App\Http\Controllers\RwController;
+use App\Http\Controllers\RtController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -14,9 +18,14 @@ Route::get('/home', function () {
     return redirect()->route('admin.profile');
 })->middleware('auth')->name('home');
 
-Route::middleware('auth')->prefix('admin')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'index'])->name('admin.profile');
-    Route::get('/pengaturan', [ProfileController::class, 'settings'])->name('admin.settings');
-    Route::put('/pengaturan/profile', [ProfileController::class, 'update'])->name('admin.settings.update');
-    Route::put('/pengaturan/password', [ProfileController::class, 'updatePassword'])->name('admin.settings.password');
+Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::get('/pengaturan', [ProfileController::class, 'settings'])->name('settings');
+    Route::put('/pengaturan/profile', [ProfileController::class, 'update'])->name('settings.update');
+    Route::put('/pengaturan/password', [ProfileController::class, 'updatePassword'])->name('settings.password');
+
+    Route::resource('dusun', DusunController::class);
+    Route::resource('rw', RwController::class);
+    Route::resource('rt', RtController::class);
+    Route::resource('warga', WargaController::class);
 });

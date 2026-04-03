@@ -610,8 +610,32 @@
                     </a>
                 </li>
 
+<li class="nav-item">
+    <a href="{{ route('admin.dusun.index') }}" class="nav-link">
+        <span class="icon-wrap"><i class="bi bi-geo-alt-fill"></i></span>
+        <span class="nav-text">Wilayah Dusun</span>
+        <i class="bi bi-chevron-right nav-arrow"></i>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('admin.rw.index') }}" class="nav-link">
+        <span class="icon-wrap"><i class="bi bi-diagram-3-fill"></i></span>
+        <span class="nav-text">Data RW</span>
+        <i class="bi bi-chevron-right nav-arrow"></i>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('admin.rt.index') }}" class="nav-link">
+        <span class="icon-wrap"><i class="bi bi-person-badge-fill"></i></span>
+        <span class="nav-text">Data RT</span>
+        <i class="bi bi-chevron-right nav-arrow"></i>
+    </a>
+</li>
+
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('admin.warga.index') }}" class="nav-link">
                         <span class="icon-wrap"><i class="bi bi-people-fill"></i></span>
                         <span class="nav-text">Data Warga</span>
                         <i class="bi bi-chevron-right nav-arrow"></i>
@@ -849,7 +873,7 @@
             </li>
 
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('admin.warga.index') }}" class="nav-link">
                     <span class="icon-wrap"><i class="bi bi-people-fill"></i></span>
                     <span class="nav-text">Data Warga</span>
                     <i class="bi bi-chevron-right nav-arrow"></i>
