@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rw extends Model
 {
-    protected $fillable = ['dusun_id', 'nomor_rw'];
+    protected $fillable = ['dusun_id', 'nomor_rw', 'latitude', 'longitude'];
+
+    protected $casts = [
+        'latitude' => 'float',
+        'longitude' => 'float',
+    ];
 
     public function dusun()
     {

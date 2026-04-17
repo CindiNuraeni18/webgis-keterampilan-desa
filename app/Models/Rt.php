@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rt extends Model
 {
-    protected $fillable = ['rw_id', 'nomor_rt'];
+    protected $fillable = ['rw_id', 'nomor_rt', 'latitude', 'longitude'];
+
+    protected $casts = [
+        'latitude' => 'float',
+        'longitude' => 'float',
+    ];
 
     public function rw()
     {

@@ -21,3 +21,25 @@
         <div class="invalid-feedback">{{ $message }}</div>
     @enderror
 </div>
+
+<div class="mb-3">
+    <label class="form-label">Latitude</label>
+    <input type="text" name="latitude"
+        class="form-control @error('latitude') is-invalid @enderror"
+        value="{{ old('latitude', $rt->latitude ?? '') }}"
+        placeholder="-6.41085">
+    @error('latitude')
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Longitude</label>
+    <input type="text" name="longitude"
+        class="form-control @error('longitude') is-invalid @enderror"
+        value="{{ old('longitude', $rt->longitude ?? '') }}"
+        placeholder="108.10235">
+    @error('longitude')
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>

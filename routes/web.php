@@ -7,6 +7,9 @@ use App\Http\Controllers\WargaController;
 use App\Http\Controllers\DusunController;
 use App\Http\Controllers\RwController;
 use App\Http\Controllers\RtController;
+use App\Http\Controllers\KategoriKeterampilanController;
+use App\Http\Controllers\KeterampilanController;
+use App\Http\Controllers\PemetaanController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -15,10 +18,14 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', function () {
-    return redirect()->route('admin.profile');
+    return redirect()->route('admin.dashboard');
 })->middleware('auth')->name('home');
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
+      Route::get('/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('dashboard');
+
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::get('/pengaturan', [ProfileController::class, 'settings'])->name('settings');
     Route::put('/pengaturan/profile', [ProfileController::class, 'update'])->name('settings.update');
@@ -28,4 +35,11 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('rw', RwController::class);
     Route::resource('rt', RtController::class);
     Route::resource('warga', WargaController::class);
+
+    Route::resource('kategori-keterampilan', KategoriKeterampilanController::class);
+    Route::resource('keterampilan', KeterampilanController::class);
+
+    Route::get('/pemetaan', [PemetaanController::class, 'index'])->name('pemetaan.index');
+    Route::get('/api/pemetaan', [PemetaanController::class, 'api']);
+    
 });

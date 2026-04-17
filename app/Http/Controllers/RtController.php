@@ -36,15 +36,22 @@ class RtController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'rw_id' => 'required|exists:rws,id',
-            'nomor_rt' => 'required|max:10',
-        ]);
+    $request->validate([
+        'rw_id' => 'required|exists:rws,id',
+        'nomor_rt' => 'required|max:10',
+        'latitude' => 'nullable|numeric',
+        'longitude' => 'nullable|numeric',
+    ]);
 
-        Rt::create($request->only('rw_id', 'nomor_rt'));
+    Rt::create([
+        'rw_id' => $request->rw_id,
+        'nomor_rt' => $request->nomor_rt,
+        'latitude' => $request->latitude,
+        'longitude' => $request->longitude,
+    ]);
 
-        return redirect()->route('admin.rt.index')
-            ->with('success', 'Data RT berhasil ditambahkan.');
+    return redirect()->route('admin.rt.index')
+        ->with('success', 'Data RT berhasil ditambahkan.');
     }
 
     public function show(Rt $rt)
@@ -60,17 +67,24 @@ class RtController extends Controller
     }
 
     public function update(Request $request, Rt $rt)
-    {
-        $request->validate([
-            'rw_id' => 'required|exists:rws,id',
-            'nomor_rt' => 'required|max:10',
-        ]);
+{
+    $request->validate([
+        'rw_id' => 'required|exists:rws,id',
+        'nomor_rt' => 'required|max:10',
+        'latitude' => 'nullable|numeric',
+        'longitude' => 'nullable|numeric',
+    ]);
 
-        $rt->update($request->only('rw_id', 'nomor_rt'));
+    $rt->update([
+        'rw_id' => $request->rw_id,
+        'nomor_rt' => $request->nomor_rt,
+        'latitude' => $request->latitude,
+        'longitude' => $request->longitude,
+    ]);
 
-        return redirect()->route('admin.rt.index')
-            ->with('success', 'Data RT berhasil diperbarui.');
-    }
+    return redirect()->route('admin.rt.index')
+        ->with('success', 'Data RT berhasil diperbarui.');
+}
 
     public function destroy(Rt $rt)
     {

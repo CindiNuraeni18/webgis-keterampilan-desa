@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'SIPKAR Admin')</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Leaflet CSS -->
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
     <style>
         :root {
@@ -26,7 +31,8 @@
             box-sizing: border-box;
         }
 
-        html, body {
+        html,
+        body {
             height: 100%;
             margin: 0;
         }
@@ -82,7 +88,7 @@
 
         .sidebar-header {
             padding: 1.6rem 1.4rem 1.2rem;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             flex-shrink: 0;
         }
 
@@ -113,7 +119,7 @@
         .brand-subtitle {
             font-size: 0.78rem;
             font-weight: 500;
-            color: rgba(255,255,255,0.55);
+            color: rgba(255, 255, 255, 0.55);
             margin-top: 2px;
         }
 
@@ -142,7 +148,7 @@
             font-weight: 700;
             letter-spacing: 1.2px;
             text-transform: uppercase;
-            color: rgba(255,255,255,0.35);
+            color: rgba(255, 255, 255, 0.35);
         }
 
         .nav-item {
@@ -168,7 +174,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255,255,255,0.04);
+            background: rgba(255, 255, 255, 0.04);
             color: #cbd5e1;
             transition: all 0.25s ease;
             flex-shrink: 0;
@@ -187,12 +193,12 @@
 
         .nav-link:hover {
             color: #fff;
-            background: rgba(255,255,255,0.06);
+            background: rgba(255, 255, 255, 0.06);
             transform: translateX(3px);
         }
 
         .nav-link:hover .icon-wrap {
-            background: rgba(255,255,255,0.12);
+            background: rgba(255, 255, 255, 0.12);
             color: #fff;
         }
 
@@ -203,12 +209,12 @@
 
         .nav-link.active {
             color: #fff;
-            background: linear-gradient(90deg, rgba(37,99,235,1) 0%, rgba(59,130,246,0.95) 100%);
+            background: linear-gradient(90deg, rgba(37, 99, 235, 1) 0%, rgba(59, 130, 246, 0.95) 100%);
             box-shadow: 0 14px 25px rgba(37, 99, 235, 0.28);
         }
 
         .nav-link.active .icon-wrap {
-            background: rgba(255,255,255,0.16);
+            background: rgba(255, 255, 255, 0.16);
             color: #fff;
         }
 
@@ -220,7 +226,7 @@
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
             border-radius: 22px;
-            border: 1px solid rgba(255,255,255,0.55);
+            border: 1px solid rgba(255, 255, 255, 0.55);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -273,7 +279,7 @@
         .search-box {
             width: 290px;
             height: 48px;
-            background: rgba(255,255,255,0.96);
+            background: rgba(255, 255, 255, 0.96);
             border: 1px solid var(--border-soft);
             border-radius: 16px;
             display: flex;
@@ -283,8 +289,8 @@
         }
 
         .search-box:focus-within {
-            border-color: rgba(37,99,235,0.4);
-            box-shadow: 0 0 0 4px rgba(37,99,235,0.08);
+            border-color: rgba(37, 99, 235, 0.4);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
         }
 
         .search-box i {
@@ -311,7 +317,7 @@
             height: 46px;
             border-radius: 15px;
             border: 1px solid var(--border-soft);
-            background: rgba(255,255,255,0.96);
+            background: rgba(255, 255, 255, 0.96);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -338,7 +344,7 @@
         }
 
         .profile-btn {
-            background: rgba(255,255,255,0.96);
+            background: rgba(255, 255, 255, 0.96);
             border: 1px solid var(--border-soft);
             border-radius: 18px;
             padding: 6px 8px 6px 14px;
@@ -395,7 +401,7 @@
         .content-container {
             flex: 1;
             min-height: 0;
-            background: rgba(255,255,255,0.96);
+            background: rgba(255, 255, 255, 0.96);
             border: 1px solid var(--border-soft);
             border-radius: 24px;
             padding: 1.5rem;
@@ -414,7 +420,9 @@
 
         /* Mobile / Tablet */
         @media (max-width: 991.98px) {
-            html, body {
+
+            html,
+            body {
                 height: 100%;
                 overflow: hidden;
             }
@@ -496,7 +504,9 @@
         }
 
         @media (max-width: 575.98px) {
-            html, body {
+
+            html,
+            body {
                 overflow: hidden;
             }
 
@@ -542,7 +552,7 @@
 
         .offcanvas-admin .offcanvas-header {
             padding: 1.35rem 1.25rem 1rem;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             flex-shrink: 0;
         }
 
@@ -580,13 +590,267 @@
             background: #cbd5e1;
             border-radius: 999px;
         }
+
+        /* FIX DROPDOWN AGAR DI DEPAN */
+        .dropdown-menu {
+            z-index: 9999 !important;
+            position: absolute !important;
+        }
+
+        .topbar,
+        .topbar-actions,
+        .dropdown {
+            position: relative;
+            z-index: 9999;
+        }
+
+        /* FIX AGAR MAP / ANIMASI TIDAK MENIMPA */
+        .leaflet-container {
+            z-index: 1 !important;
+        }
+
+        /* KHUSUS MOBILE FIX */
+        @media (max-width: 991.98px) {
+
+            /* turunkan topbar saat mobile */
+            .topbar {
+                position: relative;
+                z-index: 1 !important;
+            }
+
+            /* naikkan sidebar mobile */
+            .offcanvas {
+                z-index: 99999 !important;
+            }
+
+            /* backdrop juga ikut */
+            .offcanvas-backdrop {
+                z-index: 99998 !important;
+            }
+        }
     </style>
 </head>
+
 <body>
 
-<div class="app-container">
-    <aside class="sidebar">
-        <div class="sidebar-header">
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="#" class="brand-logo">
+                    <div class="brand-mark">
+                        <i class="bi bi-cpu-fill"></i>
+                    </div>
+                    <div>
+                        <div>SIPKAR ADMIN</div>
+                        <div class="brand-subtitle">Desa Karangmulya</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="sidebar-menu-wrapper">
+                <ul class="nav-list">
+                    <li class="nav-section-title">Main Menu</li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('admin.dashboard') }}"
+                            class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                            <span class="icon-wrap"><i class="bi bi-grid-fill"></i></span>
+                            <span class="nav-text">Dashboard</span>
+                            <i class="bi bi-chevron-right nav-arrow"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('admin.dusun.index') }}"
+                            class="nav-link {{ request()->routeIs('admin.dusun.*') ? 'active' : '' }}">
+                            <span class="icon-wrap"><i class="bi bi-geo-alt-fill"></i></span>
+                            <span class="nav-text">Data Dusun</span>
+                            <i class="bi bi-chevron-right nav-arrow"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('admin.rw.index') }}"
+                            class="nav-link {{ request()->routeIs('admin.rw.*') ? 'active' : '' }}">
+                            <span class="icon-wrap"><i class="bi bi-diagram-3-fill"></i></span>
+                            <span class="nav-text">Data RW</span>
+                            <i class="bi bi-chevron-right nav-arrow"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('admin.rt.index') }}"
+                            class="nav-link {{ request()->routeIs('admin.rt.*') ? 'active' : '' }}">
+                            <span class="icon-wrap"><i class="bi bi-person-badge-fill"></i></span>
+                            <span class="nav-text">Data RT</span>
+                            <i class="bi bi-chevron-right nav-arrow"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('admin.warga.index') }}"
+                            class="nav-link {{ request()->routeIs('admin.warga.*') ? 'active' : '' }}">
+                            <span class="icon-wrap"><i class="bi bi-people-fill"></i></span>
+                            <span class="nav-text">Data Warga</span>
+                            <i class="bi bi-chevron-right nav-arrow"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('admin.kategori-keterampilan.index') }}"
+                            class="nav-link {{ request()->routeIs('admin.kategori-keterampilan.*') ? 'active' : '' }}">
+                            <span class="icon-wrap"><i class="bi bi-tags-fill"></i></span>
+                            <span class="nav-text">Kategori Keterampilan</span>
+                            <i class="bi bi-chevron-right nav-arrow"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('admin.keterampilan.index') }}"
+                            class="nav-link {{ request()->routeIs('admin.keterampilan.*') ? 'active' : '' }}">
+                            <span class="icon-wrap"><i class="bi bi-stars"></i></span>
+                            <span class="nav-text">Data Keterampilan</span>
+                            <i class="bi bi-chevron-right nav-arrow"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('admin.pemetaan.index') }}"
+                            class="nav-link {{ request()->routeIs('admin.pemetaan.*') ? 'active' : '' }}">
+                            <span class="icon-wrap"><i class="bi bi-map-fill"></i></span>
+                            <span class="nav-text">Pemetaan</span>
+                            <i class="bi bi-chevron-right nav-arrow"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-section-title mt-2">Laporan</li>
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="icon-wrap"><i class="bi bi-bar-chart-steps"></i></span>
+                            <span class="nav-text">Statistik</span>
+                            <i class="bi bi-chevron-right nav-arrow"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="icon-wrap"><i class="bi bi-file-earmark-text-fill"></i></span>
+                            <span class="nav-text">Laporan Bulanan</span>
+                            <i class="bi bi-chevron-right nav-arrow"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="icon-wrap"><i class="bi bi-file-bar-graph-fill"></i></span>
+                            <span class="nav-text">Laporan Tahunan</span>
+                            <i class="bi bi-chevron-right nav-arrow"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="icon-wrap"><i class="bi bi-archive-fill"></i></span>
+                            <span class="nav-text">Arsip Laporan</span>
+                            <i class="bi bi-chevron-right nav-arrow"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-section-title mt-2">Pengaturan</li>
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <span class="icon-wrap"><i class="bi bi-database-fill-gear"></i></span>
+                            <span class="nav-text">Backup Data</span>
+                            <i class="bi bi-chevron-right nav-arrow"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="mobile-toggle d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu"
+                        type="button">
+                        <i class="bi bi-list fs-4"></i>
+                    </button>
+
+                    <div class="page-info">
+                        <h1>@yield('title', 'Dashboard')</h1>
+                    </div>
+                </div>
+
+                <div class="topbar-actions">
+                    <div class="search-box d-none d-md-flex">
+                        <i class="bi bi-search"></i>
+                        <input type="text" placeholder="Cari data warga, laporan, dusun...">
+                    </div>
+
+                    <button class="icon-btn d-none d-sm-inline-flex" type="button">
+                        <i class="bi bi-bell"></i>
+                        <span class="badge-dot"></span>
+                    </button>
+
+                    <div class="dropdown">
+                        <button class="profile-btn border-0" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <div class="profile-meta d-none d-sm-block">
+                                <div class="name">{{ auth()->user()->name }}</div>
+                                <div class="role">{{ auth()->user()->jabatan ?? 'Admin Desa' }}</div>
+                            </div>
+
+                            @if (auth()->user()->foto)
+                                <img src="{{ asset('storage/' . auth()->user()->foto) }}" alt="Foto Profil"
+                                    class="avatar-small">
+                            @else
+                                <div class="avatar-small">
+                                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                                </div>
+                            @endif
+                        </button>
+
+                        <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-2"
+                            style="border-radius: 16px; min-width: 220px;">
+                            <li>
+                                <a class="dropdown-item rounded-3 py-2" href="{{ route('admin.profile') }}">
+                                    <i class="bi bi-person me-2"></i> Profil
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item rounded-3 py-2" href="{{ route('admin.settings') }}">
+                                    <i class="bi bi-gear me-2"></i> Pengaturan
+                                </a>
+                            </li>
+
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item rounded-3 py-2 text-danger" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="bi bi-power me-2"></i> Keluar
+                                </a>
+                            </li>
+                        </ul>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content-container">
+                @yield('content')
+            </main>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-start offcanvas-admin border-0" tabindex="-1" id="mobileMenu">
+        <div class="offcanvas-header">
             <a href="#" class="brand-logo">
                 <div class="brand-mark">
                     <i class="bi bi-cpu-fill"></i>
@@ -596,46 +860,53 @@
                     <div class="brand-subtitle">Desa Karangmulya</div>
                 </div>
             </a>
+
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
 
         <div class="sidebar-menu-wrapper">
-            <ul class="nav-list">
+            <ul class="nav-list mt-2">
                 <li class="nav-section-title">Main Menu</li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link active">
+                    <a href="{{ route('admin.dashboard') }}"
+                        class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                         <span class="icon-wrap"><i class="bi bi-grid-fill"></i></span>
                         <span class="nav-text">Dashboard</span>
                         <i class="bi bi-chevron-right nav-arrow"></i>
                     </a>
                 </li>
 
-<li class="nav-item">
-    <a href="{{ route('admin.dusun.index') }}" class="nav-link">
-        <span class="icon-wrap"><i class="bi bi-geo-alt-fill"></i></span>
-        <span class="nav-text">Wilayah Dusun</span>
-        <i class="bi bi-chevron-right nav-arrow"></i>
-    </a>
-</li>
-
-<li class="nav-item">
-    <a href="{{ route('admin.rw.index') }}" class="nav-link">
-        <span class="icon-wrap"><i class="bi bi-diagram-3-fill"></i></span>
-        <span class="nav-text">Data RW</span>
-        <i class="bi bi-chevron-right nav-arrow"></i>
-    </a>
-</li>
-
-<li class="nav-item">
-    <a href="{{ route('admin.rt.index') }}" class="nav-link">
-        <span class="icon-wrap"><i class="bi bi-person-badge-fill"></i></span>
-        <span class="nav-text">Data RT</span>
-        <i class="bi bi-chevron-right nav-arrow"></i>
-    </a>
-</li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.dusun.index') }}"
+                        class="nav-link {{ request()->routeIs('admin.dusun.*') ? 'active' : '' }}">
+                        <span class="icon-wrap"><i class="bi bi-geo-alt-fill"></i></span>
+                        <span class="nav-text">Data Dusun</span>
+                        <i class="bi bi-chevron-right nav-arrow"></i>
+                    </a>
+                </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('admin.warga.index') }}" class="nav-link">
+                    <a href="{{ route('admin.rw.index') }}"
+                        class="nav-link {{ request()->routeIs('admin.rw.*') ? 'active' : '' }}">
+                        <span class="icon-wrap"><i class="bi bi-diagram-3-fill"></i></span>
+                        <span class="nav-text">Data RW</span>
+                        <i class="bi bi-chevron-right nav-arrow"></i>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('admin.rt.index') }}"
+                        class="nav-link {{ request()->routeIs('admin.rt.*') ? 'active' : '' }}">
+                        <span class="icon-wrap"><i class="bi bi-person-badge-fill"></i></span>
+                        <span class="nav-text">Data RT</span>
+                        <i class="bi bi-chevron-right nav-arrow"></i>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('admin.warga.index') }}"
+                        class="nav-link {{ request()->routeIs('admin.warga.*') ? 'active' : '' }}">
                         <span class="icon-wrap"><i class="bi bi-people-fill"></i></span>
                         <span class="nav-text">Data Warga</span>
                         <i class="bi bi-chevron-right nav-arrow"></i>
@@ -643,373 +914,65 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('admin.kategori-keterampilan.index') }}"
+                        class="nav-link {{ request()->routeIs('admin.kategori-keterampilan.*') ? 'active' : '' }}">
+                        <span class="icon-wrap"><i class="bi bi-tags-fill"></i></span>
+                        <span class="nav-text">Kategori Keterampilan</span>
+                        <i class="bi bi-chevron-right nav-arrow"></i>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('admin.keterampilan.index') }}"
+                        class="nav-link {{ request()->routeIs('admin.keterampilan.*') ? 'active' : '' }}">
                         <span class="icon-wrap"><i class="bi bi-stars"></i></span>
-                        <span class="nav-text">Keterampilan</span>
+                        <span class="nav-text">Data Keterampilan</span>
                         <i class="bi bi-chevron-right nav-arrow"></i>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-geo-alt-fill"></i></span>
-                        <span class="nav-text">Wilayah Dusun</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-person-badge-fill"></i></span>
-                        <span class="nav-text">Data RT / RW</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-house-door-fill"></i></span>
-                        <span class="nav-text">Data Rumah</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-briefcase-fill"></i></span>
-                        <span class="nav-text">Pekerjaan</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-mortarboard-fill"></i></span>
-                        <span class="nav-text">Pendidikan</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-heart-pulse-fill"></i></span>
-                        <span class="nav-text">Kesehatan Warga</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
-
-                <li class="nav-section-title mt-2">Laporan</li>
-
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-bar-chart-steps"></i></span>
-                        <span class="nav-text">Statistik</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-file-earmark-text-fill"></i></span>
-                        <span class="nav-text">Laporan Bulanan</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-file-bar-graph-fill"></i></span>
-                        <span class="nav-text">Laporan Tahunan</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-archive-fill"></i></span>
-                        <span class="nav-text">Arsip Laporan</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
-
-                <li class="nav-section-title mt-2">Pengaturan</li>
-
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-person-gear"></i></span>
-                        <span class="nav-text">Manajemen Admin</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-shield-lock-fill"></i></span>
-                        <span class="nav-text">Hak Akses</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-gear-wide-connected"></i></span>
-                        <span class="nav-text">Pengaturan Sistem</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <span class="icon-wrap"><i class="bi bi-database-fill-gear"></i></span>
-                        <span class="nav-text">Backup Data</span>
+                    <a href="{{ route('admin.pemetaan.index') }}"
+                        class="nav-link {{ request()->routeIs('admin.pemetaan.*') ? 'active' : '' }}">
+                        <span class="icon-wrap"><i class="bi bi-map-fill"></i></span>
+                        <span class="nav-text">Pemetaan</span>
                         <i class="bi bi-chevron-right nav-arrow"></i>
                     </a>
                 </li>
             </ul>
         </div>
-    </aside>
 
-    <div class="main-wrapper">
-        <header class="topbar">
-            <div class="topbar-left">
-                <button class="mobile-toggle d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" type="button">
-                    <i class="bi bi-list fs-4"></i>
-                </button>
-
-                <div class="page-info">
-                    <h1>@yield('title', 'Dashboard')</h1>
-                </div>
-            </div>
-
-            <div class="topbar-actions">
-                <div class="search-box d-none d-md-flex">
-                    <i class="bi bi-search"></i>
-                    <input type="text" placeholder="Cari data warga, laporan, dusun...">
-                </div>
-
-                <button class="icon-btn d-none d-sm-inline-flex" type="button">
-                    <i class="bi bi-bell"></i>
-                    <span class="badge-dot"></span>
-                </button>
-
-                <div class="dropdown">
-                    <button class="profile-btn border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <div class="profile-meta d-none d-sm-block">
-                            <div class="name">{{ auth()->user()->name }}</div>
-                            <div class="role">{{ auth()->user()->jabatan ?? 'Admin Desa' }}</div>
-                        </div>
-
-                        @if(auth()->user()->foto)
-                            <img src="{{ asset('storage/' . auth()->user()->foto) }}"
-                                 alt="Foto Profil"
-                                 class="avatar-small">
-                        @else
-                            <div class="avatar-small">
-                                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
-                            </div>
-                        @endif
-                    </button>
-
-                    <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-3 p-2" style="border-radius: 16px; min-width: 220px;">
-                        <li>
-                            <a class="dropdown-item rounded-3 py-2" href="{{ route('admin.profile') }}">
-                                <i class="bi bi-person me-2"></i> Profil
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item rounded-3 py-2" href="{{ route('admin.settings') }}">
-                                <i class="bi bi-gear me-2"></i> Pengaturan
-                            </a>
-                        </li>
-                        
-                        <li><hr class="dropdown-divider"></li>
-                        <li>
-                            <a class="dropdown-item rounded-3 py-2 text-danger"
-                               href="{{ route('logout') }}"
-                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <i class="bi bi-power me-2"></i> Keluar
-                            </a>
-                        </li>
-                    </ul>
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
-                </div>
-            </div>
-        </header>
-
-        <main class="content-container">
-            @yield('content')
-        </main>
-    </div>
-</div>
-
-<div class="offcanvas offcanvas-start offcanvas-admin border-0" tabindex="-1" id="mobileMenu">
-    <div class="offcanvas-header">
-        <a href="#" class="brand-logo">
-            <div class="brand-mark">
-                <i class="bi bi-cpu-fill"></i>
-            </div>
-            <div>
-                <div>SIPKAR ADMIN</div>
-                <div class="brand-subtitle">Desa Karangmulya</div>
-            </div>
-        </a>
-
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <div class="sidebar-footer pt-0"></div>
     </div>
 
-    <div class="sidebar-menu-wrapper">
-        <ul class="nav-list mt-2">
-            <li class="nav-section-title">Main Menu</li>
+    <!-- Leaflet JS -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
 
-            <li class="nav-item">
-                <a href="#" class="nav-link active">
-                    <span class="icon-wrap"><i class="bi bi-grid-fill"></i></span>
-                    <span class="nav-text">Dashboard</span>
-                    <i class="bi bi-chevron-right nav-arrow"></i>
-                </a>
-            </li>
+            // DESKTOP
+            const activeDesktop = document.querySelector('.sidebar .nav-link.active');
+            if (activeDesktop) {
+                activeDesktop.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
 
-            <li class="nav-item">
-                <a href="{{ route('admin.warga.index') }}" class="nav-link">
-                    <span class="icon-wrap"><i class="bi bi-people-fill"></i></span>
-                    <span class="nav-text">Data Warga</span>
-                    <i class="bi bi-chevron-right nav-arrow"></i>
-                </a>
-            </li>
+            // MOBILE (offcanvas)
+            const activeMobile = document.querySelector('#mobileMenu .nav-link.active');
+            if (activeMobile) {
+                activeMobile.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
 
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <span class="icon-wrap"><i class="bi bi-stars"></i></span>
-                    <span class="nav-text">Keterampilan</span>
-                    <i class="bi bi-chevron-right nav-arrow"></i>
-                </a>
-            </li>
+        });
+    </script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    @stack('scripts')
 
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <span class="icon-wrap"><i class="bi bi-geo-alt-fill"></i></span>
-                    <span class="nav-text">Wilayah Dusun</span>
-                    <i class="bi bi-chevron-right nav-arrow"></i>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <span class="icon-wrap"><i class="bi bi-person-badge-fill"></i></span>
-                    <span class="nav-text">Data RT / RW</span>
-                    <i class="bi bi-chevron-right nav-arrow"></i>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <span class="icon-wrap"><i class="bi bi-house-door-fill"></i></span>
-                    <span class="nav-text">Data Rumah</span>
-                    <i class="bi bi-chevron-right nav-arrow"></i>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <span class="icon-wrap"><i class="bi bi-briefcase-fill"></i></span>
-                    <span class="nav-text">Pekerjaan</span>
-                    <i class="bi bi-chevron-right nav-arrow"></i>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <span class="icon-wrap"><i class="bi bi-mortarboard-fill"></i></span>
-                    <span class="nav-text">Pendidikan</span>
-                    <i class="bi bi-chevron-right nav-arrow"></i>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <span class="icon-wrap"><i class="bi bi-heart-pulse-fill"></i></span>
-                    <span class="nav-text">Kesehatan Warga</span>
-                    <i class="bi bi-chevron-right nav-arrow"></i>
-                </a>
-            </li>
-
-            <li class="nav-section-title mt-2">Laporan</li>
-
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <span class="icon-wrap"><i class="bi bi-bar-chart-steps"></i></span>
-                    <span class="nav-text">Statistik</span>
-                    <i class="bi bi-chevron-right nav-arrow"></i>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <span class="icon-wrap"><i class="bi bi-file-earmark-text-fill"></i></span>
-                    <span class="nav-text">Laporan Bulanan</span>
-                    <i class="bi bi-chevron-right nav-arrow"></i>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <span class="icon-wrap"><i class="bi bi-file-bar-graph-fill"></i></span>
-                    <span class="nav-text">Laporan Tahunan</span>
-                    <i class="bi bi-chevron-right nav-arrow"></i>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <span class="icon-wrap"><i class="bi bi-archive-fill"></i></span>
-                    <span class="nav-text">Arsip Laporan</span>
-                    <i class="bi bi-chevron-right nav-arrow"></i>
-                </a>
-            </li>
-
-            <li class="nav-section-title mt-2">Pengaturan</li>
-
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <span class="icon-wrap"><i class="bi bi-person-gear"></i></span>
-                    <span class="nav-text">Manajemen Admin</span>
-                    <i class="bi bi-chevron-right nav-arrow"></i>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <span class="icon-wrap"><i class="bi bi-shield-lock-fill"></i></span>
-                    <span class="nav-text">Hak Akses</span>
-                    <i class="bi bi-chevron-right nav-arrow"></i>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <span class="icon-wrap"><i class="bi bi-gear-wide-connected"></i></span>
-                    <span class="nav-text">Pengaturan Sistem</span>
-                    <i class="bi bi-chevron-right nav-arrow"></i>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <span class="icon-wrap"><i class="bi bi-database-fill-gear"></i></span>
-                    <span class="nav-text">Backup Data</span>
-                    <i class="bi bi-chevron-right nav-arrow"></i>
-                </a>
-            </li>
-        </ul>
-    </div>
-
-    <div class="sidebar-footer pt-0"></div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-@stack('scripts')
 </body>
+
 </html>

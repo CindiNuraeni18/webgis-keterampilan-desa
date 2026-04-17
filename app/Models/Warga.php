@@ -22,4 +22,9 @@ class Warga extends Model
     {
         return $this->belongsTo(Rt::class);
     }
+
+    public function keterampilans()
+    {
+    return $this->hasMany(Keterampilan::class);
+    }
 }

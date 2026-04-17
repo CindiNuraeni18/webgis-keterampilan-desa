@@ -26,17 +26,22 @@ class DusunController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'nama_dusun' => 'required|max:255',
-        ]);
+{
+    $request->validate([
+        'nama_dusun' => 'required|max:255',
+        'latitude' => 'nullable|numeric',
+        'longitude' => 'nullable|numeric',
+    ]);
 
-        Dusun::create($request->only('nama_dusun'));
+    Dusun::create([
+        'nama_dusun' => $request->nama_dusun,
+        'latitude' => $request->latitude,
+        'longitude' => $request->longitude,
+    ]);
 
-        return redirect()->route('admin.dusun.index')
-            ->with('success', 'Data dusun berhasil ditambahkan.');
-    }
-
+    return redirect()->route('admin.dusun.index')
+        ->with('success', 'Data dusun berhasil ditambahkan.');
+}
     public function show(Dusun $dusun)
     {
         return view('admin.dusun.show', compact('dusun'));
@@ -48,16 +53,22 @@ class DusunController extends Controller
     }
 
     public function update(Request $request, Dusun $dusun)
-    {
-        $request->validate([
-            'nama_dusun' => 'required|max:255',
-        ]);
+{
+    $request->validate([
+        'nama_dusun' => 'required|max:255',
+        'latitude' => 'nullable|numeric',
+        'longitude' => 'nullable|numeric',
+    ]);
 
-        $dusun->update($request->only('nama_dusun'));
+    $dusun->update([
+        'nama_dusun' => $request->nama_dusun,
+        'latitude' => $request->latitude,
+        'longitude' => $request->longitude,
+    ]);
 
-        return redirect()->route('admin.dusun.index')
-            ->with('success', 'Data dusun berhasil diperbarui.');
-    }
+    return redirect()->route('admin.dusun.index')
+        ->with('success', 'Data dusun berhasil diperbarui.');
+}
 
     public function destroy(Dusun $dusun)
     {

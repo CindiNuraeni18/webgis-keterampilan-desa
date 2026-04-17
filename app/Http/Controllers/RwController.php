@@ -32,17 +32,25 @@ class RwController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'dusun_id' => 'required|exists:dusuns,id',
-            'nomor_rw' => 'required|max:10',
-        ]);
+{
+    $request->validate([
+        'dusun_id' => 'required|exists:dusuns,id',
+        'nomor_rw' => 'required|max:10',
+        'latitude' => 'nullable|numeric',
+        'longitude' => 'nullable|numeric',
+    ]);
 
-        Rw::create($request->only('dusun_id', 'nomor_rw'));
+    Rw::create([
+        'dusun_id' => $request->dusun_id,
+        'nomor_rw' => $request->nomor_rw,
+        'latitude' => $request->latitude,
+        'longitude' => $request->longitude,
+    ]);
 
-        return redirect()->route('admin.rw.index')
-            ->with('success', 'Data RW berhasil ditambahkan.');
-    }
+    return redirect()->route('admin.rw.index')
+        ->with('success', 'Data RW berhasil ditambahkan.');
+}
+
 
     public function show(Rw $rw)
     {
@@ -57,18 +65,24 @@ class RwController extends Controller
     }
 
     public function update(Request $request, Rw $rw)
-    {
-        $request->validate([
-            'dusun_id' => 'required|exists:dusuns,id',
-            'nomor_rw' => 'required|max:10',
-        ]);
+{
+    $request->validate([
+        'dusun_id' => 'required|exists:dusuns,id',
+        'nomor_rw' => 'required|max:10',
+        'latitude' => 'nullable|numeric',
+        'longitude' => 'nullable|numeric',
+    ]);
 
-        $rw->update($request->only('dusun_id', 'nomor_rw'));
+    $rw->update([
+        'dusun_id' => $request->dusun_id,
+        'nomor_rw' => $request->nomor_rw,
+        'latitude' => $request->latitude,
+        'longitude' => $request->longitude,
+    ]);
 
-        return redirect()->route('admin.rw.index')
-            ->with('success', 'Data RW berhasil diperbarui.');
-    }
-
+    return redirect()->route('admin.rw.index')
+        ->with('success', 'Data RW berhasil diperbarui.');
+}
     public function destroy(Rw $rw)
     {
         $rw->delete();

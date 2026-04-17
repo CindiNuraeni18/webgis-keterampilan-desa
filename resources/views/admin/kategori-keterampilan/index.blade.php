@@ -1,6 +1,6 @@
 @extends('layouts.sidebar-admin')
 
-@section('title', 'Data Warga')
+@section('title', 'Kategori Keterampilan')
 
 @section('content')
 
@@ -106,25 +106,12 @@
             transform: translateX(3px);
         }
 
-        /* sticky aksi */
-        .sticky-col {
-            position: sticky;
-            right: 0;
-            background: #fff;
-            z-index: 2;
-        }
-
-        thead .sticky-col {
-            background: #f8f9fa;
-            z-index: 3;
-        }
-
         /* =========================
            SEARCH & BUTTONS
         ========================= */
         .search-wrapper {
             flex: 1;
-            max-width: 400px;
+            max-width: 380px;
         }
 
         .search-group {
@@ -193,7 +180,6 @@
 
             .search-wrapper {
                 max-width: 100%;
-                width: 100%;
             }
         }
     </style>
@@ -203,84 +189,72 @@
 
             <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
                 <div>
-                    <h4 class="mb-1 title-animate">Data Warga</h4>
-                    <p class="text-muted title-animate mb-0">Kelola informasi kependudukan Desa Karangmulya</p>
+                    <h4 class="mb-1 title-animate">Kategori Keterampilan</h4>
+                    <p class="text-muted title-animate mb-0">Kelola kategori keterampilan warga</p>
                 </div>
 
                 <div class="d-flex flex-wrap gap-2">
-                    <form action="{{ route('admin.warga.index') }}" method="GET" class="search-wrapper search-animate">
+                    <form action="{{ route('admin.kategori-keterampilan.index') }}" method="GET"
+                        class="search-wrapper search-animate">
                         <div class="input-group search-group shadow-sm">
                             <button type="submit" class="input-group-text bg-primary text-white border-0">
                                 <i class="bi bi-search"></i>
                             </button>
                             <input type="text" name="search" class="form-control border-0"
-                                placeholder="Cari nama atau NIK..." value="{{ request('search') }}">
+                                placeholder="Cari kategori..." value="{{ request('search') }}">
 
                             @if (request()->filled('search'))
-                                <a href="{{ route('admin.warga.index') }}" class="btn btn-light border-0">
+                                <a href="{{ route('admin.kategori-keterampilan.index') }}" class="btn btn-light border-0">
                                     <i class="bi bi-x-circle"></i>
                                 </a>
                             @endif
                         </div>
                     </form>
 
-                    <a href="{{ route('admin.warga.create') }}" class="btn btn-primary btn-animate click-animate">
+                    <a href="{{ route('admin.kategori-keterampilan.create') }}"
+                        class="btn btn-primary btn-animate click-animate">
                         <i class="bi bi-plus-circle"></i>
-                        <span class="d-none d-md-inline">Tambah Warga</span>
+                        <span class="d-none d-md-inline">Tambah</span>
                     </a>
                 </div>
             </div>
 
             @if (session('success'))
-                <div class="alert alert-success fade-in">
+                <div class="alert alert-success border-0 shadow-sm fade-in">
                     <i class="bi bi-check-circle me-2"></i> {{ session('success') }}
                 </div>
             @endif
 
             <div class="table-responsive">
-                <table class="table table-bordered align-middle table-striped table-hover text-nowrap">
+                <table class="table table-bordered table-striped table-hover align-middle">
                     <thead class="table-primary text-center">
                         <tr>
                             <th width="60">No</th>
-                            <th>NIK</th>
-                            <th>Nama</th>
-                            <th>JK</th>
-                            <th>RT</th>
-                            <th>RW</th>
-                            <th>Dusun</th>
-                            <th>No HP</th>
-                            <th>Pekerjaan</th>
-                            <th width="180" class="sticky-col">Aksi</th>
+                            <th>Nama Kategori</th>
+                            <th width="200">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($wargas as $key => $warga)
-                            <tr>
-                                <td class="text-center">{{ $wargas->firstItem() + $key }}</td>
-                                <td>{{ $warga->nik }}</td>
-                                <td>{{ $warga->nama }}</td>
-                                <td>{{ $warga->jenis_kelamin }}</td>
-                                <td>{{ $warga->rt->nomor_rt }}</td>
-                                <td>{{ $warga->rt->rw->nomor_rw }}</td>
-                                <td>{{ $warga->rt->rw->dusun->nama_dusun }}</td>
-                                <td>{{ $warga->no_hp ?? '-' }}</td>
-                                <td>{{ $warga->pekerjaan ?? '-' }}</td>
-                                <td class="text-center sticky-col">
+                        @forelse($kategoris as $key => $kategori)
+                            <tr style="animation-delay: {{ $loop->index * 0.05 }}s">
+                                <td class="text-center">{{ $kategoris->firstItem() + $key }}</td>
+                                <td class="fw-semibold">{{ $kategori->nama_kategori }}</td>
+                                <td class="text-center">
                                     <div class="d-flex justify-content-center gap-2">
-                                        <a href="{{ route('admin.warga.show', $warga->id) }}"
+                                        <a href="{{ route('admin.kategori-keterampilan.show', $kategori->id) }}"
                                             class="btn btn-info btn-sm text-white" title="Detail">
                                             <i class="bi bi-eye"></i>
                                         </a>
-                                        <a href="{{ route('admin.warga.edit', $warga->id) }}"
+                                        <a href="{{ route('admin.kategori-keterampilan.edit', $kategori->id) }}"
                                             class="btn btn-warning btn-sm" title="Edit">
                                             <i class="bi bi-pencil"></i>
                                         </a>
-                                        <form action="{{ route('admin.warga.destroy', $warga->id) }}" method="POST"
-                                            class="d-inline">
+                                        <form action="{{ route('admin.kategori-keterampilan.destroy', $kategori->id) }}"
+                                            method="POST" class="d-inline">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-danger btn-sm" title="Hapus"
-                                                onclick="return confirm('Yakin ingin menghapus data warga ini?')">
+                                                onclick="return confirm('Yakin hapus data?')">
                                                 <i class="bi bi-trash"></i>
                                             </button>
                                         </form>
@@ -289,9 +263,9 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="10" class="text-center text-muted">
+                                <td colspan="3" class="text-center text-muted">
                                     <i class="bi bi-inbox"></i>
-                                    Data warga tidak ditemukan.
+                                    Data kategori belum ada.
                                 </td>
                             </tr>
                         @endforelse
@@ -299,10 +273,9 @@
                 </table>
             </div>
 
-            <div>
-                {{ $wargas->links() }}
+            <div class="mt-4">
+                {{ $kategoris->links() }}
             </div>
-
 
         </div>
     </div>

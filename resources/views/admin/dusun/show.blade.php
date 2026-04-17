@@ -12,6 +12,14 @@
                 <th width="200">Nama Dusun</th>
                 <td>{{ $dusun->nama_dusun }}</td>
             </tr>
+            <tr>
+    <th>Latitude</th>
+    <td>{{ $dusun->latitude ?? '-' }}</td>
+</tr>
+<tr>
+    <th>Longitude</th>
+    <td>{{ $dusun->longitude ?? '-' }}</td>
+</tr>
         </table>
 
         <a href="{{ route('admin.dusun.index') }}" class="btn btn-secondary">Kembali</a>
