@@ -736,23 +736,7 @@
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <span class="icon-wrap"><i class="bi bi-file-earmark-text-fill"></i></span>
-                            <span class="nav-text">Laporan Bulanan</span>
-                            <i class="bi bi-chevron-right nav-arrow"></i>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <span class="icon-wrap"><i class="bi bi-file-bar-graph-fill"></i></span>
-                            <span class="nav-text">Laporan Tahunan</span>
-                            <i class="bi bi-chevron-right nav-arrow"></i>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <span class="icon-wrap"><i class="bi bi-archive-fill"></i></span>
-                            <span class="nav-text">Arsip Laporan</span>
+                            <span class="nav-text">Laporan</span>
                             <i class="bi bi-chevron-right nav-arrow"></i>
                         </a>
                     </li>

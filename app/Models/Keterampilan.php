@@ -10,7 +10,6 @@ class Keterampilan extends Model
         'warga_id',
         'kategori_keterampilan_id',
         'nama_keterampilan',
-        'tingkat_keahlian',
         'pengalaman',
         'keterangan',
     ];

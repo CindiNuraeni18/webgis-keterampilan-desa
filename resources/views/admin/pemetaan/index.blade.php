@@ -54,6 +54,86 @@
         .leaflet-popup-content b {
             color: #0d6efd;
         }
+
+        /* ===== marker di atas polygon ===== */
+
+        .leaflet-marker-pane {
+            z-index: 650 !important;
+        }
+
+        .leaflet-overlay-pane {
+            z-index: 400 !important;
+        }
+
+        .leaflet-popup-pane {
+            z-index: 700 !important;
+        }
+
+
+        /* ===== LEGENDA DI KANAN BAWAH (tidak bentrok layer control) ===== */
+
+        #legend-box {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+
+            z-index: 999;
+
+            background: #ffffff;
+            padding: 14px 18px;
+
+            border-radius: 12px;
+
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
+
+            min-width: 180px;
+
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        #legend-box h6 {
+            margin-bottom: 10px;
+        }
+
+        #legend-box p {
+            margin-bottom: 8px;
+        }
+
+        .kotak {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            border-radius: 3px;
+            vertical-align: middle;
+        }
+
+        .hijau {
+            background: #198754;
+        }
+
+        .ungu {
+            background: #6f42c1;
+        }
+
+        .bulat {
+            display: inline-block;
+            background: #333;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .besar {
+            width: 14px;
+            height: 14px;
+        }
+
+        .kecil {
+            width: 8px;
+            height: 8px;
+        }
     </style>
 
     <div class="card card-map border-0 shadow-sm">
@@ -66,6 +146,34 @@
             </div>
 
             <div id="map"></div>
+
+            <div id="legend-box">
+
+                <h6><b>Keterangan Peta</b></h6>
+
+                <p>
+                    <span class="kotak hijau"></span>
+                    Dusun Kemped
+                </p>
+
+                <p>
+                    <span class="kotak ungu"></span>
+                    Dusun Sukamelang
+                </p>
+
+                <hr>
+
+                <p>
+                    <span class="bulat besar"></span>
+                    Marker RW
+                </p>
+
+                <p>
+                    <span class="bulat kecil"></span>
+                    Marker RT
+                </p>
+
+            </div>
         </div>
     </div>
 @endsection
@@ -167,54 +275,71 @@
                 .then(data => {
 
                     // =====================
-                    // MARKER DUSUN
+                    // polygon DUSUN
                     // =====================
-                    data.dusun.forEach(dusun => {
+                    fetch("{{ asset('geojson/dusun.geojson') }}")
+                        .then(response => response.json())
 
-                        if (dusun.latitude && dusun.longitude) {
+                        .then(data => {
 
-                            L.marker([
-                                    dusun.latitude,
-                                    dusun.longitude
-                                ])
-                                .bindPopup(`
-                        <div style="min-width:220px">
+                            console.log(data);
 
-                            <h6 style="margin-bottom:8px;">
-                                Dusun ${dusun.nama_dusun}
-                            </h6>
+                            L.geoJSON(data, {
+                                interactive: false,
+                                pane: 'overlayPane',
 
-                            <hr style="margin:6px 0;">
+                                style: function(feature) {
 
-                            <p>
-                                <b>Jumlah Warga:</b> 
-                                ${dusun.jumlah_warga || 0}
-                            </p>
+                                    if (feature.properties.nama_dusun === 'Kemped') {
+                                        return {
+                                            color: '#198754',
+                                            weight: 2,
+                                            fillColor: '#198754',
+                                            fillOpacity: 0.25
+                                        };
+                                    }
 
-                            <p>
-                                <b>Warga Berketerampilan:</b> 
-                                ${dusun.jumlah_keterampilan || 0}
-                            </p>
+                                    if (feature.properties.nama_dusun === 'Sukamelang') {
+                                        return {
+                                            color: '#6f42c1',
+                                            weight: 2,
+                                            fillColor: '#6f42c1',
+                                            fillOpacity: 0.25
+                                        };
+                                    }
 
-                            <p>
-                                <b>Potensi Utama:</b> 
-                                ${dusun.keterampilan_dominan || 'Belum tersedia'}
-                            </p>
+                                    return {
+                                        color: '#6c757d',
+                                        weight: 2,
+                                        fillColor: '#6c757d',
+                                        fillOpacity: 0.20
+                                    };
 
-                            <a href="/admin/dusun/${dusun.id}"
-                               class="btn btn-sm btn-primary mt-2 w-100">
 
-                               Lihat Detail
 
-                            </a>
+                                },
 
-                        </div>
-                    `)
-                                .addTo(dusunLayer);
+                                onEachFeature: function(feature, layer) {
 
-                        }
+                                    layer.bindPopup(`
+                    <b>Dusun:</b>
+                    ${feature.properties.nama_dusun}
+                    `);
 
-                    });
+                                }
+
+                            }).addTo(dusunLayer);
+                            dusunLayer.bringToBack();
+                            rwLayer.bringToFront();
+                            rtLayer.bringToFront();
+
+                        })
+
+                        .catch(error => {
+
+                            console.log('GeoJSON Error:', error);
+
+                        });
 
 
                     // =====================
@@ -270,7 +395,7 @@
                         ${rw.nama_keterampilan_dominan || '-'}
                         </p>
 
-                        <a href="/admin/rw/${rw.id}"
+                        <a href="/admin/detail/rw/${rw.id}"
                         class="btn btn-sm btn-success mt-2 w-100">
 
                         Lihat Detail
@@ -346,7 +471,7 @@
                         ${rt.nama_keterampilan_dominan || '-'}
                         </p>
 
-                        <a href="/admin/rt/${rt.id}"
+                        <a href="/admin/detail/rt/${rt.id}"
                         class="btn btn-sm btn-danger mt-2 w-100">
 
                         Lihat Detail

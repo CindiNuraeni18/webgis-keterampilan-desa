@@ -44,7 +44,6 @@ class KeterampilanController extends Controller
             'warga_id' => 'required|exists:wargas,id',
             'kategori_keterampilan_id' => 'required|exists:kategori_keterampilans,id',
             'nama_keterampilan' => 'required|max:255',
-            'tingkat_keahlian' => 'nullable|in:Pemula,Menengah,Mahir',
             'pengalaman' => 'nullable|max:255',
             'keterangan' => 'nullable',
         ]);
@@ -53,7 +52,6 @@ class KeterampilanController extends Controller
             'warga_id',
             'kategori_keterampilan_id',
             'nama_keterampilan',
-            'tingkat_keahlian',
             'pengalaman',
             'keterangan',
         ]));
@@ -83,7 +81,6 @@ class KeterampilanController extends Controller
             'warga_id' => 'required|exists:wargas,id',
             'kategori_keterampilan_id' => 'required|exists:kategori_keterampilans,id',
             'nama_keterampilan' => 'required|max:255',
-            'tingkat_keahlian' => 'nullable|in:Pemula,Menengah,Mahir',
             'pengalaman' => 'nullable|max:255',
             'keterangan' => 'nullable',
         ]);
@@ -92,7 +89,6 @@ class KeterampilanController extends Controller
             'warga_id',
             'kategori_keterampilan_id',
             'nama_keterampilan',
-            'tingkat_keahlian',
             'pengalaman',
             'keterangan',
         ]));

@@ -38,19 +38,6 @@
 </div>
 
 <div class="mb-3">
-    <label class="form-label">Tingkat Keahlian</label>
-    <select name="tingkat_keahlian" class="form-select @error('tingkat_keahlian') is-invalid @enderror">
-        <option value="">-- Pilih Tingkat --</option>
-        <option value="Pemula" {{ old('tingkat_keahlian', $keterampilan->tingkat_keahlian ?? '') == 'Pemula' ? 'selected' : '' }}>Pemula</option>
-        <option value="Menengah" {{ old('tingkat_keahlian', $keterampilan->tingkat_keahlian ?? '') == 'Menengah' ? 'selected' : '' }}>Menengah</option>
-        <option value="Mahir" {{ old('tingkat_keahlian', $keterampilan->tingkat_keahlian ?? '') == 'Mahir' ? 'selected' : '' }}>Mahir</option>
-    </select>
-    @error('tingkat_keahlian')
-        <div class="invalid-feedback">{{ $message }}</div>
-    @enderror
-</div>
-
-<div class="mb-3">
     <label class="form-label">Pengalaman</label>
     <input type="text" name="pengalaman" class="form-control @error('pengalaman') is-invalid @enderror"
            value="{{ old('pengalaman', $keterampilan->pengalaman ?? '') }}" placeholder="Contoh: 3 tahun">

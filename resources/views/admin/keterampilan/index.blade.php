@@ -246,7 +246,6 @@
                             <th>Dusun</th>
                             <th>Kategori</th>
                             <th>Nama Keterampilan</th>
-                            <th>Tingkat</th>
                             <th>Pengalaman</th>
                             <th width="180" class="sticky-col">Aksi</th>
                         </tr>
@@ -259,7 +258,6 @@
                                 <td>{{ $item->warga->rt->rw->dusun->nama_dusun }}</td>
                                 <td>{{ $item->kategori->nama_kategori }}</td>
                                 <td>{{ $item->nama_keterampilan }}</td>
-                                <td class="text-center">{{ $item->tingkat_keahlian ?? '-' }}</td>
                                 <td>{{ $item->pengalaman ?? '-' }}</td>
                                 <td class="text-center sticky-col">
                                     <div class="d-flex justify-content-center gap-2">

@@ -242,4 +242,18 @@ class PemetaanController extends Controller
         'rt' => $dataRt
     ]);
 }
+
+public function detailRt($id)
+{
+    $rt = Rt::with('wargas.keterampilans.kategori', 'rw.dusun')->findOrFail($id);
+
+    return view('admin.pemetaan.detail-rt', compact('rt'));
+}
+
+public function detailRw($id)
+{
+    $rw = Rw::with('rts.wargas.keterampilans.kategori', 'dusun')->findOrFail($id);
+
+    return view('admin.pemetaan.detail-rw', compact('rw'));
+}
 }

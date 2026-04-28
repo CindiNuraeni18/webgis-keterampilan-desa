@@ -42,4 +42,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/pemetaan', [PemetaanController::class, 'index'])->name('pemetaan.index');
     Route::get('/api/pemetaan', [PemetaanController::class, 'api']);
     
+    Route::get('/detail/rt/{id}', [PemetaanController::class, 'detailRt'])
+    ->name('pemetaan.detail.rt');
+Route::get('/detail/rw/{id}', [PemetaanController::class, 'detailRw'])
+    ->name('pemetaan.detail.rw');
 });
