@@ -807,6 +807,36 @@
                 opacity: 1 !important;
             }
         }
+
+        /* ===============================
+   NAVBAR LOGO BARU
+=================================*/
+        .logo-navbar {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .brand-title {
+            color: var(--primary);
+            font-size: 1.1rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .brand-subtitle {
+            font-size: 12px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        /* navbar tetap slim */
+        .navbar {
+            min-height: 75px;
+            padding-top: 0.4rem;
+            padding-bottom: 0.4rem;
+        }
     </style>
 </head>
 
@@ -819,10 +849,13 @@
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#beranda">
-                <div class="brand-icon">
-                    <i class="bi bi-geo-alt-fill"></i>
+
+                <img src="{{ asset('images/logo-indramayu.png') }}" alt="Logo Indramayu" class="logo-navbar">
+                <div>
+                    <span>SkillMap Desa</span>
+
                 </div>
-                <span>SkillMap Desa</span>
+
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
@@ -1252,10 +1285,10 @@
 
     <script>
         /* =========================================================
-               SCRIPT COUNTER ANGKA STATISTIK
-               Fungsi ini membuat angka statistik naik otomatis saat
-               halaman dimuat agar tampil lebih menarik.
-            ========================================================= */
+                   SCRIPT COUNTER ANGKA STATISTIK
+                   Fungsi ini membuat angka statistik naik otomatis saat
+                   halaman dimuat agar tampil lebih menarik.
+                ========================================================= */
         const counters = document.querySelectorAll(".stat-number");
 
         counters.forEach(counter => {
@@ -1279,19 +1312,19 @@
 
     <script>
         /* =========================================================
-           ADVANCED SCROLL STAGGER ANIMATION
-           =========================================================
-           Fitur:
-           - IntersectionObserver sebagai trigger utama
-           - Delay dinamis dari JavaScript berdasarkan index elemen
-           - Masuk satu per satu (stagger enter)
-           - Keluar satu per satu (reverse stagger exit)
-           - Exit lebih cepat dari enter
-           - Ada sedikit random delay kecil agar terasa natural
-           - Bisa repeat saat scroll naik & turun
-           - Tetap memakai class animasi yang sudah ada:
-             .fade-up, .fade-left, .fade-right, .zoom-soft
-        ========================================================= */
+               ADVANCED SCROLL STAGGER ANIMATION
+               =========================================================
+               Fitur:
+               - IntersectionObserver sebagai trigger utama
+               - Delay dinamis dari JavaScript berdasarkan index elemen
+               - Masuk satu per satu (stagger enter)
+               - Keluar satu per satu (reverse stagger exit)
+               - Exit lebih cepat dari enter
+               - Ada sedikit random delay kecil agar terasa natural
+               - Bisa repeat saat scroll naik & turun
+               - Tetap memakai class animasi yang sudah ada:
+                 .fade-up, .fade-left, .fade-right, .zoom-soft
+            ========================================================= */
 
         (() => {
             const animatedElements = Array.from(document.querySelectorAll('.scroll-animate'));
@@ -1537,14 +1570,14 @@
     </script>
     <script>
         /* =========================================================
-           ACTIVE NAVBAR MENU
-           =========================================================
-           Fitur:
-           - Saat menu diklik -> langsung aktif
-           - Saat scroll -> aktif otomatis mengikuti section yang terlihat
-           - Ringan: menggunakan IntersectionObserver
-           - Aman: hanya untuk link navbar yang menuju id section (#...)
-        ========================================================= */
+               ACTIVE NAVBAR MENU
+               =========================================================
+               Fitur:
+               - Saat menu diklik -> langsung aktif
+               - Saat scroll -> aktif otomatis mengikuti section yang terlihat
+               - Ringan: menggunakan IntersectionObserver
+               - Aman: hanya untuk link navbar yang menuju id section (#...)
+            ========================================================= */
 
         document.addEventListener("DOMContentLoaded", function() {
             /* Ambil semua link navbar yang mengarah ke section */

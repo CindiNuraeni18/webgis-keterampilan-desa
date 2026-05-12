@@ -707,7 +707,13 @@
 
                     <li class="nav-item">
                         <a href="{{ route('admin.keterampilan.index') }}"
-                            class="nav-link {{ request()->routeIs('admin.keterampilan.*') ? 'active' : '' }}">
+                            class="nav-link 
+    {{ request()->routeIs('admin.keterampilan.index') ||
+    request()->routeIs('admin.keterampilan.create') ||
+    request()->routeIs('admin.keterampilan.edit') ||
+    request()->routeIs('admin.keterampilan.show')
+        ? 'active'
+        : '' }}">
                             <span class="icon-wrap"><i class="bi bi-stars"></i></span>
                             <span class="nav-text">Data Keterampilan</span>
                             <i class="bi bi-chevron-right nav-arrow"></i>
@@ -726,7 +732,9 @@
                     <li class="nav-section-title mt-2">Laporan</li>
 
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('admin.keterampilan.statistik') }}"
+                            class="nav-link {{ request()->routeIs('admin.keterampilan.statistik') ? 'active' : '' }}">
+
                             <span class="icon-wrap"><i class="bi bi-bar-chart-steps"></i></span>
                             <span class="nav-text">Statistik</span>
                             <i class="bi bi-chevron-right nav-arrow"></i>
@@ -734,7 +742,9 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('admin.keterampilan.laporan') }}"
+                            class="nav-link {{ request()->routeIs('admin.keterampilan.laporan') ? 'active' : '' }}">
+
                             <span class="icon-wrap"><i class="bi bi-file-earmark-text-fill"></i></span>
                             <span class="nav-text">Laporan</span>
                             <i class="bi bi-chevron-right nav-arrow"></i>
@@ -744,7 +754,8 @@
                     <li class="nav-section-title mt-2">Pengaturan</li>
 
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('admin.backup.index') }}"
+                            class="nav-link {{ request()->routeIs('admin.backup.*') ? 'active' : '' }}">
                             <span class="icon-wrap"><i class="bi bi-database-fill-gear"></i></span>
                             <span class="nav-text">Backup Data</span>
                             <i class="bi bi-chevron-right nav-arrow"></i>
@@ -908,7 +919,13 @@
 
                 <li class="nav-item">
                     <a href="{{ route('admin.keterampilan.index') }}"
-                        class="nav-link {{ request()->routeIs('admin.keterampilan.*') ? 'active' : '' }}">
+                        class="nav-link 
+    {{ request()->routeIs('admin.keterampilan.index') ||
+    request()->routeIs('admin.keterampilan.create') ||
+    request()->routeIs('admin.keterampilan.edit') ||
+    request()->routeIs('admin.keterampilan.show')
+        ? 'active'
+        : '' }}">
                         <span class="icon-wrap"><i class="bi bi-stars"></i></span>
                         <span class="nav-text">Data Keterampilan</span>
                         <i class="bi bi-chevron-right nav-arrow"></i>
@@ -923,6 +940,20 @@
                         <i class="bi bi-chevron-right nav-arrow"></i>
                     </a>
                 </li>
+
+                <li class="nav-section-title mt-2">Laporan</li>
+
+
+                <li class="nav-item">
+                    <a href="{{ route('admin.keterampilan.statistik') }}"
+                        class="nav-link {{ request()->routeIs('admin.keterampilan.statistik') ? 'active' : '' }}">
+
+                        <span class="icon-wrap"><i class="bi bi-bar-chart-steps"></i></span>
+                        <span class="nav-text">Statistik</span>
+                        <i class="bi bi-chevron-right nav-arrow"></i>
+                    </a>
+                </li>
+
             </ul>
         </div>
 

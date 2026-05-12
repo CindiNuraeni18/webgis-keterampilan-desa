@@ -10,6 +10,8 @@ use App\Http\Controllers\RtController;
 use App\Http\Controllers\KategoriKeterampilanController;
 use App\Http\Controllers\KeterampilanController;
 use App\Http\Controllers\PemetaanController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\BackupController; 
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,9 +24,8 @@ Route::get('/home', function () {
 })->middleware('auth')->name('home');
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
-      Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
+      Route::get('/dashboard', [HomeController::class, 'index'])
+    ->name('dashboard');
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::get('/pengaturan', [ProfileController::class, 'settings'])->name('settings');
@@ -37,7 +38,29 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('warga', WargaController::class);
 
     Route::resource('kategori-keterampilan', KategoriKeterampilanController::class);
+
+    Route::get(
+    '/keterampilan/statistik',
+    [KeterampilanController::class, 'statistik']
+)->name('keterampilan.statistik');
+
+Route::get(
+    '/keterampilan/laporan',
+    [KeterampilanController::class, 'laporan']
+)->name('keterampilan.laporan');
+
+Route::get(
+    '/keterampilan/laporan/pdf',
+    [KeterampilanController::class, 'exportPdf']
+)->name('keterampilan.laporan.pdf');
+
+Route::get(
+    '/keterampilan/laporan/excel',
+    [KeterampilanController::class, 'exportExcel']
+)->name('keterampilan.laporan.excel');
+
     Route::resource('keterampilan', KeterampilanController::class);
+
 
     Route::get('/pemetaan', [PemetaanController::class, 'index'])->name('pemetaan.index');
     Route::get('/api/pemetaan', [PemetaanController::class, 'api']);
@@ -46,4 +69,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     ->name('pemetaan.detail.rt');
 Route::get('/detail/rw/{id}', [PemetaanController::class, 'detailRw'])
     ->name('pemetaan.detail.rw');
+
+    Route::get('/backup', [BackupController::class, 'index'])->name('backup.index');
+Route::post('/backup', [BackupController::class, 'store'])->name('backup.store');
+Route::get('/backup/download/{id}', [BackupController::class, 'download'])->name('backup.download');
 });
