@@ -162,6 +162,7 @@ public function laporan(Request $request)
     $rw = $request->rw;
     $rt = $request->rt;
     $kategori = $request->kategori;
+    $tahun = $request->tahun;
 
     $laporans = Keterampilan::with(
         'warga.rt.rw.dusun',
@@ -197,6 +198,10 @@ public function laporan(Request $request)
         $query->where('kategori_keterampilan_id', $kategori);
     })
 
+    ->when($tahun, function ($query) use ($tahun) {
+    $query->whereYear('created_at', $tahun);
+})
+
     ->latest()
     ->paginate(10);
 
@@ -205,13 +210,19 @@ public function laporan(Request $request)
     $rts = Rt::all();
     $kategoris = KategoriKeterampilan::all();
 
+    $tahuns = Keterampilan::selectRaw('YEAR(created_at) as tahun')
+    ->distinct()
+    ->orderByDesc('tahun')
+    ->pluck('tahun');
+
     return view('admin.keterampilan.laporan', compact(
         'laporans',
         'search',
         'dusuns',
         'rws',
         'rts',
-        'kategoris'
+        'kategoris',
+        'tahuns'
     ));
 }
 

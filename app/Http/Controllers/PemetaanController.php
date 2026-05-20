@@ -15,9 +15,19 @@ class PemetaanController extends Controller
 
     public function api()
 {
-    $dusuns = Dusun::with('rws.rts.wargas.keterampilans')->get();
-    $rws = Rw::with('dusun','rts.wargas.keterampilans')->get();
-    $rts = Rt::with('rw.dusun','wargas.keterampilans')->get();
+    $dusuns = Dusun::with(
+    'rws.rts.wargas.keterampilans.kategori'
+)->get();
+
+$rws = Rw::with(
+    'dusun',
+    'rts.wargas.keterampilans.kategori'
+)->get();
+
+$rts = Rt::with(
+    'rw.dusun',
+    'wargas.keterampilans.kategori'
+)->get();
 
 
     // =======================

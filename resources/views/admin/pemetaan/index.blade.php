@@ -270,77 +270,80 @@
             rwLayer.clearLayers();
             rtLayer.clearLayers();
 
-            fetch("{{ url('/admin/api/pemetaan') }}")
+            fetch("{{ url('/api/pemetaan') }}")
                 .then(res => res.json())
                 .then(data => {
 
                     // =====================
                     // polygon DUSUN
                     // =====================
-                    fetch("{{ asset('geojson/dusun.geojson') }}")
-                        .then(response => response.json())
+                    fetch("{{ asset('geojson/dusunreal.geojson') }}")
+    .then(response => response.json())
 
-                        .then(data => {
+    .then(data => {
 
-                            console.log(data);
+        console.log(data);
 
-                            L.geoJSON(data, {
-                                interactive: false,
-                                pane: 'overlayPane',
+        L.geoJSON(data, {
+            interactive: false,
+            pane: 'overlayPane',
 
-                                style: function(feature) {
+            style: function(feature) {
 
-                                    if (feature.properties.nama_dusun === 'Kemped') {
-                                        return {
-                                            color: '#198754',
-                                            weight: 2,
-                                            fillColor: '#198754',
-                                            fillOpacity: 0.25
-                                        };
-                                    }
+                let namaDusun = feature.properties.dusunbaru;
 
-                                    if (feature.properties.nama_dusun === 'Sukamelang') {
-                                        return {
-                                            color: '#6f42c1',
-                                            weight: 2,
-                                            fillColor: '#6f42c1',
-                                            fillOpacity: 0.25
-                                        };
-                                    }
+                // warna dusun
+                if (namaDusun === 'kemped') {
+                    return {
+                        color: '#198754',
+                        weight: 2,
+                        fillColor: '#198754',
+                        fillOpacity: 0.35
+                    };
+                }
 
-                                    return {
-                                        color: '#6c757d',
-                                        weight: 2,
-                                        fillColor: '#6c757d',
-                                        fillOpacity: 0.20
-                                    };
+                if (namaDusun === 'sukamelang') {
+                    return {
+                        color: '#6f42c1',
+                        weight: 2,
+                        fillColor: '#6f42c1',
+                        fillOpacity: 0.35
+                    };
+                }
 
+                // default
+                return {
+                    color: '#0d6efd',
+                    weight: 2,
+                    fillColor: '#0d6efd',
+                    fillOpacity: 0.20
+                };
 
+            },
 
-                                },
+            onEachFeature: function(feature, layer) {
 
-                                onEachFeature: function(feature, layer) {
-
-                                    layer.bindPopup(`
+                layer.bindPopup(`
                     <b>Dusun:</b>
-                    ${feature.properties.nama_dusun}
-                    `);
+                    ${feature.properties.dusunbaru}
+                `);
 
-                                }
+            }
 
-                            }).addTo(dusunLayer);
-                            dusunLayer.bringToBack();
-                            rwLayer.bringToFront();
-                            rtLayer.bringToFront();
+        }).addTo(dusunLayer);
 
-                        })
+        dusunLayer.bringToBack();
+        rwLayer.bringToFront();
+        rtLayer.bringToFront();
 
-                        .catch(error => {
+    })
 
-                            console.log('GeoJSON Error:', error);
+    .catch(error => {
 
-                        });
+        console.log('GeoJSON Error:', error);
 
+    });
+                           
 
                     // =====================
                     // MARKER RW

@@ -56,7 +56,7 @@ class LoginController extends Controller
     \Illuminate\Support\Facades\Auth::login($user, $request->filled('remember'));
     $request->session()->regenerate();
 
-    return redirect()->intended($this->redirectPath());
+    return redirect('/admin/dashboard');
 }
 
     /**

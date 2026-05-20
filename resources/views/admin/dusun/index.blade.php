@@ -6,8 +6,8 @@
 
     <style>
         /* =========================
-           ANIMASI
-        ========================= */
+               ANIMASI
+            ========================= */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -31,8 +31,8 @@
         }
 
         /* =========================
-           CARD
-        ========================= */
+               CARD
+            ========================= */
         .card {
             border-radius: 12px;
             transition: 0.3s ease;
@@ -44,8 +44,8 @@
         }
 
         /* =========================
-           TABLE
-        ========================= */
+               TABLE
+            ========================= */
         .table-responsive {
             border-radius: 10px;
             overflow-x: auto;
@@ -94,8 +94,8 @@
         }
 
         /* =========================
-           STICKY AKSI
-        ========================= */
+               STICKY AKSI
+            ========================= */
         .sticky-col {
             position: sticky;
             right: 0;
@@ -109,8 +109,8 @@
         }
 
         /* =========================
-           BUTTON
-        ========================= */
+               BUTTON
+            ========================= */
         .btn {
             transition: 0.2s ease-in-out;
         }
@@ -120,8 +120,8 @@
         }
 
         /* =========================
-           SEARCH (FIX CLEAN)
-        ========================= */
+               SEARCH (FIX CLEAN)
+            ========================= */
 
         /* wrapper */
         .search-wrapper {
@@ -177,8 +177,8 @@
         }
 
         /* =========================
-           RESPONSIVE
-        ========================= */
+               RESPONSIVE
+            ========================= */
         @media (max-width: 768px) {
             .table {
                 font-size: 12px;
@@ -201,8 +201,8 @@
         }
 
         /* =========================
-       ANIMASI HEADER (BARU)
-    ========================= */
+           ANIMASI HEADER (BARU)
+        ========================= */
 
         /* Judul */
         .title-animate {
@@ -225,8 +225,8 @@
         }
 
         /* =========================
-       KEYFRAMES BARU
-    ========================= */
+           KEYFRAMES BARU
+        ========================= */
         @keyframes slideFadeLeft {
             from {
                 opacity: 0;
@@ -264,16 +264,16 @@
         }
 
         /* =========================
-       ANIMASI GLOBAL (HALUS)
-    ========================= */
+           ANIMASI GLOBAL (HALUS)
+        ========================= */
         :root {
             --anim-speed: 0.85s;
             --anim-ease: cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* =========================
-       ANIMASI TABLE (TETAP)
-    ========================= */
+           ANIMASI TABLE (TETAP)
+        ========================= */
         .table-responsive {
             animation: slideInUp var(--anim-speed) var(--anim-ease);
         }
@@ -284,8 +284,8 @@
         }
 
         /* =========================
-       ANIMASI HEADER (DIPERHALUS)
-    ========================= */
+           ANIMASI HEADER (DIPERHALUS)
+        ========================= */
 
         /* Judul */
         .title-animate {
@@ -312,8 +312,8 @@
         }
 
         /* =========================
-       KEYFRAMES (HALUS)
-    ========================= */
+           KEYFRAMES (HALUS)
+        ========================= */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -434,8 +434,6 @@
                         <tr>
                             <th width="60">No</th>
                             <th>Nama Dusun</th>
-                            <th>Latitude</th>
-                            <th>Longitude</th>
                             <th width="180" class="sticky-col">Aksi</th>
                         </tr>
                     </thead>
@@ -444,19 +442,13 @@
                             <tr>
                                 <td class="text-center">{{ $dusuns->firstItem() + $key }}</td>
                                 <td>{{ $dusun->nama_dusun }}</td>
-                                <td>{{ $dusun->latitude ?? '-' }}</td>
-                                <td>{{ $dusun->longitude ?? '-' }}</td>
                                 <td class="text-center sticky-col">
 
                                     <div class="d-flex justify-content-center gap-2">
 
-                                        <a href="{{ route('admin.dusun.show', $dusun->id) }}" class="btn btn-info btn-sm"
-                                            title="Detail">
-                                            <i class="bi bi-eye"></i>
-                                        </a>
-
-                                        <a href="{{ route('admin.dusun.edit', $dusun->id) }}"
-                                            class="btn btn-warning btn-sm" title="Edit">
+                                     
+                                        <a href="{{ route('admin.dusun.edit', $dusun->id) }}" class="btn btn-warning btn-sm"
+                                            title="Edit">
                                             <i class="bi bi-pencil"></i>
                                         </a>
 

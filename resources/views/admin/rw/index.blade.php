@@ -277,10 +277,7 @@
                                 <td>{{ $rw->longitude ?? '-' }}</td>
                                 <td class="text-center sticky-col">
                                     <div class="d-flex justify-content-center gap-2">
-                                        <a href="{{ route('admin.rw.show', $rw->id) }}" class="btn btn-info btn-sm"
-                                            title="Detail">
-                                            <i class="bi bi-eye"></i>
-                                        </a>
+                                        
                                         <a href="{{ route('admin.rw.edit', $rw->id) }}" class="btn btn-warning btn-sm"
                                             title="Edit">
                                             <i class="bi bi-pencil"></i>

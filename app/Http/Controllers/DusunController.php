@@ -29,14 +29,10 @@ class DusunController extends Controller
 {
     $request->validate([
         'nama_dusun' => 'required|max:255',
-        'latitude' => 'nullable|numeric',
-        'longitude' => 'nullable|numeric',
     ]);
 
     Dusun::create([
         'nama_dusun' => $request->nama_dusun,
-        'latitude' => $request->latitude,
-        'longitude' => $request->longitude,
     ]);
 
     return redirect()->route('admin.dusun.index')
@@ -56,14 +52,10 @@ class DusunController extends Controller
 {
     $request->validate([
         'nama_dusun' => 'required|max:255',
-        'latitude' => 'nullable|numeric',
-        'longitude' => 'nullable|numeric',
     ]);
 
     $dusun->update([
         'nama_dusun' => $request->nama_dusun,
-        'latitude' => $request->latitude,
-        'longitude' => $request->longitude,
     ]);
 
     return redirect()->route('admin.dusun.index')

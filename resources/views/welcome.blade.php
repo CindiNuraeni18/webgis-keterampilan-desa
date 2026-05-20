@@ -336,36 +336,222 @@
        STATISTIK
     =============================== */
         .stat-card {
-            background: white;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 28px;
+            position: relative;
+
+            background:
+                linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.96),
+                    rgba(255, 255, 255, 0.88));
+
+            backdrop-filter: blur(10px);
+
+            border-radius: 24px;
+
+            padding: 30px 24px;
+
             text-align: center;
+
+            overflow: hidden;
+
+            border: 1px solid rgba(255, 255, 255, 0.4);
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.06);
+
+            transition: all .35s ease;
+
             height: 100%;
         }
 
-        .stat-number {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--primary);
+        .stat-card:hover {
+            transform: translateY(-8px);
+
+            box-shadow:
+                0 18px 35px rgba(47, 133, 90, 0.15);
         }
+
+        .stat-card::before {
+            content: '';
+
+            position: absolute;
+
+            top: -30px;
+            right: -30px;
+
+            width: 100px;
+            height: 100px;
+
+            background: rgba(47, 133, 90, 0.08);
+
+            border-radius: 50%;
+        }
+
+        .stat-icon {
+            width: 70px;
+            height: 70px;
+
+            margin: auto;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(135deg,
+                    #2f855a,
+                    #68d391);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: white;
+
+            font-size: 1.8rem;
+
+            box-shadow:
+                0 10px 25px rgba(47, 133, 90, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+
+            font-weight: 800;
+
+            color: #2f855a;
+
+            margin-bottom: 8px;
+        }
+
+        /* ===============================
+   DATA BOX
+================================ */
 
         .data-box {
-            background: linear-gradient(135deg, #2f855a, #3fa46e);
+            background:
+                linear-gradient(135deg,
+                    #1f6f4a,
+                    #2f855a,
+                    #4caf75);
+
             color: white;
-            border-radius: var(--radius);
-            padding: 35px;
-            box-shadow: var(--shadow);
+
+            border-radius: 30px;
+
+            padding: 45px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 20px 45px rgba(47, 133, 90, 0.18);
         }
 
+        .data-box::before {
+            content: '';
+
+            position: absolute;
+
+            top: -90px;
+            right: -90px;
+
+            width: 250px;
+            height: 250px;
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            border-radius: 50%;
+        }
+
+        /* ===============================
+   MINI CARD
+================================ */
+
+        .mini-data-card {
+            background:
+                rgba(255, 255, 255, 0.12);
+
+            backdrop-filter: blur(10px);
+
+            border-radius: 22px;
+
+            padding: 24px;
+
+            text-align: center;
+
+            border: 1px solid rgba(255, 255, 255, 0.15);
+
+            transition: all .3s ease;
+
+            height: 100%;
+        }
+
+        .mini-data-card:hover {
+            transform: translateY(-5px);
+
+            background:
+                rgba(255, 255, 255, 0.16);
+        }
+
+        .mini-data-icon {
+            width: 60px;
+            height: 60px;
+
+            margin: auto auto 16px;
+
+            border-radius: 18px;
+
+            background:
+                rgba(255, 255, 255, 0.18);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 1.5rem;
+
+            color: #fff;
+        }
+
+        .mini-data-card h3 {
+            font-size: 2rem;
+
+            font-weight: 800;
+
+            margin-bottom: 6px;
+        }
+
+        .mini-data-card p {
+            margin: 0;
+
+            opacity: .85;
+        }
+
+        /* ===============================
+   PROGRESS
+================================ */
+
         .progress {
-            height: 10px;
+            height: 14px;
+
             border-radius: 999px;
-            background-color: rgba(255, 255, 255, 0.25);
+
+            background:
+                rgba(255, 255, 255, 0.18);
+
+            overflow: hidden;
         }
 
         .progress-bar {
-            background-color: #d9f99d;
+            border-radius: 999px;
+
+            background:
+                linear-gradient(90deg,
+                    #d9f99d,
+                    #ffffff);
+
+            box-shadow:
+                0 0 15px rgba(255, 255, 255, 0.35);
         }
 
         /* ===============================
@@ -418,11 +604,7 @@
             background: #f9fcfa;
         }
 
-        #villageMap {
-            width: 100%;
-            height: 450px;
-            max-width: 100%;
-        }
+
 
         /* =========================================================
        ANIMASI SCROLL ADVANCED
@@ -570,9 +752,7 @@
                 padding: 18px 20px;
             }
 
-            #villageMap {
-                height: 380px;
-            }
+
         }
 
         /* =========================================================
@@ -687,9 +867,7 @@
                 border-radius: 16px 16px 0 0;
             }
 
-            #villageMap {
-                height: 300px;
-            }
+
 
             .progress {
                 height: 9px;
@@ -781,9 +959,6 @@
                 padding: 16px 16px 14px;
             }
 
-            #villageMap {
-                height: 260px;
-            }
 
             .contact-item {
                 margin-bottom: 14px;
@@ -837,6 +1012,446 @@
             padding-top: 0.4rem;
             padding-bottom: 0.4rem;
         }
+
+
+        /* pemetaan */
+        #map {
+            height: 600px;
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        .card-map {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+
+        .leaflet-popup-content b {
+            color: #0d6efd;
+        }
+
+        /* ===== marker di atas polygon ===== */
+
+        .leaflet-marker-pane {
+            z-index: 650 !important;
+        }
+
+        .leaflet-overlay-pane {
+            z-index: 400 !important;
+        }
+
+        .leaflet-popup-pane {
+            z-index: 700 !important;
+        }
+
+
+        /* ===== LEGENDA DI KANAN BAWAH (tidak bentrok layer control) ===== */
+
+        #legend-box {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+
+            z-index: 999;
+
+            background: #ffffff;
+            padding: 14px 18px;
+
+            border-radius: 12px;
+
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
+
+            min-width: 180px;
+
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        #legend-box h6 {
+            margin-bottom: 10px;
+        }
+
+        #legend-box p {
+            margin-bottom: 8px;
+        }
+
+        .kotak {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            border-radius: 3px;
+            vertical-align: middle;
+        }
+
+        .hijau {
+            background: #198754;
+        }
+
+        .ungu {
+            background: #6f42c1;
+        }
+
+        .bulat {
+            display: inline-block;
+            background: #333;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .besar {
+            width: 14px;
+            height: 14px;
+        }
+
+        .kecil {
+            width: 8px;
+            height: 8px;
+        }
+
+        /* Custom Layer Control */
+        .custom-layer-ctrl {
+            background: transparent;
+        }
+
+        .ctrl-toggle {
+            width: 44px;
+            height: 44px;
+            background: #fff;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .ctrl-panel {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            padding: 10px 14px;
+            margin-top: 6px;
+            min-width: 130px;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .ctrl-section label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .ctrl-section input {
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .hero-stat-card {
+            background: rgba(255, 255, 255, 0.55);
+
+            backdrop-filter: blur(12px);
+
+            -webkit-backdrop-filter: blur(12px);
+
+            border-radius: 18px;
+
+            padding: 16px 18px;
+
+            border-left: 4px solid #2f855a;
+
+            border: 1px solid rgba(255, 255, 255, 0.35);
+
+            box-shadow:
+                0 8px 24px rgba(0, 0, 0, 0.05);
+
+            transition: all 0.3s ease;
+
+            height: 100%;
+        }
+
+        .hero-stat-card:hover {
+            transform: translateY(-4px);
+
+            background: rgba(255, 255, 255, 0.7);
+
+            box-shadow:
+                0 14px 28px rgba(47, 133, 90, 0.12);
+        }
+
+        .hero-stat-label {
+            display: block;
+
+            font-size: 0.82rem;
+
+            font-weight: 600;
+
+            color: #64748b;
+
+            margin-bottom: 8px;
+        }
+
+        .hero-stat-number {
+            font-size: 2rem;
+
+            font-weight: 800;
+
+            color: #2f855a;
+
+            margin: 0;
+
+            line-height: 1;
+        }
+
+        .comparison-box{
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.16),
+            rgba(255,255,255,.10)
+        );
+
+    border-radius: 28px;
+
+    padding: 34px;
+
+    backdrop-filter: blur(14px);
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.08);
+
+    height: 100%;
+}
+        .compare-bar {
+            width: 100%;
+
+            height: 12px;
+
+            border-radius: 999px;
+
+            overflow: hidden;
+
+            background:
+                rgba(255, 255, 255, 0.10);
+        }
+
+        .compare-fill {
+            height: 100%;
+
+            border-radius: 999px;
+        }
+
+        .fill-blue {
+            background:
+                linear-gradient(90deg,
+                    #60a5fa,
+                    #bfdbfe);
+        }
+
+        .fill-green {
+            background:
+                linear-gradient(90deg,
+                    #4ade80,
+                    #bbf7d0);
+        }
+
+        .wilayah-table-box {
+            overflow: hidden;
+        }
+
+        .ranking-icon {
+            width: 52px;
+            height: 52px;
+
+            border-radius: 16px;
+
+            background:
+                rgba(255, 255, 255, 0.12);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 1.2rem;
+
+            color: #facc15;
+        }
+
+        .wilayah-table {
+            color: #fff;
+            margin-bottom: 0;
+        }
+
+        .wilayah-table thead th {
+            border: none;
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            padding: 16px;
+
+            font-size: .9rem;
+
+            white-space: nowrap;
+        }
+
+        .wilayah-table tbody td {
+            border-color:
+                rgba(255, 255, 255, 0.08);
+
+            padding: 16px;
+
+            vertical-align: middle;
+        }
+
+        .ranking-badge {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: 700;
+
+            background:
+                rgba(255, 255, 255, 0.10);
+        }
+
+        .gold {
+            background:
+                linear-gradient(135deg,
+                    #facc15,
+                    #fde68a);
+
+            color: #000;
+        }
+
+        .silver {
+            background:
+                linear-gradient(135deg,
+                    #d1d5db,
+                    #f3f4f6);
+
+            color: #000;
+        }
+
+        .bronze {
+            background:
+                linear-gradient(135deg,
+                    #fb923c,
+                    #fdba74);
+
+            color: #000;
+        }
+
+        .skill-badge {
+            font-size: .85rem;
+
+            font-weight: 600;
+
+            color: #070000;
+
+            opacity: .9;
+        }
+        .wilayah-table{
+    border-collapse: separate;
+    border-spacing: 0 14px;
+    margin-bottom: 0;
+}
+
+.wilayah-table thead th{
+    background: transparent;
+    color: rgba(255,255,255,.85);
+
+    border: none;
+
+    font-size: .9rem;
+    font-weight: 600;
+
+    padding-bottom: 14px;
+}
+
+.wilayah-table tbody tr{
+    background: rgba(255,255,255,.96);
+
+    transition: .3s ease;
+
+    overflow: hidden;
+}
+
+.wilayah-table tbody tr:hover{
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 24px rgba(0,0,0,.08);
+}
+
+.wilayah-table tbody td{
+    border: none;
+
+    padding: 18px 16px;
+
+    vertical-align: middle;
+}
+
+.wilayah-table tbody td:first-child{
+    border-radius: 18px 0 0 18px;
+}
+
+.wilayah-table tbody td:last-child{
+    border-radius: 0 18px 18px 0;
+}
+
+.skill-badge{
+
+    padding: 8px 14px;
+
+    border-radius: 999px;
+
+    font-size: .85rem;
+
+    font-weight: 600;
+
+    display: inline-block;
+}
+
+.jumlah-warga{
+    font-weight: 700;
+
+    color: #2f855a;
+
+    font-size: 1rem;
+}
+
+.wilayah-label{
+    font-weight: 700;
+
+    color: #1f2937;
+
+    margin-bottom: 2px;
+}
+
+.wilayah-sub{
+    color: #6b7280;
+
+    font-size: .84rem;
+}
     </style>
 </head>
 
@@ -849,13 +1464,10 @@
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#beranda">
-
                 <img src="{{ asset('images/logo-indramayu.png') }}" alt="Logo Indramayu" class="logo-navbar">
                 <div>
-                    <span>SkillMap Desa</span>
-
+                    <span>SIKARMAP</span>
                 </div>
-
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
@@ -888,64 +1500,69 @@
                 <div class="col-lg-6 scroll-animate fade-left delay-1">
                     <h1 class="scroll-animate fade-up delay-1">Sistem Pemetaan Keterampilan Warga Desa Karangmulya</h1>
                     <p class="scroll-animate fade-up delay-2">
-                        Platform digital untuk mengelola dan memetakan data keterampilan warga
-                        Desa Karangmulya berdasarkan wilayah administratif RT, RW, dan dusun secara terintegrasi.
+                        Sistem berbasis WebGIS yang digunakan
+    untuk mengelola, menampilkan, dan memetakan
+    data keterampilan warga berdasarkan wilayah
+    RT, RW, dan dusun secara digital.
                     </p>
 
-                    <div class="d-flex flex-wrap gap-3 scroll-animate fade-up delay-3">
-                        <a href="#fitur" class="btn btn-main">Pemetaan</a>
-                        <a href="#data" class="btn btn-outline-custom">Lihat Data Desa</a>
+                    <div class="row g-3 mt-3 scroll-animate fade-up delay-3">
+
+                        <div class="col-md-4 col-4">
+                            <div class="hero-stat-card">
+                                <span class="hero-stat-label">Total Kategori Keterampilan</span>
+                                <h2 class="hero-stat-number">{{ $totalKategori }}</h2>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-4">
+                            <div class="hero-stat-card">
+                                <span class="hero-stat-label">Warga Skill</span>
+                                <h2 class="hero-stat-number">{{ $totalSkill }}</h2>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
                 <div class="col-lg-6 scroll-animate fade-right delay-2">
-                    <div class="hero-card">
-                        <div class="row g-3">
+                    <div class="hero-card" style="padding: 22px;">
 
-                            <!-- Judul -->
-                            <div class="col-12 scroll-animate fade-up delay-1">
-                                <h5 class="fw-bold mb-3">
-                                    <i class="bi bi-map-fill me-2 text-success"></i>
-                                    Profil Singkat Desa
-                                </h5>
+                        <!-- Foto utama -->
+                        <div style="position: relative; border-radius: 14px; overflow: hidden; margin-bottom: 12px;">
+                            <img src="{{ asset('images/kantor-desa.jpeg') }}" alt="Kantor Desa Karangmulya"
+                                style="width: 100%; height: 220px; object-fit: cover; display: block;">
+                            <!-- Badge live pojok kiri atas -->
+                            <span
+                                style="position: absolute; top: 11px; left: 11px; background: rgba(0,0,0,0.48); color: #fff; font-size: 11px; font-weight: 600; padding: 4px 11px; border-radius: 999px; display: flex; align-items: center; gap: 5px;">
+                                <span
+                                    style="width: 6px; height: 6px; background: #68d391; border-radius: 50%; display: inline-block; animation: kantorBlink 1.5s infinite;"></span>
+                                Kantor Desa Karangmulya
+                            </span>
+                            <!-- Caption overlay bawah -->
+                            <div
+                                style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%); padding: 28px 14px 12px;">
+                                <strong style="color: #fff; font-size: 13px; display: block;">Kantor Desa
+                                    Karangmulya</strong>
+                                <span style="color: rgba(255,255,255,0.72); font-size: 11px;">Kec. Kandanghaur, Kab.
+                                    Indramayu</span>
                             </div>
+                        </div>
 
-                            <!-- Luas Wilayah -->
-                            <div class="col-sm-6 scroll-animate zoom-soft delay-1">
-                                <div class="mini-stat scroll-animate zoom-soft delay-1">
-                                    <i class="bi bi-aspect-ratio-fill"></i>
-                                    <h5>3,85</h5>
-                                    <p class="mb-0 text-muted">km² Luas Wilayah</p>
-                                </div>
+                        <!-- 3 thumbnail bawah -->
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                            <div style="border-radius: 10px; overflow: hidden;">
+                                <img src="" alt="Ruang Pelayanan"
+                                    style="width: 100%; height: 80px; object-fit: cover; display: block;">
                             </div>
-
-                            <!-- Jumlah Penduduk -->
-                            <div class="col-sm-6 scroll-animate zoom-soft delay-2">
-                                <div class="mini-stat scroll-animate zoom-soft delay-2">
-                                    <i class="bi bi-people-fill"></i>
-                                    <h5>3.117</h5>
-                                    <p class="mb-0 text-muted">Jumlah Penduduk</p>
-                                </div>
+                            <div style="border-radius: 10px; overflow: hidden;">
+                                <img src="{{ asset('images/desa.jpeg') }}" alt="Lingkungan Desa"
+                                    style="width: 100%; height: 80px; object-fit: cover; display: block;">
                             </div>
-
-                            <!-- RT -->
-                            <div class="col-sm-6 scroll-animate zoom-soft delay-3">
-                                <div class="mini-stat scroll-animate zoom-soft delay-3">
-                                    <i class="bi bi-house-door-fill"></i>
-                                    <h5>8</h5>
-                                    <p class="mb-0 text-muted">RT</p>
-                                </div>
+                            <div style="border-radius: 10px; overflow: hidden;">
+                                <img src="" alt="Potensi Alam"
+                                    style="width: 100%; height: 80px; object-fit: cover; display: block;">
                             </div>
-
-                            <!-- RW -->
-                            <div class="col-sm-6 scroll-animate zoom-soft delay-4">
-                                <div class="mini-stat scroll-animate zoom-soft delay-4">
-                                    <i class="bi bi-building"></i>
-                                    <h5>4</h5>
-                                    <p class="mb-0 text-muted">RW</p>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
                 </div>
@@ -966,56 +1583,91 @@
          TENTANG SISTEM
          Penjelasan singkat tujuan website
     ================================ -->
-    <section id="tentang" class="scroll-animate fade-up">
+    <section id="tentang" class="bg-soft">
         <div class="container">
-            <div class="text-center mb-5 scroll-animate fade-up delay-1">
-                <h2 class="section-title scroll-animate fade-up delay-1">Tentang Sistem</h2>
-                <p class="section-subtitle scroll-animate fade-up delay-2">
-                    Sistem ini digunakan untuk mengelola data keterampilan warga secara
-                    terpusat dan menampilkan sebarannya dalam bentuk peta digital.
+
+            <div class="text-center mb-5 scroll-animate fade-up">
+                <h2 class="section-title">
+                    Tentang Sistem
+                </h2>
+
+                <p class="section-subtitle">
+                    SIPKARMAP merupakan Sistem Pemetaan
+                    Keterampilan Warga Desa Karangmulya berbasis WebGIS
+                    yang digunakan untuk mengelola, memvisualisasikan,
+                    dan memetakan data keterampilan warga berdasarkan
+                    wilayah RT, RW, dan dusun ke dalam bentuk peta digital
+                    secara interaktif
                 </p>
             </div>
 
             <div class="row g-4">
-                <div class="col-md-6 col-lg-4 scroll-animate fade-up delay-1">
-                    <div class="feature-card">
+
+                <!-- fungsi -->
+                <div class="col-md-4 scroll-animate fade-up">
+                    <div class="feature-card h-100">
+
                         <div class="feature-icon">
-                            <i class="bi bi-bullseye"></i>
+                            <i class="bi bi-map"></i>
                         </div>
-                        <h5 class="fw-bold scroll-animate fade-up delay-3">Tujuan Utama</h5>
-                        <p class="text-muted mb-0 scroll-animate fade-up delay-4">
-                            Mengidentifikasi potensi keterampilan masyarakat desa secara akurat
-                            untuk mendukung program pembangunan berbasis data.
+
+                        <h5 class="fw-bold mb-3">
+                            Fungsi Sistem
+                        </h5>
+
+                        <p class="text-muted mb-0">
+                            Membantu mengelola, dan menampilkan
+                            keterampilan warga desa secara digital
+                            melalui peta interaktif yang mudah diakses.
                         </p>
+
                     </div>
                 </div>
 
-                <div class="col-md-6 col-lg-4 scroll-animate fade-up delay-2">
-                    <div class="feature-card">
+                <!-- manfaat -->
+                <div class="col-md-4 scroll-animate fade-up delay-1">
+                    <div class="feature-card h-100">
+
                         <div class="feature-icon">
-                            <i class="bi bi-diagram-3-fill"></i>
+                            <i class="bi bi-bar-chart"></i>
                         </div>
-                        <h5 class="fw-bold scroll-animate fade-up delay-3">Data Terintegrasi</h5>
-                        <p class="text-muted mb-0 scroll-animate fade-up delay-4">
-                            Data warga, jenis keterampilan, dan lokasi dapat dikelola dalam satu
-                            sistem yang terpusat dan mudah diakses.
+
+                        <h5 class="fw-bold mb-3">
+                            Manfaat Sistem
+                        </h5>
+
+                        <p class="text-muted mb-0">
+                            Membantu pemerintah desa dan masyarakat
+                            mengetahui keterampilan warga yang lebih
+                            banyak dimiliki di setiap wilayah desa.
                         </p>
+
                     </div>
                 </div>
 
-                <div class="col-md-6 col-lg-4 scroll-animate fade-up delay-3">
-                    <div class="feature-card">
+                <!-- fitur -->
+                <div class="col-md-4 scroll-animate fade-up delay-2">
+                    <div class="feature-card h-100">
+
                         <div class="feature-icon">
-                            <i class="bi bi-graph-up-arrow"></i>
+                            <i class="bi bi-people"></i>
                         </div>
-                        <h5 class="fw-bold scroll-animate fade-up delay-3">Dukungan Keputusan</h5>
-                        <p class="text-muted mb-0 scroll-animate fade-up delay-4">
-                            Informasi yang tersaji membantu desa menentukan prioritas pelatihan,
-                            UMKM, dan kolaborasi pengembangan potensi warga.
+
+                        <h5 class="fw-bold mb-3">
+                            Fitur Utama
+                        </h5>
+
+                        <p class="text-muted mb-0">
+                            Menyediakan peta digital, statistik data,
+                            dan pemetaan keterampilan warga berdasarkan
+                            wilayah desa.
                         </p>
+
                     </div>
                 </div>
+
             </div>
+
         </div>
     </section>
 
@@ -1034,145 +1686,347 @@
                 </p>
             </div>
 
-            <div class="map-card scroll-animate zoom-soft delay-2">
-                <div class="map-header scroll-animate fade-up delay-2">
-                    <h5 class="fw-bold mb-1 scroll-animate fade-up delay-1">
-                        <i class="bi bi-map-fill text-success me-2"></i>
-                        Peta Interaktif Desa
-                    </h5>
-                    <p class="text-muted mb-0 scroll-animate fade-up delay-1">
-                        Peta lokasi yang dapat dikembangkan dengan marker data warga
-                    </p>
-                </div>
+            <div class="card card-map border-0 shadow-sm">
+                <div class="card-body">
+                    <div id="map"></div>
+                    <div id="legend-box">
+                        <h6><b>Keterangan Peta</b></h6>
+                        <p>
+                            <span class="kotak hijau"></span>
+                            Dusun Kemped
+                        </p>
 
-                <div id="villageMap" class="scroll-animate fade-up delay-3"></div>
+                        <p>
+                            <span class="kotak ungu"></span>
+                            Dusun Sukamelang
+                        </p>
+
+                        <hr>
+
+                        <p>
+                            <span class="bulat besar"></span>
+                            Marker RW
+                        </p>
+
+                        <p>
+                            <span class="bulat kecil"></span>
+                            Marker RT
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- ===============================
-         DATA / STATISTIK DESA
-         Menampilkan data
-    ================================ -->
+     DATA / STATISTIK DESA
+================================ -->
     <section id="data" class="scroll-animate fade-up">
+
         <div class="container">
+
             <div class="text-center mb-5 scroll-animate fade-up delay-1">
-                <h2 class="section-title scroll-animate fade-up delay-1">Statistik & Data Desa</h2>
-                <p class="section-subtitle scroll-animate fade-up delay-2">
+
+                <h2 class="section-title">
+                    Statistik & Data Desa
+                </h2>
+
+                <p class="section-subtitle">
                     Berikut data sebaran keterampilan warga
-                    desa Karangmulya.
+                    Desa Karangmulya berdasarkan data terbaru
+                    pada sistem.
                 </p>
+
             </div>
 
-            <div class="row g-4 mb-4">
-                <div class="col-6 col-md-3 scroll-animate zoom-soft delay-1">
-                    <div class="stat-card">
-                        <div class="stat-number" data-target="1250">0</div>
-                        <p class="mb-0 text-muted">Total Warga Terdata</p>
-                    </div>
-                </div>
+            <!-- CARD STATISTIK -->
+            <div class="row g-4 mb-5">
 
-                <div class="col-6 col-md-3 scroll-animate zoom-soft delay-2">
-                    <div class="stat-card">
-                        <div class="stat-number" data-target="480">0</div>
-                        <p class="mb-0 text-muted">Warga Produktif</p>
-                    </div>
-                </div>
+                <!-- total warga -->
+                <div class="col-6 col-md-2 scroll-animate zoom-soft delay-1">
 
-                <div class="col-6 col-md-3 scroll-animate zoom-soft delay-3">
                     <div class="stat-card">
-                        <div class="stat-number" data-target="18">0</div>
-                        <p class="mb-0 text-muted">Kategori Keterampilan</p>
-                    </div>
-                </div>
 
-                <div class="col-6 col-md-3 scroll-animate zoom-soft delay-4">
-                    <div class="stat-card">
-                        <div class="stat-number" data-target="12">0</div>
-                        <p class="mb-0 text-muted">Dusun Terpetakan</p>
-                    </div>
-                </div>
-            </div>
+                        <div class="stat-icon mb-3">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
 
-            <div class="data-box scroll-animate fade-up delay-2">
-                <div class="row align-items-center g-4">
-                    <div class="col-lg-6 scroll-animate fade-left delay-2">
-                        <h4 class="fw-bold mb-3">Contoh Sebaran Keterampilan</h4>
-                        <p class="mb-4">
-                            Data berikut merupakan simulasi kategori keterampilan yang paling
-                            banyak dimiliki warga desa.
+                        <div class="stat-number" data-target="{{ $totalWarga }}">
+                            0
+                        </div>
+
+                        <p class="mb-0 text-muted">
+                            Total Warga
                         </p>
 
-                        <!-- Contoh progress keterampilan -->
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between mb-1">
-                                <span>Pertanian Modern</span>
-                                <span>80%</span>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar" style="width: 80%;"></div>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between mb-1">
-                                <span>Kerajinan Tangan</span>
-                                <span>65%</span>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar" style="width: 65%;"></div>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between mb-1">
-                                <span>Pengolahan Pangan</span>
-                                <span>72%</span>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar" style="width: 72%;"></div>
-                            </div>
-                        </div>
-
-                        <div class="mb-0">
-                            <div class="d-flex justify-content-between mb-1">
-                                <span>Jasa & Teknologi</span>
-                                <span>40%</span>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar" style="width: 40%;"></div>
-                            </div>
-                        </div>
                     </div>
 
-                    <div class="col-lg-6 scroll-animate fade-right delay-3">
-                        <div class="bg-white text-dark rounded-4 p-4 h-100">
-                            <h5 class="fw-bold mb-3">
-                                <i class="bi bi-info-circle-fill text-success me-2"></i>Informasi Ringkas
-                            </h5>
-                            <ul class="list-unstyled mb-0">
-                                <li class="mb-3">
-                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                    Mayoritas warga memiliki keterampilan di bidang pertanian dan UMKM.
-                                </li>
-                                <li class="mb-3">
-                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                    Data lokasi dapat dikaitkan dengan peta dusun atau RW.
-                                </li>
-                                <li class="mb-3">
-                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                    Informasi ini bermanfaat untuk perencanaan pelatihan dan bantuan usaha.
-                                </li>
-                                <li class="mb-0">
-                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
-                                    Sistem dapat dikembangkan lebih lanjut untuk integrasi GIS dan dashboard admin.
-                                </li>
-                            </ul>
+                </div>
+
+                <!-- warga skill -->
+                <div class="col-6 col-md-2 scroll-animate zoom-soft delay-1">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon mb-3">
+                            <i class="bi bi-briefcase-fill"></i>
+                        </div>
+
+                        <div class="stat-number" data-target="{{ $totalSkill }}">
+                            0
+                        </div>
+
+                        <p class="mb-0 text-muted">
+                            Warga Berketerampilan
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- kategori -->
+                <div class="col-6 col-md-2 scroll-animate zoom-soft delay-1">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon mb-3">
+                            <i class="bi bi-grid-fill"></i>
+                        </div>
+
+                        <div class="stat-number" data-target="{{ $totalKategori }}">
+                            0
+                        </div>
+
+                        <p class="mb-0 text-muted">
+                            Kategori Keterampilan
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- dusun -->
+                <div class="col-6 col-md-2 scroll-animate zoom-soft delay-1">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon mb-3">
+                            <i class="bi bi-geo-alt-fill"></i>
+                        </div>
+
+                        <div class="stat-number" data-target="{{ $totalDusun }}">
+                            0
+                        </div>
+
+                        <p class="mb-0 text-muted">
+                            Total Dusun
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- rw -->
+                <div class="col-6 col-md-2 scroll-animate zoom-soft delay-5">
+
+                    <div class="stat-card h-100">
+
+                        <div class="stat-icon small-icon mb-3">
+                            <i class="bi bi-diagram-3-fill"></i>
+                        </div>
+
+                        <div class="stat-number" data-target="{{ $totalRw }}">
+                            0
+                        </div>
+
+                        <p class="mb-0 text-muted">
+                            Total RW
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- rt -->
+                <div class="col-6 col-md-2 scroll-animate zoom-soft delay-6">
+
+                    <div class="stat-card h-100">
+
+                        <div class="stat-icon small-icon mb-3">
+                            <i class="bi bi-signpost-2-fill"></i>
+                        </div>
+
+                        <div class="stat-number" data-target="{{ $totalRt }}">
+                            0
+                        </div>
+
+                        <p class="mb-0 text-muted">
+                            Total RT
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- VISUALISASI -->
+                <div class="data-box scroll-animate fade-up delay-2">
+
+                    <div class="row align-items-center g-5">
+                        <div class="row g-4">
+
+                            <!-- kategori -->
+                            <div class="col-lg-6 scroll-animate fade-left delay-2">
+
+                                <div class="comparison-box">
+
+                                    <h4 class="fw-bold mb-3">
+                                      Data Kategori Keterampilan
+                                    </h4>
+
+                                    @php
+                                        $maxKategori = $kategoriChart->max('total') ?: 1;
+                                    @endphp
+
+                                    @foreach ($kategoriChart->take(5) as $item)
+                                        <div class="wilayah-card mb-4">
+
+                                            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                                                <div>
+
+                                                    <h6 class="fw-bold mb-1">
+                                                        {{ $item->nama_kategori }}
+                                                    </h6>
+                                                </div>
+
+                                                <div class="jumlah-box">
+
+                                                    <strong>
+                                                        {{ $item->total }}
+                                                    </strong>
+
+                                                    <small>
+                                                        Orang
+                                                    </small>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="compare-bar">
+
+                                                <div class="compare-fill fill-green"
+                                                    style="width:
+                         {{ ($item->total / $maxKategori) * 100 }}%;">
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    @endforeach
+
+                                </div>
+
+                            </div>
+
+                            <!-- wilayah -->
+                            <div class="col-lg-6 scroll-animate fade-right delay-3">
+
+                                <div class="comparison-box wilayah-table-box">
+
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+
+                                        <div>
+
+                                            <h4 class="fw-bold mb-1">
+                                                Sebaran Keterampilan Wilayah
+                                            </h4>
+
+                                        </div>
+
+                                    </div>
+
+                                   <div class="table-responsive">
+
+    <table class="table wilayah-table align-middle">
+
+        <thead>
+
+            <tr>
+
+                <th>Wilayah</th>
+                <th>Keterampilan Dominan</th>
+                <th>Jumlah Warga</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @foreach ($statistikDusun->take(5) as $item)
+
+                <tr>
+
+                    <td>
+
+                        <div class="fw-semibold">
+
+                            RT {{ $item->rt }}
+                            /
+                            RW {{ $item->rw }}
+
+                        </div>
+
+                        <small class="opacity-75">
+
+                            Dusun
+                            {{ $item->nama_dusun }}
+
+                        </small>
+
+                    </td>
+
+                    <td>
+
+                        <span class="skill-badge">
+
+                            {{ $item->nama_kategori }}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <strong>
+                            {{ $item->total_skill }}
+                        </strong>
+
+                        Orang
+
+                    </td>
+
+                </tr>
+
+            @endforeach
+
+        </tbody>
+
+    </table>
+
+</div>
+
+                                </div>
+
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+
     </section>
 
     <!-- ===============================
@@ -1184,8 +2038,10 @@
             <div class="text-center mb-5 scroll-animate fade-up delay-1">
                 <h2 class="section-title scroll-animate fade-up delay-1">Kontak</h2>
                 <p class="section-subtitle scroll-animate fade-up delay-2">
-                    Hubungi kami untuk informasi lebih lanjut mengenai Sistem
-                    Pemetaan Keterampilan Warga Desa Karangmulya.
+                   Masyarakat dapat mengirimkan pengajuan keterampilan,
+                    informasi usaha, atau potensi yang dimiliki kepada
+                    perangkat Desa Karangmulya melalui formulir kontak
+                    yang tersedia.
                 </p>
             </div>
 
@@ -1227,39 +2083,111 @@
                                 <p class="text-muted mb-0">Senin - Jumat, 08.00 - 16.00 WIB</p>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
 
                 <div class="col-lg-7 scroll-animate fade-right delay-3">
                     <div class="contact-card">
-                        <h4 class="fw-bold mb-4">Kirim Pesan</h4>
 
-                        <!-- Form dummy kontak -->
-                        <form>
+                        <h4 class="fw-bold mb-4">
+                            Kirim Pesan
+                        </h4>
+
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        <form action="{{ route('pesan.store') }}" method="POST">
+                            @csrf
+
                             <div class="row g-3">
+
                                 <div class="col-md-6">
-                                    <label class="form-label">Nama Lengkap</label>
-                                    <input type="text" class="form-control" placeholder="Masukkan nama">
+                                    <label class="form-label">
+                                        Nama
+                                    </label>
+
+                                    <input type="text" name="nama" class="form-control"
+                                        placeholder="Masukkan nama lengkap" required>
                                 </div>
+
                                 <div class="col-md-6">
-                                    <label class="form-label">Email</label>
-                                    <input type="email" class="form-control" placeholder="Masukkan email">
+                                    <label class="form-label">
+                                        Email
+                                    </label>
+
+                                    <input type="email" name="email" class="form-control"
+                                        placeholder="Masukkan email" required>
                                 </div>
-                                <div class="col-12">
-                                    <label class="form-label">Subjek</label>
-                                    <input type="text" class="form-control" placeholder="Masukkan subjek">
+
+                                <div class="mb-3">
+
+                                    <label class="form-label">
+                                        Nomor WhatsApp
+                                    </label>
+
+                                    <input type="text" name="nomor_hp" class="form-control"
+                                        placeholder="Contoh: 081234567890" required>
                                 </div>
-                                <div class="col-12">
-                                    <label class="form-label">Pesan</label>
-                                    <textarea class="form-control" rows="5" placeholder="Tulis pesan Anda"></textarea>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        Dusun
+                                    </label>
+
+                                    <input type="text" name="dusun" class="form-control"
+                                        placeholder="Masukkan dusun" required>
                                 </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        RW
+                                    </label>
+
+                                    <input type="text" name="rw" class="form-control"
+                                        placeholder="Contoh: 01">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        RT
+                                    </label>
+
+                                    <input type="text" name="rt" class="form-control"
+                                        placeholder="Contoh: 02">
+                                </div>
+
                                 <div class="col-12">
-                                    <button type="button" class="btn btn-main">
-                                        <i class="bi bi-send-fill me-2"></i>Kirim Pesan
+                                    <label class="form-label">
+                                        Keterampilan
+                                    </label>
+
+                                    <input type="text" name="keterampilan" class="form-control"
+                                        placeholder="Contoh: Menjahit, Bertani, Desain">
+                                </div>
+
+                                <div class="col-12">
+                                    <label class="form-label">
+                                        Pesan
+                                    </label>
+
+                                    <textarea name="pesan" class="form-control" rows="5"
+                                        placeholder="Jelaskan pengalaman, usaha, atau keterampilan yang dimiliki" required></textarea>
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-main w-100">
+                                        <i class="bi bi-send-fill me-2"></i>
+                                        Kirim Pesan
                                     </button>
                                 </div>
+
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>
@@ -1285,10 +2213,10 @@
 
     <script>
         /* =========================================================
-                   SCRIPT COUNTER ANGKA STATISTIK
-                   Fungsi ini membuat angka statistik naik otomatis saat
-                   halaman dimuat agar tampil lebih menarik.
-                ========================================================= */
+                    SCRIPT COUNTER ANGKA STATISTIK
+                    Fungsi ini membuat angka statistik naik otomatis saat
+                    halaman dimuat agar tampil lebih menarik.
+               ========================================================= */
         const counters = document.querySelectorAll(".stat-number");
 
         counters.forEach(counter => {
@@ -1312,19 +2240,19 @@
 
     <script>
         /* =========================================================
-               ADVANCED SCROLL STAGGER ANIMATION
-               =========================================================
-               Fitur:
-               - IntersectionObserver sebagai trigger utama
-               - Delay dinamis dari JavaScript berdasarkan index elemen
-               - Masuk satu per satu (stagger enter)
-               - Keluar satu per satu (reverse stagger exit)
-               - Exit lebih cepat dari enter
-               - Ada sedikit random delay kecil agar terasa natural
-               - Bisa repeat saat scroll naik & turun
-               - Tetap memakai class animasi yang sudah ada:
-                 .fade-up, .fade-left, .fade-right, .zoom-soft
-            ========================================================= */
+                ADVANCED SCROLL STAGGER ANIMATION
+                 =========================================================
+                                                                Fitur:
+                                                                - IntersectionObserver sebagai trigger utama
+                                                                - Delay dinamis dari JavaScript berdasarkan index elemen
+                                                                - Masuk satu per satu (stagger enter)
+                                                                - Keluar satu per satu (reverse stagger exit)
+                                                                - Exit lebih cepat dari enter
+                                                                - Ada sedikit random delay kecil agar terasa natural
+                                                                - Bisa repeat saat scroll naik & turun
+                                                                - Tetap memakai class animasi yang sudah ada:
+                                                                    .fade-up, .fade-left, .fade-right, .zoom-soft
+                                                                ========================================================= */
 
         (() => {
             const animatedElements = Array.from(document.querySelectorAll('.scroll-animate'));
@@ -1552,32 +2480,274 @@
             });
         })();
     </script>
-
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-        // Koordinat contoh, silakan ganti dengan koordinat asli Desa Karangmulya
-        const map = L.map('villageMap').setView([-6.914744, 107.609810], 13);
+        // 1. BASE LAYERS
+        const streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap'
+        });
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors'
-        }).addTo(map);
+        const satelliteLayer = L.tileLayer(
+            'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Tiles &copy; Esri'
+            });
 
-        L.marker([-6.914744, 107.609810])
-            .addTo(map)
-            .bindPopup('<b>Desa Karangmulya</b><br>Lokasi pemetaan keterampilan warga.')
-            .openPopup();
+        const terrainLayer = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data: &copy; OpenStreetMap | Style: &copy; OpenTopoMap'
+        });
+
+        // 2. INISIALISASI MAP
+        const map = L.map('map', {
+            center: [-6.39963, 108.11848],
+            zoom: 14,
+            layers: [streetLayer]
+        });
+
+        // Nonaktifkan interaksi sampai peta diklik
+        map.scrollWheelZoom.disable();
+        map.dragging.disable();
+
+        map.once('click', function() {
+            map.scrollWheelZoom.enable();
+            map.dragging.enable();
+        });
+
+        // 3. LAYER GROUPS
+        const polygonLayer = L.layerGroup().addTo(map);
+        const dusunLayer = L.layerGroup().addTo(map);
+        const rwLayer = L.layerGroup().addTo(map);
+        const rtLayer = L.layerGroup().addTo(map);
+
+        // 4. LOAD GEOJSON BATAS DESA (outline biru)
+        fetch("{{ asset('geojson/karangmulya.geojson') }}")
+            .then(res => res.json())
+            .then(data => {
+                const geojson = L.geoJSON(data, {
+                    style: {
+                        color: '#0d6efd',
+                        weight: 3,
+                        fillOpacity: 0
+                    }
+                }).addTo(polygonLayer);
+
+                polygonLayer.bringToBack();
+                try {
+                    map.fitBounds(geojson.getBounds());
+                } catch (e) {}
+            });
+
+        // 5. FUNGSI WARNA KATEGORI
+        function warnaKategori(kategori) {
+            if (!kategori) return '#6c757d';
+            const warnaList = [
+                '#198754', '#0d6efd', '#fd7e14', '#6f42c1',
+                '#20c997', '#dc3545', '#6610f2', '#d63384',
+                '#1982c4', '#8ac926', '#ffca3a', '#ff595e'
+            ];
+            let index = 0;
+            for (let i = 0; i < kategori.length; i++) {
+                index += kategori.charCodeAt(i);
+            }
+            return warnaList[index % warnaList.length];
+        }
+
+        // 6. LOAD DATA (Dusun + RW + RT) — dipisah, tidak nested
+        function loadData() {
+            dusunLayer.clearLayers();
+            rwLayer.clearLayers();
+            rtLayer.clearLayers();
+
+            // Load polygon dusun
+            fetch("{{ asset('geojson/dusunreal.geojson') }}")
+                .then(res => res.json())
+                .then(data => {
+                    L.geoJSON(data, {
+                        interactive: false,
+                        pane: 'overlayPane',
+                        style: function(feature) {
+                            const nama = feature.properties.dusunbaru;
+                            if (nama === 'kemped') {
+                                return {
+                                    color: '#198754',
+                                    weight: 2,
+                                    fillColor: '#198754',
+                                    fillOpacity: 0.35
+                                };
+                            }
+                            if (nama === 'sukamelang') {
+                                return {
+                                    color: '#6f42c1',
+                                    weight: 2,
+                                    fillColor: '#6f42c1',
+                                    fillOpacity: 0.35
+                                };
+                            }
+                            return {
+                                color: '#0d6efd',
+                                weight: 2,
+                                fillColor: '#0d6efd',
+                                fillOpacity: 0.20
+                            };
+                        },
+                        onEachFeature: function(feature, layer) {
+                            layer.bindPopup(`<b>Dusun:</b> ${feature.properties.dusunbaru}`);
+                        }
+                    }).addTo(dusunLayer);
+
+                    dusunLayer.bringToBack();
+                    rwLayer.bringToFront();
+                    rtLayer.bringToFront();
+                })
+                .catch(err => console.log('GeoJSON Error:', err));
+
+            // Load marker RW & RT dari API
+            fetch("{{ url('/api/pemetaan') }}")
+                .then(res => res.json())
+                .then(data => {
+
+                    // Marker RW
+                    data.rw.forEach(rw => {
+                        if (rw.latitude && rw.longitude) {
+                            L.circleMarker([rw.latitude, rw.longitude], {
+                                radius: 12,
+                                color: warnaKategori(rw.keterampilan_dominan),
+                                fillColor: warnaKategori(rw.keterampilan_dominan),
+                                fillOpacity: 0.8
+                            }).bindPopup(`
+                            <div style="min-width:220px">
+                                <h6>RW ${rw.nama_rw}</h6>
+                                <hr>
+                                <p><b>Dusun :</b> ${rw.nama_dusun || '-'}</p>
+                                <p><b>Jumlah Warga :</b> ${rw.jumlah_warga || 0}</p>
+                                <p><b>Warga Berketerampilan :</b> ${rw.jumlah_keterampilan || 0}</p>
+                                <p><b>Kategori Dominan :</b> ${rw.keterampilan_dominan || '-'}</p>
+                                <p><b>Keterampilan Dominan :</b> ${rw.nama_keterampilan_dominan || '-'}</p>
+                            </div>
+                        `).addTo(rwLayer);
+                        }
+                    });
+
+                    // Marker RT
+                    data.rt.forEach(rt => {
+                        if (rt.latitude && rt.longitude) {
+                            L.circleMarker([rt.latitude, rt.longitude], {
+                                radius: 4,
+                                color: warnaKategori(rt.keterampilan_dominan),
+                                fillColor: warnaKategori(rt.keterampilan_dominan),
+                                fillOpacity: 0.8
+                            }).bindPopup(`
+                            <div style="min-width:220px">
+                                <h6>RT ${rt.nama_rt}</h6>
+                                <hr>
+                                <p><b>RW :</b> ${rt.nama_rw || '-'}</p>
+                                <p><b>Dusun :</b> ${rt.nama_dusun || '-'}</p>
+                                <p><b>Jumlah Warga :</b> ${rt.jumlah_warga || 0}</p>
+                                <p><b>Warga Berketerampilan :</b> ${rt.jumlah_keterampilan || 0}</p>
+                                <p><b>Kategori Dominan :</b> ${rt.keterampilan_dominan || '-'}</p>
+                                <p><b>Keterampilan Dominan :</b> ${rt.nama_keterampilan_dominan || '-'}</p>
+                            </div>
+                        `).addTo(rtLayer);
+                        }
+                    });
+
+                })
+                .catch(err => console.log('API Error:', err));
+        }
+
+        loadData();
+        setInterval(loadData, 10000);
+
+        // 7. LAYER CONTROL CUSTOM
+        // Tambahkan tombol custom ke peta
+        const CustomControl = L.Control.extend({
+            options: {
+                position: 'topright'
+            },
+            onAdd: function() {
+                const div = L.DomUtil.create('div', 'custom-layer-ctrl');
+                div.innerHTML = `
+    <button class="ctrl-toggle" onclick="toggleLayerPanel(this)">
+        <svg width="20" height="20" fill="#0d6efd" viewBox="0 0 16 16">
+            <path d="M7.765 1.559a.5.5 0 0 1 .47 0l6.39 3.39a.5.5 0 0 1 0 .87l-6.39 3.39a.5.5 0 0 1-.47 0L1.375 5.819a.5.5 0 0 1 0-.87l6.39-3.39z"/>
+            <path d="m1.375 9.18 6.39 3.39a.5.5 0 0 0 .47 0l6.39-3.39a.5.5 0 0 0 0-.87l-6.39-3.39a.5.5 0 0 0-.47 0L1.375 8.31a.5.5 0 0 0 0 .87z"/>
+            <path d="m1.375 12.54 6.39 3.39a.5.5 0 0 0 .47 0l6.39-3.39a.5.5 0 0 0 0-.87l-6.39-3.39a.5.5 0 0 0-.47 0L1.375 11.67a.5.5 0 0 0 0 .87z"/>
+        </svg>
+    </button>
+    <div class="ctrl-panel" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <small style="font-weight:600; color:#555;">Layer</small>
+            <button onclick="closeLayerPanel(this)" style="background:none; border:none; cursor:pointer; font-size:16px; color:#999; line-height:1; padding:0;">&times;</button>
+        </div>
+        <div class="ctrl-section">
+            <label><input type="radio" name="basemap" value="street" checked onchange="switchBase(this)"> Peta Jalan</label>
+            <label><input type="radio" name="basemap" value="satellite" onchange="switchBase(this)"> Satelit</label>
+            <label><input type="radio" name="basemap" value="terrain" onchange="switchBase(this)"> Terrain</label>
+        </div>
+        <hr style="margin:6px 0;">
+        <div class="ctrl-section">
+            <label><input type="checkbox" checked onchange="toggleLayer('polygon', this)"> Batas Wilayah</label>
+            <label><input type="checkbox" checked onchange="toggleLayer('dusun', this)"> Dusun</label>
+            <label><input type="checkbox" checked onchange="toggleLayer('rw', this)"> RW</label>
+            <label><input type="checkbox" checked onchange="toggleLayer('rt', this)"> RT</label>
+        </div>
+    </div>
+`;
+                L.DomEvent.disableClickPropagation(div);
+                return div;
+            }
+        });
+        new CustomControl().addTo(map);
+
+        // Toggle panel
+        function toggleLayerPanel(btn) {
+            const panel = btn.nextElementSibling;
+            panel.style.display = 'block';
+            btn.style.display = 'none';
+        }
+
+        function closeLayerPanel(closeBtn) {
+            const panel = closeBtn.closest('.ctrl-panel');
+            const toggle = panel.previousElementSibling;
+            panel.style.display = 'none';
+            toggle.style.display = 'flex';
+        }
+
+        // Ganti base layer
+        function switchBase(radio) {
+            map.removeLayer(streetLayer);
+            map.removeLayer(satelliteLayer);
+            map.removeLayer(terrainLayer);
+            if (radio.value === 'street') map.addLayer(streetLayer);
+            if (radio.value === 'satellite') map.addLayer(satelliteLayer);
+            if (radio.value === 'terrain') map.addLayer(terrainLayer);
+        }
+
+        // Toggle overlay
+        function toggleLayer(name, cb) {
+            const layers = {
+                polygon: polygonLayer,
+                dusun: dusunLayer,
+                rw: rwLayer,
+                rt: rtLayer
+            };
+            if (cb.checked) map.addLayer(layers[name]);
+            else map.removeLayer(layers[name]);
+        }
+
+
+        window.addEventListener('resize', () => map.invalidateSize());
     </script>
     <script>
         /* =========================================================
-               ACTIVE NAVBAR MENU
-               =========================================================
-               Fitur:
-               - Saat menu diklik -> langsung aktif
-               - Saat scroll -> aktif otomatis mengikuti section yang terlihat
-               - Ringan: menggunakan IntersectionObserver
-               - Aman: hanya untuk link navbar yang menuju id section (#...)
-            ========================================================= */
+                                                               ACTIVE NAVBAR MENU
+                                                               =========================================================
+                                                               Fitur:
+                                                               - Saat menu diklik -> langsung aktif
+                                                               - Saat scroll -> aktif otomatis mengikuti section yang terlihat
+                                                               - Ringan: menggunakan IntersectionObserver
+                                                               - Aman: hanya untuk link navbar yang menuju id section (#...)
+                                                            ========================================================= */
 
         document.addEventListener("DOMContentLoaded", function() {
             /* Ambil semua link navbar yang mengarah ke section */
@@ -1624,8 +2794,8 @@
             ===================================================== */
             const observerOptions = {
                 root: null,
-                threshold: 0.25,
-                rootMargin: "-100px 0px -50% 0px"
+                threshold: 0.05,
+                rootMargin: "-80px 0px -40% 0px"
             };
 
             const sectionObserver = new IntersectionObserver((entries) => {
@@ -1649,6 +2819,7 @@
             }
         });
     </script>
+
 </body>
 
 </html>

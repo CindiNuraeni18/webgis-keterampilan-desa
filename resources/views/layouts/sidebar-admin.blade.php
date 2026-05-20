@@ -102,17 +102,13 @@
             letter-spacing: 0.2px;
         }
 
-        .brand-mark {
-            width: 46px;
-            height: 46px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, #2563eb, #60a5fa);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            color: white;
-            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.35);
+        .brand-logo-img {
+            width: 58px;
+
+            height: 58px;
+
+            object-fit: contain;
+
             flex-shrink: 0;
         }
 
@@ -312,36 +308,207 @@
             color: #94a3b8;
         }
 
-        .icon-btn {
-            width: 46px;
-            height: 46px;
-            border-radius: 15px;
-            border: 1px solid var(--border-soft);
-            background: rgba(255, 255, 255, 0.96);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #334155;
-            position: relative;
-            transition: all 0.25s ease;
-            flex-shrink: 0;
-        }
+     /* ===============================
+   TOMBOL NOTIF AKTIF
+================================= */
+.icon-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: 15px;
+    border: 1px solid var(--border-soft);
+    background: rgba(255, 255, 255, 0.96);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #334155;
+    position: relative;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+}
 
-        .icon-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 10px 18px rgba(15, 23, 42, 0.08);
-        }
+.icon-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 18px rgba(15, 23, 42, 0.08);
+    background: #fff;
+    color: var(--accent-blue);
+}
 
-        .icon-btn .badge-dot {
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
-            background: #ef4444;
-            position: absolute;
-            top: 11px;
-            right: 12px;
-            border: 2px solid #fff;
-        }
+/* tombol aktif */
+.icon-btn.show,
+.icon-btn:active {
+    background: var(--accent-blue-soft) !important;
+    color: var(--accent-blue) !important;
+    border-color: rgba(37, 99, 235, 0.3) !important;
+    transform: scale(0.95);
+    box-shadow: inset 0 2px 4px rgba(37, 99, 235, 0.1);
+}
+
+/* ===============================
+   DROPDOWN NOTIF
+================================= */
+.notif-dropdown {
+    width: 360px;
+    border-radius: 22px;
+    overflow: hidden;
+    padding: 0;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(15px) scale(0.95);
+
+    transition:
+        all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    z-index: 99999 !important;
+}
+
+/* saat notif dibuka */
+.notif-dropdown.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(10px) scale(1);
+}
+
+/* ===============================
+   HEADER NOTIF
+================================= */
+.notif-header {
+    padding: 18px 20px;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8fafc;
+}
+
+/* ===============================
+   ITEM NOTIF
+================================= */
+.notif-item {
+    display: flex;
+    gap: 14px;
+    padding: 16px 18px;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid #f1f5f9;
+    color: #0f172a;
+}
+
+.notif-item:hover {
+    background: #f8fafc;
+    transform: translateX(4px);
+}
+
+.notif-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: rgba(37, 99, 235, .1);
+    color: #2563eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1rem;
+}
+
+.notif-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.notif-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.notif-name {
+    font-weight: 700;
+    font-size: .92rem;
+}
+
+.notif-message {
+    font-size: .83rem;
+    color: #475569;
+    margin-bottom: 4px;
+    line-height: 1.4;
+}
+
+.notif-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #2563eb;
+    flex-shrink: 0;
+}
+
+/* ===============================
+   FOOTER NOTIF
+================================= */
+.notif-footer {
+    padding: 14px 18px;
+    background: #fff;
+    text-align: center;
+    border-top: 1px solid #f1f5f9;
+}
+
+.lihat-semua-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: .92rem;
+    font-weight: 600;
+    color: #2563eb;
+    transition: .2s ease;
+}
+
+.lihat-semua-link i {
+    font-size: 1.1rem;
+    transition: .2s ease;
+}
+
+.lihat-semua-link:hover {
+    color: #1d4ed8;
+    gap: 8px;
+}
+
+.lihat-semua-link:hover i {
+    transform: translateX(2px);
+}
+
+/* ===============================
+   FIX DROPDOWN TIDAK BENTROK
+================================= */
+.dropdown-menu {
+    z-index: 99999 !important;
+    position: absolute !important;
+}
+
+.topbar,
+.topbar-actions,
+.dropdown {
+    position: relative;
+    z-index: 9999;
+}
+
+.leaflet-container {
+    z-index: 1 !important;
+}
+
+/* ===============================
+   MOBILE
+================================= */
+@media (max-width: 575.98px) {
+
+    .notif-dropdown {
+        width: 320px;
+        max-width: 92vw;
+        right: 0 !important;
+        left: auto !important;
+    }
+
+}
 
         .profile-btn {
             background: rgba(255, 255, 255, 0.96);
@@ -628,20 +795,149 @@
                 z-index: 99998 !important;
             }
         }
+
+        /* notif modern */
+        .notif-dropdown {
+            width: 360px;
+            border-radius: 22px;
+            overflow: hidden;
+            padding: 0;
+            animation: notifFade .25s ease;
+        }
+
+        .notif-header {
+            padding: 18px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8fafc;
+        }
+
+        .notif-item {
+            display: flex;
+            gap: 14px;
+            padding: 16px 18px;
+            transition: .2s ease;
+            border-bottom: 1px solid #f1f5f9;
+            color: #0f172a;
+        }
+
+        .notif-item:hover {
+            background: #f8fafc;
+            transform: translateX(3px);
+        }
+
+        .notif-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            background: rgba(37, 99, 235, .1);
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1rem;
+        }
+
+        .notif-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .notif-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+
+        .notif-name {
+            font-weight: 700;
+            font-size: .92rem;
+        }
+
+        .notif-message {
+            font-size: .83rem;
+            color: #475569;
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+
+        .notif-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #2563eb;
+            flex-shrink: 0;
+        }
+
+        .notif-footer {
+            padding: 16px;
+            background: #fff;
+        }
+
+        @keyframes notifFade {
+
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        /* footer notif */
+        .notif-footer {
+            padding: 14px 18px;
+            background: #fff;
+            text-align: center;
+        }
+
+        /* lihat semua */
+        .lihat-semua-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: .92rem;
+            font-weight: 600;
+            color: #2563eb;
+            transition: .2s ease;
+        }
+
+        .lihat-semua-link i {
+            font-size: 1.1rem;
+            transition: .2s ease;
+        }
+
+        .lihat-semua-link:hover {
+            color: #1d4ed8;
+            gap: 8px;
+        }
+
+        .lihat-semua-link:hover i {
+            transform: translateX(2px);
+        }
     </style>
 </head>
 
 <body>
+    @php
+        $notifPesan = \App\Models\Pesan::where('status_baca', false)->count();
+    @endphp
 
     <div class="app-container">
         <aside class="sidebar">
             <div class="sidebar-header">
                 <a href="#" class="brand-logo">
-                    <div class="brand-mark">
-                        <i class="bi bi-cpu-fill"></i>
-                    </div>
+                    <img src="{{ asset('images/logo-indramayu.png') }}" alt="Logo" class="brand-logo-img">
                     <div>
-                        <div>SIPKAR ADMIN</div>
+                        <div>SIKARMAP</div>
                         <div class="brand-subtitle">Desa Karangmulya</div>
                     </div>
                 </a>
@@ -761,6 +1057,33 @@
                             <i class="bi bi-chevron-right nav-arrow"></i>
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('admin.pesan.index') }}"
+                            class="nav-link {{ request()->routeIs('admin.pesan.*') ? 'active' : '' }}">
+
+                            <span class="icon-wrap">
+                                <i class="bi bi-chat-dots-fill"></i>
+                            </span>
+
+                            <span class="nav-text d-flex align-items-center justify-content-between w-100">
+
+                                Pesan Masyarakat
+
+                                @if ($notifPesan > 0)
+                                    <span class="badge bg-danger rounded-pill ms-2">
+
+                                        {{ $notifPesan }}
+
+                                    </span>
+                                @endif
+
+                            </span>
+
+                            <i class="bi bi-chevron-right nav-arrow"></i>
+                        </a>
+                    </li>
+
                 </ul>
             </div>
         </aside>
@@ -784,10 +1107,122 @@
                         <input type="text" placeholder="Cari data warga, laporan, dusun...">
                     </div>
 
-                    <button class="icon-btn d-none d-sm-inline-flex" type="button">
-                        <i class="bi bi-bell"></i>
-                        <span class="badge-dot"></span>
-                    </button>
+                    <div class="dropdown">
+
+                        <button class="icon-btn d-none d-sm-inline-flex position-relative" type="button"
+                            data-bs-toggle="dropdown">
+
+                            <i class="bi bi-bell"></i>
+
+                            @if ($notifPesan > 0)
+                                <span
+                                    class="position-absolute top-0 start-100 translate-middle
+            badge rounded-pill bg-danger">
+
+                                    {{ $notifPesan }}
+
+                                </span>
+                            @endif
+
+                        </button>
+
+                        <ul class="dropdown-menu dropdown-menu-end notif-dropdown border-0 shadow">
+
+                            <!-- header -->
+                            <li class="notif-header">
+
+                                <div>
+
+                                    <h6 class="mb-0 fw-bold">
+                                        Notifikasi
+                                    </h6>
+
+                                    <small class="text-muted">
+                                        Pesan masyarakat terbaru
+                                    </small>
+
+                                </div>
+
+                                @if ($notifPesan > 0)
+                                    <span class="badge bg-danger rounded-pill">
+                                        {{ $notifPesan }}
+                                    </span>
+                                @endif
+
+                            </li>
+
+                            @php
+                                $pesanBaru = \App\Models\Pesan::where('status_baca', false)->latest()->take(5)->get();
+                            @endphp
+
+                            @forelse($pesanBaru as $pesan)
+                                <li>
+
+                                    <a href="{{ route('admin.pesan.index') }}" class="notif-item">
+
+                                        <div class="notif-icon">
+
+                                            <i class="bi bi-chat-dots-fill"></i>
+
+                                        </div>
+
+                                        <div class="notif-content">
+
+                                            <div class="notif-top">
+
+                                                <span class="notif-name">
+                                                    {{ $pesan->nama }}
+                                                </span>
+
+                                                <span class="notif-dot"></span>
+
+                                            </div>
+
+                                            <div class="notif-message">
+
+                                                {{ \Illuminate\Support\Str::limit($pesan->pesan, 55) }}
+
+                                            </div>
+
+                                            <small class="text-muted">
+
+                                                Pengajuan keterampilan baru
+
+                                            </small>
+
+                                        </div>
+
+                                    </a>
+
+                                </li>
+
+                            @empty
+
+                                <li class="text-center py-5 text-muted">
+
+                                    <i class="bi bi-bell fs-2 d-block mb-2"></i>
+
+                                    Tidak ada notifikasi baru
+
+                                </li>
+                            @endforelse
+
+                            <!-- footer -->
+                            <li class="notif-footer">
+
+                                <a href="{{ route('admin.pesan.index') }}" class="lihat-semua-link">
+
+                                    Lihat semua pesan
+
+                                    <i class="bi bi-arrow-right-short"></i>
+
+                                </a>
+
+                            </li>
+
+                        </ul>
+
+                    </div>
 
                     <div class="dropdown">
                         <button class="profile-btn border-0" type="button" data-bs-toggle="dropdown"

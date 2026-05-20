@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Rt;
 use App\Models\Warga;
+use App\Imports\WargaImport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 
 class WargaController extends Controller
@@ -47,6 +49,21 @@ class WargaController extends Controller
 
         return redirect()->route('admin.warga.index')->with('success', 'Data warga berhasil ditambahkan.');
     }
+
+    public function import(Request $request)
+{
+    $request->validate([
+        'file' => 'required|mimes:xlsx,xls,csv'
+    ]);
+
+    Excel::import(
+        new WargaImport,
+        $request->file('file')
+    );
+
+    return redirect()->route('admin.warga.index')
+        ->with('success', 'Data warga berhasil diimport.');
+}
 
     public function show(Warga $warga)
     {

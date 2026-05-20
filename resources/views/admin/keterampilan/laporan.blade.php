@@ -47,7 +47,28 @@
                             <input type="text" name="search" value="{{ request('search') }}" class="form-control"
                                 placeholder="Nama warga / NIK...">
                         </div>
+                        <!-- TAHUN -->
+                        <div class="col-md-2">
 
+                            <label class="form-label fw-semibold">
+                                Tahun
+                            </label>
+
+                            <select name="tahun" class="form-select">
+
+                                <option value="">Semua</option>
+
+                                @foreach ($tahuns as $tahun)
+                                    <option value="{{ $tahun }}" {{ request('tahun') == $tahun ? 'selected' : '' }}>
+
+                                        {{ $tahun }}
+
+                                    </option>
+                                @endforeach
+
+                            </select>
+
+                        </div>
                         <!-- DUSUN -->
                         <div class="col-md-2">
                             <label class="form-label fw-semibold">Dusun</label>
@@ -81,7 +102,8 @@
                             <select name="rt" class="form-select">
                                 <option value="">Semua</option>
                                 @foreach ($rts as $item)
-                                    <option value="{{ $item->id }}" {{ request('rt') == $item->id ? 'selected' : '' }}>
+                                    <option value="{{ $item->id }}"
+                                        {{ request('rt') == $item->id ? 'selected' : '' }}>
                                         RT {{ $item->nomor_rt }}
                                     </option>
                                 @endforeach
@@ -108,7 +130,8 @@
                                     request()->filled('dusun') ||
                                     request()->filled('rw') ||
                                     request()->filled('rt') ||
-                                    request()->filled('kategori'))
+                                    request()->filled('kategori') ||
+                                    request()->filled('tahun'))
                                 <a href="{{ route('admin.keterampilan.laporan') }}" class="btn btn-outline-secondary">
                                     <i class="bi bi-arrow-clockwise"></i>
                                     Reset Filter
