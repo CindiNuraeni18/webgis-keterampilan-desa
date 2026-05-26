@@ -8,6 +8,7 @@ class Dusun extends Model
 {
     protected $fillable = [
         'nama_dusun',
+       'geojson',
         'latitude',
         'longitude',
     ];

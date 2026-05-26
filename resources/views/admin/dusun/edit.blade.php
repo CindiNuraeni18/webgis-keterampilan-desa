@@ -6,8 +6,8 @@
 <div class="card border-0 shadow-sm">
     <div class="card-body">
         <h4 class="mb-4">Edit Data Dusun</h4>
-
-        <form action="{{ route('admin.dusun.update', $dusun->id) }}" method="POST">
+        
+        <form action="{{ route('admin.dusun.update', $dusun->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             @include('admin.dusun.form')

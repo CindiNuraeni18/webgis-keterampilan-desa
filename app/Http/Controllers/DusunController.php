@@ -29,12 +29,22 @@ class DusunController extends Controller
 {
     $request->validate([
         'nama_dusun' => 'required|max:255',
+        'geojson' => 'nullable|file',
     ]);
 
-    Dusun::create([
-        'nama_dusun' => $request->nama_dusun,
-    ]);
+   $geojsonPath = null;
 
+if ($request->hasFile('geojson')) {
+
+    $geojsonPath = $request
+        ->file('geojson')
+        ->store('geojson-dusun', 'public');
+}
+
+Dusun::create([
+    'nama_dusun' => $request->nama_dusun,
+    'geojson' => $geojsonPath,
+]);
     return redirect()->route('admin.dusun.index')
         ->with('success', 'Data dusun berhasil ditambahkan.');
 }
@@ -52,11 +62,22 @@ class DusunController extends Controller
 {
     $request->validate([
         'nama_dusun' => 'required|max:255',
+         'geojson' => 'nullable|file',
     ]);
 
-    $dusun->update([
-        'nama_dusun' => $request->nama_dusun,
-    ]);
+  $geojsonPath = $dusun->geojson;
+
+if ($request->hasFile('geojson')) {
+
+    $geojsonPath = $request
+        ->file('geojson')
+        ->store('geojson-dusun', 'public');
+}
+
+$dusun->update([
+    'nama_dusun' => $request->nama_dusun,
+    'geojson' => $geojsonPath,
+]);
 
     return redirect()->route('admin.dusun.index')
         ->with('success', 'Data dusun berhasil diperbarui.');

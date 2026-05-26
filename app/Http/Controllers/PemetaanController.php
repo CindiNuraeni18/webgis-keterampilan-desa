@@ -10,7 +10,9 @@ class PemetaanController extends Controller
 {
     public function index()
     {
-        return view('admin.pemetaan.index');
+         $dusuns = Dusun::whereNotNull('geojson')->get();
+
+    return view('admin.pemetaan.index', compact('dusuns'));
     }
 
     public function api()

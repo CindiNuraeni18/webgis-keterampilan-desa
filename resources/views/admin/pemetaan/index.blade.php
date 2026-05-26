@@ -214,6 +214,7 @@
         fetch("{{ asset('geojson/karangmulya.geojson') }}")
             .then(res => res.json())
             .then(data => {
+                
                 const geojson = L.geoJSON(data, {
                     style: {
                         color: '#0d6efd',
@@ -335,6 +336,39 @@
         dusunLayer.bringToBack();
         rwLayer.bringToFront();
         rtLayer.bringToFront();
+@foreach($dusuns as $dusun)
+
+@if($dusun->geojson)
+
+fetch("{{ asset('storage/' . $dusun->geojson) }}")
+.then(response => response.json())
+.then(geojsonData => {
+
+    L.geoJSON(geojsonData, {
+
+        style: {
+            color: '#198754',
+            weight: 2,
+            fillColor: '#198754',
+            fillOpacity: 0.35
+        },
+
+        onEachFeature: function(feature, layer) {
+
+            layer.bindPopup(`
+                <b>Dusun:</b>
+                {{ $dusun->nama_dusun }}
+            `);
+
+        }
+
+    }).addTo(dusunLayer);
+
+});
+
+@endif
+
+@endforeach
 
     })
 
@@ -521,4 +555,5 @@
         // Responsive adjustment
         window.addEventListener('resize', () => map.invalidateSize());
     </script>
+   
 @endpush

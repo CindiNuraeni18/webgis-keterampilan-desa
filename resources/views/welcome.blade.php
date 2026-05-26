@@ -1482,9 +1482,9 @@
                     <li class="nav-item"><a class="nav-link" href="#fitur">Pemetaan</a></li>
                     <li class="nav-item"><a class="nav-link" href="#data">Data</a></li>
                     <li class="nav-item"><a class="nav-link" href="#kontak">Kontak</a></li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a href="{{ route('login') }}" class="nav-link"> Login</a>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
         </div>
