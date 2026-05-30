@@ -308,207 +308,207 @@
             color: #94a3b8;
         }
 
-     /* ===============================
+        /* ===============================
    TOMBOL NOTIF AKTIF
 ================================= */
-.icon-btn {
-    width: 46px;
-    height: 46px;
-    border-radius: 15px;
-    border: 1px solid var(--border-soft);
-    background: rgba(255, 255, 255, 0.96);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #334155;
-    position: relative;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    flex-shrink: 0;
-}
+        .icon-btn {
+            width: 46px;
+            height: 46px;
+            border-radius: 15px;
+            border: 1px solid var(--border-soft);
+            background: rgba(255, 255, 255, 0.96);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #334155;
+            position: relative;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-shrink: 0;
+        }
 
-.icon-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 10px 18px rgba(15, 23, 42, 0.08);
-    background: #fff;
-    color: var(--accent-blue);
-}
+        .icon-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 18px rgba(15, 23, 42, 0.08);
+            background: #fff;
+            color: var(--accent-blue);
+        }
 
-/* tombol aktif */
-.icon-btn.show,
-.icon-btn:active {
-    background: var(--accent-blue-soft) !important;
-    color: var(--accent-blue) !important;
-    border-color: rgba(37, 99, 235, 0.3) !important;
-    transform: scale(0.95);
-    box-shadow: inset 0 2px 4px rgba(37, 99, 235, 0.1);
-}
+        /* tombol aktif */
+        .icon-btn.show,
+        .icon-btn:active {
+            background: var(--accent-blue-soft) !important;
+            color: var(--accent-blue) !important;
+            border-color: rgba(37, 99, 235, 0.3) !important;
+            transform: scale(0.95);
+            box-shadow: inset 0 2px 4px rgba(37, 99, 235, 0.1);
+        }
 
-/* ===============================
+        /* ===============================
    DROPDOWN NOTIF
 ================================= */
-.notif-dropdown {
-    width: 360px;
-    border-radius: 22px;
-    overflow: hidden;
-    padding: 0;
-    display: block;
-    visibility: hidden;
-    opacity: 0;
-    transform: translateY(15px) scale(0.95);
+        .notif-dropdown {
+            width: 360px;
+            border-radius: 22px;
+            overflow: hidden;
+            padding: 0;
+            display: block;
+            visibility: hidden;
+            opacity: 0;
+            transform: translateY(15px) scale(0.95);
 
-    transition:
-        all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition:
+                all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 
-    z-index: 99999 !important;
-}
+            z-index: 99999 !important;
+        }
 
-/* saat notif dibuka */
-.notif-dropdown.show {
-    visibility: visible;
-    opacity: 1;
-    transform: translateY(10px) scale(1);
-}
+        /* saat notif dibuka */
+        .notif-dropdown.show {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(10px) scale(1);
+        }
 
-/* ===============================
+        /* ===============================
    HEADER NOTIF
 ================================= */
-.notif-header {
-    padding: 18px 20px;
-    border-bottom: 1px solid #e2e8f0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #f8fafc;
-}
+        .notif-header {
+            padding: 18px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8fafc;
+        }
 
-/* ===============================
+        /* ===============================
    ITEM NOTIF
 ================================= */
-.notif-item {
-    display: flex;
-    gap: 14px;
-    padding: 16px 18px;
-    transition: all 0.2s ease;
-    border-bottom: 1px solid #f1f5f9;
-    color: #0f172a;
-}
+        .notif-item {
+            display: flex;
+            gap: 14px;
+            padding: 16px 18px;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #f1f5f9;
+            color: #0f172a;
+        }
 
-.notif-item:hover {
-    background: #f8fafc;
-    transform: translateX(4px);
-}
+        .notif-item:hover {
+            background: #f8fafc;
+            transform: translateX(4px);
+        }
 
-.notif-icon {
-    width: 46px;
-    height: 46px;
-    border-radius: 14px;
-    background: rgba(37, 99, 235, .1);
-    color: #2563eb;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    font-size: 1rem;
-}
+        .notif-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            background: rgba(37, 99, 235, .1);
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1rem;
+        }
 
-.notif-content {
-    flex: 1;
-    min-width: 0;
-}
+        .notif-content {
+            flex: 1;
+            min-width: 0;
+        }
 
-.notif-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 4px;
-}
+        .notif-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
 
-.notif-name {
-    font-weight: 700;
-    font-size: .92rem;
-}
+        .notif-name {
+            font-weight: 700;
+            font-size: .92rem;
+        }
 
-.notif-message {
-    font-size: .83rem;
-    color: #475569;
-    margin-bottom: 4px;
-    line-height: 1.4;
-}
+        .notif-message {
+            font-size: .83rem;
+            color: #475569;
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
 
-.notif-dot {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: #2563eb;
-    flex-shrink: 0;
-}
+        .notif-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #2563eb;
+            flex-shrink: 0;
+        }
 
-/* ===============================
+        /* ===============================
    FOOTER NOTIF
 ================================= */
-.notif-footer {
-    padding: 14px 18px;
-    background: #fff;
-    text-align: center;
-    border-top: 1px solid #f1f5f9;
-}
+        .notif-footer {
+            padding: 14px 18px;
+            background: #fff;
+            text-align: center;
+            border-top: 1px solid #f1f5f9;
+        }
 
-.lihat-semua-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: .92rem;
-    font-weight: 600;
-    color: #2563eb;
-    transition: .2s ease;
-}
+        .lihat-semua-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: .92rem;
+            font-weight: 600;
+            color: #2563eb;
+            transition: .2s ease;
+        }
 
-.lihat-semua-link i {
-    font-size: 1.1rem;
-    transition: .2s ease;
-}
+        .lihat-semua-link i {
+            font-size: 1.1rem;
+            transition: .2s ease;
+        }
 
-.lihat-semua-link:hover {
-    color: #1d4ed8;
-    gap: 8px;
-}
+        .lihat-semua-link:hover {
+            color: #1d4ed8;
+            gap: 8px;
+        }
 
-.lihat-semua-link:hover i {
-    transform: translateX(2px);
-}
+        .lihat-semua-link:hover i {
+            transform: translateX(2px);
+        }
 
-/* ===============================
+        /* ===============================
    FIX DROPDOWN TIDAK BENTROK
 ================================= */
-.dropdown-menu {
-    z-index: 99999 !important;
-    position: absolute !important;
-}
+        .dropdown-menu {
+            z-index: 99999 !important;
+            position: absolute !important;
+        }
 
-.topbar,
-.topbar-actions,
-.dropdown {
-    position: relative;
-    z-index: 9999;
-}
+        .topbar,
+        .topbar-actions,
+        .dropdown {
+            position: relative;
+            z-index: 9999;
+        }
 
-.leaflet-container {
-    z-index: 1 !important;
-}
+        .leaflet-container {
+            z-index: 1 !important;
+        }
 
-/* ===============================
+        /* ===============================
    MOBILE
 ================================= */
-@media (max-width: 575.98px) {
+        @media (max-width: 575.98px) {
 
-    .notif-dropdown {
-        width: 320px;
-        max-width: 92vw;
-        right: 0 !important;
-        left: auto !important;
-    }
+            .notif-dropdown {
+                width: 320px;
+                max-width: 92vw;
+                right: 0 !important;
+                left: auto !important;
+            }
 
-}
+        }
 
         .profile-btn {
             background: rgba(255, 255, 255, 0.96);
@@ -983,25 +983,25 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="{{ route('admin.warga.index') }}"
-                            class="nav-link {{ request()->routeIs('admin.warga.*') ? 'active' : '' }}">
-                            <span class="icon-wrap"><i class="bi bi-people-fill"></i></span>
-                            <span class="nav-text">Data Warga</span>
-                            <i class="bi bi-chevron-right nav-arrow"></i>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
+     <li class="nav-item">
                         <a href="{{ route('admin.kategori-keterampilan.index') }}"
                             class="nav-link {{ request()->routeIs('admin.kategori-keterampilan.*') ? 'active' : '' }}">
-                            <span class="icon-wrap"><i class="bi bi-tags-fill"></i></span>
+                            <span class="icon-wrap"><i class="bi bi-stars"></i></span>
                             <span class="nav-text">Kategori Keterampilan</span>
                             <i class="bi bi-chevron-right nav-arrow"></i>
                         </a>
                     </li>
 
                     <li class="nav-item">
+                        <a href="{{ route('admin.warga.index') }}"
+                            class="nav-link {{ request()->routeIs('admin.warga.*') ? 'active' : '' }}">
+                            <span class="icon-wrap"><i class="bi bi-people-fill"></i></span>
+                            <span class="nav-text">Data Warga Keterampilan</span>
+                            <i class="bi bi-chevron-right nav-arrow"></i>
+                        </a>
+                    </li>
+
+                    {{-- <li class="nav-item">
                         <a href="{{ route('admin.keterampilan.index') }}"
                             class="nav-link 
     {{ request()->routeIs('admin.keterampilan.index') ||
@@ -1014,7 +1014,7 @@
                             <span class="nav-text">Data Keterampilan</span>
                             <i class="bi bi-chevron-right nav-arrow"></i>
                         </a>
-                    </li>
+                    </li> --}}
 
                     <li class="nav-item">
                         <a href="{{ route('admin.pemetaan.index') }}"

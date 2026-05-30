@@ -45,11 +45,3 @@
         <div class="invalid-feedback">{{ $message }}</div>
     @enderror
 </div>
-
-<div class="mb-3">
-    <label class="form-label">Keterangan</label>
-    <textarea name="keterangan" rows="3" class="form-control @error('keterangan') is-invalid @enderror">{{ old('keterangan', $keterampilan->keterangan ?? '') }}</textarea>
-    @error('keterangan')
-        <div class="invalid-feedback">{{ $message }}</div>
-    @enderror
-</div>

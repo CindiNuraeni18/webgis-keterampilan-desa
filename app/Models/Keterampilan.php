@@ -11,7 +11,6 @@ class Keterampilan extends Model
         'kategori_keterampilan_id',
         'nama_keterampilan',
         'pengalaman',
-        'keterangan',
     ];
 
     public function warga()

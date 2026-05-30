@@ -3,173 +3,614 @@
 @section('title', 'Data Warga')
 
 @section('content')
-
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 <style>
-    :root {
-        --anim-speed: 0.85s;
-        --anim-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+/* =========================
+   ANIMASI GLOBAL
+========================= */
+:root{
+    --anim-speed: 0.85s;
+    --anim-ease: cubic-bezier(0.4,0,0.2,1);
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+    }
+    to{
+        opacity:1;
+    }
+}
+
+@keyframes slideInUp{
+    from{
+        opacity:0;
+        transform:translateY(25px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+
+
+/* =========================
+   CARD & TABLE
+========================= */
+.card{
+    border-radius:12px;
+    transition:0.3s ease;
+}
+
+.card:hover{
+    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+    transform:translateY(-2px);
+}
+
+.table-responsive{
+    border-radius:10px;
+    overflow-x:auto;
+    box-shadow:0 2px 6px rgba(0,0,0,0.05);
+    animation:slideInUp var(--anim-speed) var(--anim-ease);
+}
+
+.table{
+    margin-bottom:0;
+}
+
+.table tbody tr{
+    animation:fadeIn var(--anim-speed) var(--anim-ease);
+    animation-fill-mode:both;
+    transition:0.2s ease;
+}
+
+.table tbody tr:hover{
+    background-color:rgba(13,110,253,0.05);
+    transform:translateX(3px);
+}
+
+
+
+/* =========================
+   STICKY
+========================= */
+.sticky-col{
+    position:sticky;
+    right:0;
+    background:#fff;
+    z-index:2;
+}
+
+thead .sticky-col{
+    background:#f8f9fa;
+    z-index:3;
+}
+
+
+
+/* =========================
+   SEARCH
+========================= */
+.search-wrapper{
+    flex:1;
+    max-width:380px;
+}
+
+.search-group{
+    display:flex;
+    align-items:center;
+    width:100%;
+    border-radius:12px;
+    overflow:hidden;
+    border:1px solid #e2e8f0;
+    background:#fff;
+    transition:0.2s ease;
+}
+
+.search-group:focus-within{
+    border-color:#0d6efd;
+    box-shadow:0 0 0 3px rgba(13,110,253,0.15);
+}
+
+.search-group input{
+    flex:1;
+    border:none;
+    outline:none;
+    padding:6px 10px;
+}
+
+.search-group .input-group-text{
+    border:none;
+    background:#0d6efd;
+    color:white;
+}
+
+
+
+/* =========================
+   BADGE
+========================= */
+
+.badge-skill{
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #3b82f6
+    );
+    color:white;
+    font-size:12px;
+    padding:7px 10px;
+    border-radius:10px;
+    margin:2px;
+    display:inline-block;
+}
+
+.badge-kategori{
+    background:#fef3c7;
+    color:#92400e;
+    font-size:12px;
+    padding:7px 10px;
+    border-radius:10px;
+    margin:2px;
+    display:inline-block;
+}
+
+
+
+/* =========================
+   BUTTON EDIT
+========================= */
+
+.btn-edit-modern{
+    border:none;
+    border-radius:12px;
+    width:38px;
+    height:38px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(
+        135deg,
+        #f59e0b,
+        #fbbf24
+    );
+    color:white;
+    transition:all .3s ease;
+    box-shadow:0 4px 10px rgba(245,158,11,.2);
+}
+
+.btn-edit-modern:hover{
+    transform:translateY(-2px) scale(1.05);
+    box-shadow:0 8px 18px rgba(245,158,11,.35);
+    color:white;
+}
+
+
+
+/* =========================
+   BUTTON DELETE
+========================= */
+
+.btn-delete-modern{
+    border:none;
+    border-radius:12px;
+    width:38px;
+    height:38px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(
+        135deg,
+        #ef4444,
+        #dc2626
+    );
+    color:white;
+    transition:all .3s ease;
+    box-shadow:0 4px 10px rgba(239,68,68,.2);
+}
+
+.btn-delete-modern:hover{
+    transform:translateY(-2px) scale(1.05);
+    box-shadow:0 8px 18px rgba(239,68,68,.35);
+    color:white;
+}
+
+
+
+/* =========================
+   BUTTON DETAIL
+========================= */
+
+.btn-detail-modern{
+    border:none;
+    border-radius:12px;
+    width:38px;
+    height:38px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(
+        135deg,
+        #0ea5e9,
+        #38bdf8
+    );
+    color:white;
+    transition:all .3s ease;
+    box-shadow:0 4px 10px rgba(14,165,233,.2);
+}
+
+.btn-detail-modern:hover{
+    transform:translateY(-2px) scale(1.05);
+    box-shadow:0 8px 18px rgba(14,165,233,.35);
+    color:white;
+}
+
+
+
+/* =========================
+   BUTTON SAVE
+========================= */
+
+.btn-save{
+
+    position: relative;
+
+    overflow: hidden;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #3b82f6
+    );
+
+    color: white !important;
+
+    font-weight: 600;
+
+    transition: all .35s ease;
+
+    box-shadow:
+        0 6px 18px rgba(37,99,235,.25);
+
+}
+
+.btn-save::before{
+
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+
+    left: -75%;
+
+    width: 50%;
+
+    height: 100%;
+
+    background: rgba(255,255,255,.22);
+
+    transform: skewX(-25deg);
+
+    transition: .7s;
+
+}
+
+.btn-save:hover{
+
+    transform:
+        translateY(-2px)
+        scale(1.03);
+
+    box-shadow:
+        0 10px 24px rgba(37,99,235,.35);
+
+    color: white !important;
+
+}
+
+.btn-save:hover::before{
+    left:130%;
+}
+
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width:768px){
+
+    .table{
+        font-size:12px;
+        white-space:nowrap;
     }
 
-    /* ANIMASI */
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
+    .search-wrapper{
+        max-width:100%;
+        width:100%;
     }
 
-    @keyframes slideInUp {
-        from {
-            opacity: 0;
-            transform: translateY(25px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
+}
 
-    @keyframes slideFadeLeft {
-        from {
-            opacity: 0;
-            transform: translateX(-25px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
+/* =========================
+   ALERT MODERN
+========================= */
 
-    @keyframes slideFadeRight {
-        from {
-            opacity: 0;
-            transform: translateX(25px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
+.custom-alert{
 
-    @keyframes zoomFade {
-        from {
-            opacity: 0;
-            transform: scale(0.95);
-        }
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
+    border:none;
 
-    /* CARD */
-    .card {
-        border-radius: 14px;
-        transition: 0.3s ease;
-    }
+    border-radius:18px;
 
-    .card:hover {
-        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    }
+    padding:16px 18px;
 
-    /* TABLE */
-    .table-responsive {
-        border-radius: 12px;
-        overflow-x: auto;
-        animation: slideInUp var(--anim-speed) var(--anim-ease);
-    }
+    animation:fadeIn .4s ease;
 
-    .table tbody tr {
-        transition: 0.2s ease;
-    }
+}
 
-    .table tbody tr:hover {
-        background: rgba(13,110,253,0.05);
-    }
+.success-alert{
 
-    .sticky-col {
-        position: sticky;
-        right: 0;
-        background: #fff;
-        z-index: 2;
-    }
+    background:
+    linear-gradient(
+        135deg,
+        #ecfdf5,
+        #d1fae5
+    );
 
-    thead .sticky-col {
-        background: #f8f9fa;
-        z-index: 3;
-    }
+    border-left:
+    5px solid #10b981;
 
-    /* SEARCH */
-    .search-wrapper {
-        flex: 1;
-        max-width: 400px;
-    }
+}
 
-    .search-group {
-        border-radius: 12px;
-        overflow: hidden;
-        border: 1px solid #e2e8f0;
-        background: white;
-    }
+.alert-icon{
 
-    .search-group input {
-        border: none;
-        outline: none;
-    }
+    width:52px;
 
-    .search-group .input-group-text {
-        background: #0d6efd;
-        color: white;
-        border: none;
-    }
+    height:52px;
 
-    /* BUTTON */
-    .btn {
-        transition: 0.2s ease;
-    }
+    border-radius:16px;
 
-    .btn:hover {
-        transform: translateY(-2px);
-    }
+    display:flex;
 
-    .click-animate:active {
-        transform: scale(0.96);
-    }
+    align-items:center;
 
-    /* MODAL PILIHAN */
-    .pilihan-card{
-        transition:0.25s ease;
-        cursor:pointer;
-    }
+    justify-content:center;
 
-    .pilihan-card:hover{
-        transform:translateY(-4px);
-        box-shadow:0 10px 24px rgba(0,0,0,0.08);
-    }
+    font-size:22px;
 
-    .icon-box{
-        width:60px;
-        height:60px;
-        border-radius:18px;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        font-size:24px;
-        flex-shrink:0;
-    }
+    color:white;
 
-    /* RESPONSIVE */
-    @media(max-width:768px){
+    flex-shrink:0;
 
-        .table{
-            font-size:12px;
-            white-space:nowrap;
-        }
+}
 
-        .search-wrapper{
-            max-width:100%;
-            width:100%;
-        }
+.success-icon{
 
-    }
+    background:
+    linear-gradient(
+        135deg,
+        #10b981,
+        #34d399
+    );
+
+}
+/* =========================
+   SWEET ALERT BUTTON MODERN
+========================= */
+
+.btn-delete-swal{
+
+    position: relative;
+
+    overflow: hidden;
+
+    border: none;
+
+    border-radius: 14px;
+
+    padding: 12px 24px;
+
+    background: linear-gradient(
+        135deg,
+        #ef4444,
+        #dc2626
+    );
+
+    color: white;
+
+    font-weight: 600;
+
+    font-size: 15px;
+
+    transition: all .35s ease;
+
+    box-shadow:
+        0 6px 18px rgba(239,68,68,.25);
+
+    margin-left: 10px;
+
+}
+
+.btn-delete-swal::before{
+
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+
+    left: -75%;
+
+    width: 50%;
+
+    height: 100%;
+
+    background: rgba(255,255,255,.25);
+
+    transform: skewX(-25deg);
+
+    transition: .7s;
+
+}
+
+.btn-delete-swal:hover{
+
+    transform:
+        translateY(-2px)
+        scale(1.04);
+
+    box-shadow:
+        0 10px 22px rgba(239,68,68,.4);
+
+}
+
+.btn-delete-swal:hover::before{
+
+    left: 130%;
+
+}
+
+
+
+/* CANCEL */
+.btn-cancel-swal{
+
+    position: relative;
+
+    overflow: hidden;
+
+    border: none;
+
+    border-radius: 14px;
+
+    padding: 12px 24px;
+
+    background: linear-gradient(
+        135deg,
+        #6b7280,
+        #4b5563
+    );
+
+    color: white;
+
+    font-weight: 600;
+
+    font-size: 15px;
+
+    transition: all .35s ease;
+
+    box-shadow:
+        0 6px 18px rgba(107,114,128,.2);
+
+}
+
+.btn-cancel-swal::before{
+
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+
+    left: -75%;
+
+    width: 50%;
+
+    height: 100%;
+
+    background: rgba(255,255,255,.2);
+
+    transform: skewX(-25deg);
+
+    transition: .7s;
+
+}
+
+.btn-cancel-swal:hover{
+
+    transform:
+        translateY(-2px)
+        scale(1.04);
+
+    box-shadow:
+        0 10px 22px rgba(107,114,128,.35);
+
+}
+
+.btn-cancel-swal:hover::before{
+
+    left: 130%;
+
+}
+
+
+
+/* ICON */
+.btn-delete-swal i,
+.btn-cancel-swal i{
+
+    transition: .3s ease;
+
+}
+
+.btn-delete-swal:hover i{
+
+    transform: rotate(-10deg);
+
+}
+
+.btn-cancel-swal:hover i{
+
+    transform: scale(1.15);
+
+}
+.btn-edit-modern i{
+    transition:.3s ease;
+}
+
+.btn-edit-modern:hover i{
+    transform:rotate(-10deg);
+}
+
+.btn-delete-modern i{
+    transition:.3s ease;
+}
+
+.btn-delete-modern:hover i{
+    transform:scale(1.12);
+}
+.btn-detail-modern i{
+    transition:.3s ease;
+}
+
+.btn-detail-modern:hover i{
+    transform:scale(1.12);
+}
+.btn-save i{
+
+    position: relative;
+
+    z-index: 2;
+
+    transition: all .3s ease;
+
+}
+
+.btn-save:hover i{
+
+    transform:
+        rotate(-15deg)
+        scale(1.15);
+
+}
 </style>
 
 <div class="card border-0 shadow-sm">
@@ -181,12 +622,16 @@
 
             <div>
 
-                <h4 class="mb-1">
-                    Data Warga
+                <h4 class="mb-1 fw-bold">
+
+                    Data Warga Terampil
+
                 </h4>
 
                 <p class="text-muted mb-0">
-                    Kelola informasi kependudukan Desa Karangmulya
+
+                    Informasi warga dan keterampilan Desa Karangmulya
+
                 </p>
 
             </div>
@@ -195,17 +640,16 @@
 
                 <!-- SEARCH -->
                 <form action="{{ route('admin.warga.index') }}"
-                    method="GET"
-                    class="search-wrapper">
+    method="GET"
+    class="search-wrapper">
+                   <div class="input-group search-group shadow-sm">
 
-                    <div class="input-group search-group shadow-sm">
+    <button type="submit"
+        class="input-group-text bg-primary text-white border-0">
 
-                        <button type="submit"
-                            class="input-group-text">
+        <i class="bi bi-search"></i>
 
-                            <i class="bi bi-search"></i>
-
-                        </button>
+    </button>
 
                         <input type="text"
                             name="search"
@@ -215,8 +659,8 @@
 
                         @if(request()->filled('search'))
 
-                            <a href="{{ route('admin.warga.index') }}"
-                                class="btn btn-light border-0">
+                            <a href="{{ route('admin.warga.index', request()->except('search')) }}"
+    class="btn btn-light border-0">
 
                                 <i class="bi bi-x-circle"></i>
 
@@ -228,353 +672,469 @@
 
                 </form>
 
+
+
                 <!-- BUTTON TAMBAH -->
-                <button class="btn btn-primary click-animate"
-                    data-bs-toggle="modal"
-                    data-bs-target="#pilihanTambahModal">
+                <a href="{{ route('admin.warga.create') }}"
+                      class="btn btn-save px-4">
 
-                    <i class="bi bi-plus-circle"></i>
-                    Tambah Data
+    <i class="fa-solid fa-plus me-2"></i>
 
-                </button>
+
+                    Tambah
+
+                </a>
 
             </div>
 
         </div>
+
+
 
         <!-- ALERT -->
         @if(session('success'))
 
-            <div class="alert alert-success">
+    <div class="custom-alert success-alert mb-4">
 
-                <i class="bi bi-check-circle me-2"></i>
-                {{ session('success') }}
+        <div class="d-flex align-items-center">
+
+            <div class="alert-icon success-icon">
+
+                <i class="fa-solid fa-circle-check"></i>
 
             </div>
 
-        @endif
+            <div class="ms-3">
+
+                <div class="fw-bold">
+
+                    Berhasil
+
+                </div>
+
+                <small>
+
+                    {{ session('success') }}
+
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+@endif
+
+
 
         <!-- TABLE -->
         <div class="table-responsive">
 
-            <table class="table table-bordered align-middle table-striped table-hover text-nowrap">
+          <table class="table table-bordered align-middle table-striped table-hover text-nowrap">
 
-                <thead class="table-primary text-center">
+             <thead class="table-primary text-center">
 
                     <tr>
-                        <th width="60">No</th>
-                        <th>NIK</th>
-                        <th>Nama</th>
-                        <th>JK</th>
-                        <th>RT</th>
-                        <th>RW</th>
-                        <th>Dusun</th>
-                        <th>No HP</th>
-                        <th>Pekerjaan</th>
-                        <th width="180" class="sticky-col">Aksi</th>
+
+                        <th width="60">
+                            No
+                        </th>
+
+                        <th>
+                            Nama
+                        </th>
+
+                        <th>
+                            RT
+                        </th>
+
+                        <th>
+                            RW
+                        </th>
+
+                        <th>
+                            Dusun
+                        </th>
+
+                        <th>
+                            Kategori
+                        </th>
+
+                        <th>
+                            Keterampilan
+                        </th>
+
+                        <th width="180"
+                            class="sticky-col">
+
+                            Aksi
+
+                        </th>
+
                     </tr>
 
                 </thead>
 
-                <tbody>
+               <tbody>
 
-                    @forelse($wargas as $key => $warga)
+    @forelse($wargas as $key => $warga)
 
-                        <tr>
+        <tr>
 
-                            <td class="text-center">
-                                {{ $wargas->firstItem() + $key }}
-                            </td>
+            <!-- NO -->
+            <td class="text-center">
 
-                            <td>{{ $warga->nik }}</td>
-                            <td>{{ $warga->nama }}</td>
-                            <td>{{ $warga->jenis_kelamin }}</td>
-                            <td>{{ $warga->rt->nomor_rt }}</td>
-                            <td>{{ $warga->rt->rw->nomor_rw }}</td>
-                            <td>{{ $warga->rt->rw->dusun->nama_dusun }}</td>
-                            <td>{{ $warga->no_hp ?? '-' }}</td>
-                            <td>{{ $warga->pekerjaan ?? '-' }}</td>
+                {{ $wargas->firstItem() + $key }}
 
-                            <td class="text-center sticky-col">
+            </td>
 
-                                <div class="d-flex justify-content-center gap-2">
 
-                                    <!-- DETAIL -->
-                                    <a href="{{ route('admin.warga.show', $warga->id) }}"
-                                        class="btn btn-info btn-sm text-white">
 
-                                        <i class="bi bi-eye"></i>
+            <!-- NAMA -->
+            <td>
 
-                                    </a>
+                <div class="fw-semibold text-dark">
 
-                                    <!-- EDIT -->
-                                    <a href="{{ route('admin.warga.edit', $warga->id) }}"
-                                        class="btn btn-warning btn-sm">
+                    {{ $warga->nama }}
 
-                                        <i class="bi bi-pencil"></i>
+                </div>
 
-                                    </a>
+            </td>
 
-                                    <!-- DELETE -->
-                                    <form action="{{ route('admin.warga.destroy', $warga->id) }}"
-                                        method="POST">
 
-                                        @csrf
-                                        @method('DELETE')
 
-                                        <button class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Yakin ingin menghapus data warga ini?')">
+            <!-- RT -->
+            <td class="text-center">
 
-                                            <i class="bi bi-trash"></i>
+                RT {{ $warga->rt->nomor_rt }}
 
-                                        </button>
+            </td>
 
-                                    </form>
 
-                                </div>
 
-                            </td>
+            <!-- RW -->
+            <td class="text-center">
 
-                        </tr>
+                RW {{ $warga->rt->rw->nomor_rw }}
 
-                    @empty
+            </td>
 
-                        <tr>
 
-                            <td colspan="10"
-                                class="text-center text-muted">
 
-                                <i class="bi bi-inbox"></i>
-                                Data warga tidak ditemukan.
+            <!-- DUSUN -->
+            <td class="text-center">
 
-                            </td>
+                {{ $warga->rt->rw->dusun->nama_dusun }}
 
-                        </tr>
+            </td>
 
-                    @endforelse
 
-                </tbody>
 
+            <!-- KATEGORI -->
+<td>
+
+    @php
+
+        $groupSkill = [];
+
+
+
+        foreach($warga->keterampilans as $skill){
+
+            $kategori =
+            $skill->kategori->nama_kategori
+            ?? 'Lainnya';
+
+
+
+            $groupSkill[$kategori][] =
+            $skill->nama_keterampilan;
+
+        }
+
+    @endphp
+
+
+
+    @forelse($groupSkill as $kategori => $skills)
+
+        <div
+            class="pb-2 mb-2"
+            style="
+                border-bottom:
+                1px solid #dbe2ea;
+            ">
+
+            {{ $kategori }}
+
+        </div>
+
+    @empty
+
+        <span class="text-muted small">
+
+            -
+
+        </span>
+
+    @endforelse
+
+</td>
+
+
+
+<!-- KETERAMPILAN -->
+<td>
+
+    @forelse($groupSkill as $kategori => $skills)
+
+        <div
+            class="pb-2 mb-2"
+            style="
+                border-bottom:
+                1px solid #dbe2ea;
+            ">
+
+            @foreach($skills as $item)
+
+                <div>
+
+                    • {{ $item }}
+
+                </div>
+
+            @endforeach
+
+        </div>
+
+    @empty
+
+        <span class="text-muted small">
+
+            -
+
+        </span>
+
+    @endforelse
+
+</td>
+
+
+
+            <!-- AKSI -->
+            <td class="text-center sticky-col">
+
+                <div class="d-flex justify-content-center gap-2">
+
+                    <!-- DETAIL -->
+                    <a href="{{ route('admin.warga.show', $warga->id) }}"
+                        class="btn-detail-modern">
+<i class="bi bi-eye-fill"></i>
+                    </a>
+
+
+
+                    <!-- EDIT -->
+                    <a href="{{ route('admin.warga.edit', $warga->id) }}"
+                        class="btn-edit-modern">
+                        <i class="bi bi-pencil-fill"></i>
+                    </a>
+
+
+
+                    <!-- DELETE -->
+                    <form action="{{ route('admin.warga.destroy', $warga->id) }}"
+    method="POST"
+    class="form-delete">
+
+    @csrf
+    @method('DELETE')
+
+    <button type="button"
+        class="btn-delete-modern"
+        onclick="confirmDelete(this)">
+<i class="bi bi-trash"></i>
+    </button>
+
+</form>
+
+                </div>
+
+            </td>
+
+        </tr>
+
+    @empty
+
+        <tr>
+
+            <td colspan="8"
+                class="text-center text-muted py-4">
+
+                Data warga tidak ditemukan.
+
+            </td>
+
+        </tr>
+
+    @endforelse
+
+</tbody>
             </table>
 
         </div>
 
+
+
         <!-- PAGINATION -->
         <div class="mt-3">
+
             {{ $wargas->links() }}
-        </div>
-
-    </div>
-
-</div>
-
-<!-- MODAL PILIHAN TAMBAH -->
-<div class="modal fade"
-    id="pilihanTambahModal"
-    tabindex="-1"
-    aria-hidden="true">
-
-    <div class="modal-dialog modal-dialog-centered">
-
-        <div class="modal-content border-0 shadow rounded-4 overflow-hidden">
-
-            <!-- HEADER -->
-            <div class="modal-header bg-primary text-white">
-
-                <h5 class="modal-title">
-
-                    <i class="bi bi-plus-circle me-2"></i>
-                    Tambah Data Warga
-
-                </h5>
-
-                <button type="button"
-                    class="btn-close btn-close-white"
-                    data-bs-dismiss="modal">
-                </button>
-
-            </div>
-
-            <!-- BODY -->
-            <div class="modal-body p-4">
-
-                <div class="row g-3">
-
-                    <!-- MANUAL -->
-                    <div class="col-12">
-
-                        <a href="{{ route('admin.warga.create') }}"
-                            class="text-decoration-none">
-
-                            <div class="card border-0 shadow-sm pilihan-card rounded-4">
-
-                                <div class="card-body d-flex align-items-center gap-3">
-
-                                    <div class="icon-box bg-primary bg-opacity-10 text-primary">
-
-                                        <i class="bi bi-pencil-square"></i>
-
-                                    </div>
-
-                                    <div>
-
-                                        <h6 class="mb-1 fw-semibold">
-                                            Tambah Manual
-                                        </h6>
-
-                                        <small class="text-muted">
-                                            Input data warga satu per satu
-                                        </small>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </a>
-
-                    </div>
-
-                    <!-- IMPORT -->
-                    <div class="col-12">
-
-                        <button class="btn p-0 border-0 w-100"
-                            data-bs-dismiss="modal"
-                            data-bs-toggle="modal"
-                            data-bs-target="#importModal">
-
-                            <div class="card border-0 shadow-sm pilihan-card rounded-4">
-
-                                <div class="card-body d-flex align-items-center gap-3">
-
-                                    <div class="icon-box bg-success bg-opacity-10 text-success">
-
-                                        <i class="bi bi-upload"></i>
-
-                                    </div>
-
-                                    <div class="text-start">
-
-                                        <h6 class="mb-1 fw-semibold">
-                                            Import Excel
-                                        </h6>
-
-                                        <small class="text-muted">
-                                            Upload data warga dari Excel / CSV
-                                        </small>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
 
         </div>
 
     </div>
 
 </div>
+<!-- SWEET ALERT -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<!-- MODAL IMPORT -->
-<div class="modal fade"
-    id="importModal"
-    tabindex="-1"
-    aria-hidden="true">
+<script>
 
-    <div class="modal-dialog">
+function confirmDelete(button){
 
-        <div class="modal-content border-0 shadow rounded-4">
+    const form = button.closest('form');
 
-            <!-- HEADER -->
-            <div class="modal-header bg-success text-white">
+    Swal.fire({
 
-                <h5 class="modal-title">
+        title: 'Hapus Data?',
 
-                    <i class="bi bi-upload me-2"></i>
-                    Import Data Warga
+        text:
+        'Data warga yang dihapus tidak dapat dikembalikan.',
 
-                </h5>
+        icon: 'warning',
 
-                <button type="button"
-                    class="btn-close btn-close-white"
-                    data-bs-dismiss="modal">
-                </button>
+        showCancelButton: true,
 
-            </div>
+        customClass: {
 
-            <!-- FORM -->
-            <form action="{{ route('admin.warga.import') }}"
-                method="POST"
-                enctype="multipart/form-data">
+            confirmButton: 'btn-delete-swal',
 
-                @csrf
+            cancelButton: 'btn-cancel-swal'
 
-                <div class="modal-body">
+        },
 
-                    <div class="mb-3">
+        buttonsStyling: false,
 
-                        <label class="form-label fw-semibold">
-                            Upload File Excel / CSV
-                        </label>
+        confirmButtonText:
+        '<i class="fa-solid fa-trash me-2"></i>Ya, Hapus',
 
-                        <input type="file"
-                            name="file"
-                            class="form-control"
-                            accept=".xlsx,.xls,.csv"
-                            required>
+        cancelButtonText:
+        '<i class="fa-solid fa-xmark me-2"></i>Batal',
 
-                    </div>
+        reverseButtons: true
 
-                    <div class="alert alert-info small mb-0">
+    }).then((result) => {
 
-                        <i class="bi bi-info-circle me-1"></i>
+        if(result.isConfirmed){
 
-                        Format file harus:
-                        <strong>.xlsx</strong>,
-                        <strong>.xls</strong>,
-                        atau
-                        <strong>.csv</strong>
+            form.submit();
 
-                    </div>
+        }
 
-                </div>
+    });
 
-                <!-- FOOTER -->
-                <div class="modal-footer">
+}
 
-                    <button type="button"
-                        class="btn btn-light"
-                        data-bs-dismiss="modal">
+</script>
+<!-- SWEET ALERT -->
 
-                        Batal
+@if(session('tambah'))
 
-                    </button>
+<script>
 
-                    <button type="submit"
-                        class="btn btn-success">
+Swal.fire({
 
-                        <i class="bi bi-upload me-1"></i>
-                        Import Data
+    icon: 'success',
 
-                    </button>
+    title: 'Berhasil Ditambahkan',
 
-                </div>
+    text: "{{ session('tambah') }}",
 
-            </form>
+    showConfirmButton: false,
 
-        </div>
+    timer: 2200,
 
-    </div>
+    background: '#ffffff',
 
-</div>
+    backdrop: `
+        rgba(0,0,0,0.45)
+    `
 
+});
+
+</script>
+
+@endif
+
+
+
+@if(session('edit'))
+
+<script>
+
+Swal.fire({
+
+    icon: 'success',
+
+    title: 'Berhasil Diperbarui',
+
+    text: "{{ session('edit') }}",
+
+    showConfirmButton: false,
+
+    timer: 2200,
+
+    background: '#ffffff',
+
+    backdrop: `
+        rgba(0,0,0,0.45)
+    `
+
+});
+
+</script>
+
+@endif
+
+
+
+@if(session('hapus'))
+
+<script>
+
+Swal.fire({
+
+    icon: 'success',
+
+    title: 'Berhasil Dihapus',
+
+    text: "{{ session('hapus') }}",
+
+    showConfirmButton: false,
+
+    timer: 2200,
+
+    background: '#ffffff',
+
+    backdrop: `
+        rgba(0,0,0,0.45)
+    `
+
+});
+
+</script>
+
+@endif
 @endsection

@@ -3,7 +3,8 @@
 @section('title', 'Kategori Keterampilan')
 
 @section('content')
-
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
     <style>
         /* =========================
            ANIMASI GLOBAL (HALUS)
@@ -143,21 +144,99 @@
             color: white;
         }
 
-        .btn {
-            transition: 0.2s ease-in-out;
-        }
+       /* =========================
+   BUTTON SAVE
+========================= */
 
-        .btn:hover {
-            transform: translateY(-2px);
-        }
+.btn-save{
 
-        .click-animate {
-            transition: transform 0.15s ease;
-        }
+    position: relative;
 
-        .click-animate:active {
-            transform: scale(0.96);
-        }
+    overflow: hidden;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #3b82f6
+    );
+
+    color: white !important;
+
+    font-weight: 600;
+
+    transition: all .35s ease;
+
+    box-shadow:
+        0 6px 18px rgba(37,99,235,.25);
+
+}
+
+.btn-save::before{
+
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+
+    left: -75%;
+
+    width: 50%;
+
+    height: 100%;
+
+    background: rgba(255,255,255,.22);
+
+    transform: skewX(-25deg);
+
+    transition: .7s;
+
+}
+
+.btn-save:hover{
+
+    transform:
+        translateY(-2px)
+        scale(1.03);
+
+    box-shadow:
+        0 10px 24px rgba(37,99,235,.35);
+
+    color: white !important;
+
+}
+
+.btn-save:hover::before{
+
+    left: 130%;
+
+}
+
+.btn-save i{
+
+    transition: .3s ease;
+
+}
+
+.btn-save:hover i{
+
+    transform: rotate(-10deg);
+
+}
+
+.btn-save span{
+
+    color: white !important;
+
+    position: relative;
+
+    z-index: 2;
+
+}
 
         /* Header Animation */
         .title-animate {
@@ -204,7 +283,8 @@
                                 placeholder="Cari kategori..." value="{{ request('search') }}">
 
                             @if (request()->filled('search'))
-                                <a href="{{ route('admin.kategori-keterampilan.index') }}" class="btn btn-light border-0">
+                               <a href="{{ route('admin.kategori-keterampilan.index', request()->except('search')) }}"
+    class="btn btn-light border-0">
                                     <i class="bi bi-x-circle"></i>
                                 </a>
                             @endif
@@ -212,10 +292,12 @@
                     </form>
 
                     <a href="{{ route('admin.kategori-keterampilan.create') }}"
-                        class="btn btn-primary btn-animate click-animate">
-                        <i class="bi bi-plus-circle"></i>
-                        <span class="d-none d-md-inline">Tambah</span>
-                    </a>
+    class="btn btn-save px-4">
+    <i class="fa-solid fa-plus me-2"></i>
+    <span>
+        Tambah
+    </span>
+</a>
                 </div>
             </div>
 
@@ -231,7 +313,7 @@
                         <tr>
                             <th width="60">No</th>
                             <th>Nama Kategori</th>
-                            <th width="200">Aksi</th>
+                            {{-- <th width="200">Aksi</th> --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -239,7 +321,7 @@
                             <tr style="animation-delay: {{ $loop->index * 0.05 }}s">
                                 <td class="text-center">{{ $kategoris->firstItem() + $key }}</td>
                                 <td class="fw-semibold">{{ $kategori->nama_kategori }}</td>
-                                <td class="text-center">
+                                {{-- <td class="text-center">
                                     <div class="d-flex justify-content-center gap-2">
                                         <a href="{{ route('admin.kategori-keterampilan.show', $kategori->id) }}"
                                             class="btn btn-info btn-sm text-white" title="Detail">
@@ -259,7 +341,7 @@
                                             </button>
                                         </form>
                                     </div>
-                                </td>
+                                </td> --}}
                             </tr>
                         @empty
                             <tr>

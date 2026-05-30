@@ -3,11 +3,11 @@
 @section('title', 'Data Dusun')
 
 @section('content')
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         /* =========================
-               ANIMASI
-            ========================= */
+                   ANIMASI
+                ========================= */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -31,8 +31,8 @@
         }
 
         /* =========================
-               CARD
-            ========================= */
+                   CARD
+                ========================= */
         .card {
             border-radius: 12px;
             transition: 0.3s ease;
@@ -44,8 +44,8 @@
         }
 
         /* =========================
-               TABLE
-            ========================= */
+                   TABLE
+                ========================= */
         .table-responsive {
             border-radius: 10px;
             overflow-x: auto;
@@ -94,8 +94,8 @@
         }
 
         /* =========================
-               STICKY AKSI
-            ========================= */
+                   STICKY AKSI
+                ========================= */
         .sticky-col {
             position: sticky;
             right: 0;
@@ -109,19 +109,15 @@
         }
 
         /* =========================
-               BUTTON
-            ========================= */
+                   BUTTON
+                ========================= */
         .btn {
             transition: 0.2s ease-in-out;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
         /* =========================
-               SEARCH (FIX CLEAN)
-            ========================= */
+                   SEARCH (FIX CLEAN)
+                ========================= */
 
         /* wrapper */
         .search-wrapper {
@@ -177,8 +173,8 @@
         }
 
         /* =========================
-               RESPONSIVE
-            ========================= */
+                   RESPONSIVE
+                ========================= */
         @media (max-width: 768px) {
             .table {
                 font-size: 12px;
@@ -201,8 +197,8 @@
         }
 
         /* =========================
-           ANIMASI HEADER (BARU)
-        ========================= */
+               ANIMASI HEADER (BARU)
+            ========================= */
 
         /* Judul */
         .title-animate {
@@ -225,8 +221,8 @@
         }
 
         /* =========================
-           KEYFRAMES BARU
-        ========================= */
+               KEYFRAMES BARU
+            ========================= */
         @keyframes slideFadeLeft {
             from {
                 opacity: 0;
@@ -264,16 +260,16 @@
         }
 
         /* =========================
-           ANIMASI GLOBAL (HALUS)
-        ========================= */
+               ANIMASI GLOBAL (HALUS)
+            ========================= */
         :root {
             --anim-speed: 0.85s;
             --anim-ease: cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* =========================
-           ANIMASI TABLE (TETAP)
-        ========================= */
+               ANIMASI TABLE (TETAP)
+            ========================= */
         .table-responsive {
             animation: slideInUp var(--anim-speed) var(--anim-ease);
         }
@@ -284,8 +280,8 @@
         }
 
         /* =========================
-           ANIMASI HEADER (DIPERHALUS)
-        ========================= */
+               ANIMASI HEADER (DIPERHALUS)
+            ========================= */
 
         /* Judul */
         .title-animate {
@@ -312,8 +308,8 @@
         }
 
         /* =========================
-           KEYFRAMES (HALUS)
-        ========================= */
+               KEYFRAMES (HALUS)
+            ========================= */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -375,6 +371,210 @@
                 transform: translateY(0);
             }
         }
+
+
+        /* EDIT MODERN */
+        .btn-edit-modern {
+
+            border: none;
+
+            border-radius: 12px;
+
+            width: 38px;
+
+            height: 38px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: linear-gradient(135deg,
+                    #f59e0b,
+                    #fbbf24);
+
+            color: white;
+
+            transition: all .3s ease;
+
+            box-shadow:
+                0 4px 10px rgba(245, 158, 11, .2);
+
+        }
+
+        .btn-edit-modern:hover {
+
+            transform:
+                translateY(-2px) scale(1.05);
+
+            box-shadow:
+                0 8px 18px rgba(245, 158, 11, .35);
+
+            color: white;
+
+        }
+
+        .btn-edit-modern i {
+
+            transition: .3s ease;
+
+        }
+
+        .btn-edit-modern:hover i {
+
+            transform: rotate(-10deg);
+
+        }
+
+        .btn-delete-modern {
+            border: none;
+            border-radius: 12px;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg,
+                    #ef4444,
+                    #dc2626);
+            color: white;
+        }
+
+        /* =========================
+       BUTTON SAVE
+    ========================= */
+
+        .btn-save {
+
+            position: relative;
+
+            overflow: hidden;
+
+            border: none;
+
+            border-radius: 14px;
+
+            background: linear-gradient(135deg,
+                    #2563eb,
+                    #3b82f6);
+
+            color: white !important;
+
+            font-weight: 600;
+
+            transition: all .35s ease;
+
+            box-shadow:
+                0 6px 18px rgba(37, 99, 235, .25);
+
+        }
+
+
+
+        /* EFEK PUTIH */
+        .btn-save::before {
+
+            content: '';
+
+            position: absolute;
+
+            top: 0;
+
+            left: -75%;
+
+            width: 50%;
+
+            height: 100%;
+
+            background: rgba(255, 255, 255, .22);
+
+            transform: skewX(-25deg);
+
+            transition: .7s;
+
+        }
+
+
+
+        /* HOVER */
+        .btn-save:hover {
+
+            transform:
+                translateY(-2px) scale(1.03);
+
+            box-shadow:
+                0 10px 24px rgba(37, 99, 235, .35);
+
+            color: white !important;
+
+        }
+
+
+
+        /* GERAK PUTIH */
+        .btn-save:hover::before {
+
+            left: 130%;
+
+        }
+
+
+
+        /* ICON */
+        .btn-save i {
+
+            position: relative;
+
+            z-index: 2;
+
+            transition: .3s ease;
+
+        }
+
+
+
+        /* ICON HOVER */
+        .btn-save:hover i {
+
+            transform: rotate(-10deg);
+
+        }
+
+
+
+        /* SAAT DIKLIK */
+        .btn-save:active {
+
+            transform: scale(0.97);
+
+            color: white !important;
+
+        }
+
+
+
+        /* FOCUS */
+        .btn-save:focus {
+
+            color: white !important;
+
+            outline: none;
+
+        }
+
+
+
+        /* TEXT */
+        .btn-save span {
+
+            color: white !important;
+
+            position: relative;
+
+            z-index: 2;
+
+        }
     </style>
 
     <div class="card border-0 shadow-sm fade-in">
@@ -412,11 +612,12 @@
                     </form>
 
                     <!-- TAMBAH -->
-                    <a href="{{ route('admin.dusun.create') }}" class="btn btn-primary btn-animate click-animate">
-                        <i class="bi bi-plus-circle"></i>
-                        <span class="d-none d-md-inline">Tambah</span>
+                    <a href="{{ route('admin.dusun.create') }}" class="btn btn-save px-4">
+                        <i class="fa-solid fa-plus me-2"></i>
+                        <span>
+                            Tambah
+                        </span>
                     </a>
-
                 </div>
             </div>
 
@@ -446,13 +647,12 @@
 
                                     <div class="d-flex justify-content-center gap-2">
 
-                                     
-                                        <a href="{{ route('admin.dusun.edit', $dusun->id) }}" class="btn btn-warning btn-sm"
-                                            title="Edit">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
 
-                                        <form action="{{ route('admin.dusun.destroy', $dusun->id) }}" method="POST"
+                                        <a href="{{ route('admin.dusun.edit', $dusun->id) }}" class="btn-edit-modern"
+                                            title="Edit">
+                                            <i class="bi bi-pencil-fill"></i>
+                                        </a>
+                                        {{-- <form action="{{ route('admin.dusun.destroy', $dusun->id) }}" method="POST"
                                             class="d-inline">
                                             @csrf
                                             @method('DELETE')
@@ -460,7 +660,7 @@
                                                 onclick="return confirm('Yakin hapus data?')">
                                                 <i class="bi bi-trash"></i>
                                             </button>
-                                        </form>
+                                        </form> --}}
 
                                     </div>
 

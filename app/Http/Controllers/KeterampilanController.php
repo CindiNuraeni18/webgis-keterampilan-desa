@@ -51,7 +51,6 @@ class KeterampilanController extends Controller
             'kategori_keterampilan_id' => 'required|exists:kategori_keterampilans,id',
             'nama_keterampilan' => 'required|max:255',
             'pengalaman' => 'nullable|max:255',
-            'keterangan' => 'nullable',
         ]);
 
         Keterampilan::create($request->only([
@@ -59,7 +58,6 @@ class KeterampilanController extends Controller
             'kategori_keterampilan_id',
             'nama_keterampilan',
             'pengalaman',
-            'keterangan',
         ]));
 
         return redirect()->route('admin.keterampilan.index')
@@ -88,7 +86,6 @@ class KeterampilanController extends Controller
             'kategori_keterampilan_id' => 'required|exists:kategori_keterampilans,id',
             'nama_keterampilan' => 'required|max:255',
             'pengalaman' => 'nullable|max:255',
-            'keterangan' => 'nullable',
         ]);
 
         $keterampilan->update($request->only([
@@ -96,7 +93,6 @@ class KeterampilanController extends Controller
             'kategori_keterampilan_id',
             'nama_keterampilan',
             'pengalaman',
-            'keterangan',
         ]));
 
         return redirect()->route('admin.keterampilan.index')

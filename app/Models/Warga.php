@@ -13,9 +13,7 @@ class Warga extends Model
         'jenis_kelamin',
         'tempat_lahir',
         'tanggal_lahir',
-        'alamat',
         'no_hp',
-        'pekerjaan',
     ];
 
     public function rt()
