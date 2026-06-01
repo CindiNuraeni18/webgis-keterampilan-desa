@@ -1334,16 +1334,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('admin.warga.index') }}"
-                        class="nav-link {{ request()->routeIs('admin.warga.*') ? 'active' : '' }}">
-                        <span class="icon-wrap"><i class="bi bi-people-fill"></i></span>
-                        <span class="nav-text">Data Warga</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li>
-
-                <li class="nav-item">
+ <li class="nav-item">
                     <a href="{{ route('admin.kategori-keterampilan.index') }}"
                         class="nav-link {{ request()->routeIs('admin.kategori-keterampilan.*') ? 'active' : '' }}">
                         <span class="icon-wrap"><i class="bi bi-tags-fill"></i></span>
@@ -1353,6 +1344,15 @@
                 </li>
 
                 <li class="nav-item">
+                    <a href="{{ route('admin.warga.index') }}"
+                        class="nav-link {{ request()->routeIs('admin.warga.*') ? 'active' : '' }}">
+                        <span class="icon-wrap"><i class="bi bi-people-fill"></i></span>
+                        <span class="nav-text">Data Warga</span>
+                        <i class="bi bi-chevron-right nav-arrow"></i>
+                    </a>
+                </li>
+
+                {{-- <li class="nav-item">
                     <a href="{{ route('admin.keterampilan.index') }}"
                         class="nav-link 
     {{ request()->routeIs('admin.keterampilan.index') ||
@@ -1365,7 +1365,7 @@
                         <span class="nav-text">Data Keterampilan</span>
                         <i class="bi bi-chevron-right nav-arrow"></i>
                     </a>
-                </li>
+                </li> --}}
 
                 <li class="nav-item">
                     <a href="{{ route('admin.pemetaan.index') }}"

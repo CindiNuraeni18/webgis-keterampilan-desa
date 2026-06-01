@@ -26,7 +26,7 @@ class WargaController extends Controller
                       ->orWhere('nik', 'like', "%{$search}%");
             })
             ->latest()
-            ->paginate(10);
+            ->paginate(20);
 
         return view('admin.warga.index', compact('wargas', 'search'));
     }

@@ -50,46 +50,81 @@ $rts = Rt::with(
 
         foreach($rw->rts as $rt){
 
-        $jumlahWarga += $rt->wargas->count();
+       foreach($rt->wargas as $warga){
 
-        foreach($rt->wargas as $warga){
+    if($warga->keterampilans->count() > 0){
 
-        foreach($warga->keterampilans as $skill){
+        $jumlahWarga++;
+
+    }
+
+    foreach($warga->keterampilans as $skill){
 
         $jumlahSkill++;
 
-        $semuaKategori[]=$skill->kategori->nama_kategori;
+        $semuaKategori[] =
+        $skill->kategori->nama_kategori;
 
-        $semuaNamaSkill[]=$skill->nama_keterampilan;
+        $semuaNamaSkill[] =
+        $skill->nama_keterampilan;
+
+    }
+
+}
+        
 
         }
 
         }
 
-        }
+        $kategoriDominan = 'Belum tersedia';
 
-        }
+if(count($semuaKategori) > 0){
 
-        $kategoriDominan='Belum tersedia';
-        $namaSkillDominan='Belum tersedia';
+    $hitung = array_count_values($semuaKategori);
 
-        if(count($semuaKategori)>0){
+    $max = max($hitung);
 
-        $hitung=array_count_values($semuaKategori);
+    $tertinggi = array_filter(
+        $hitung,
+        fn($jumlah) => $jumlah == $max
+    );
 
-        arsort($hitung);
+    if(count($tertinggi) > 1){
 
-        $kategoriDominan=array_key_first($hitung);
-        }
+        $kategoriDominan = 'Tidak Ada Dominan';
 
-        if(count($semuaNamaSkill)>0){
+    }else{
 
-        $hitung2=array_count_values($semuaNamaSkill);
+        $kategoriDominan = array_key_first($tertinggi);
 
-        arsort($hitung2);
+    }
+}
 
-        $namaSkillDominan=array_key_first($hitung2);
-        }
+        $namaSkillDominan = 'Belum tersedia';
+
+if(count($semuaNamaSkill) > 0){
+
+    $hitung2 = array_count_values($semuaNamaSkill);
+
+    $maxSkill = max($hitung2);
+
+    $tertinggiSkill = array_filter(
+        $hitung2,
+        fn($jumlah) => $jumlah == $maxSkill
+    );
+
+    if(count($tertinggiSkill) > 1){
+
+        $namaSkillDominan = 'Tidak Ada Dominan';
+
+    }else{
+
+        $namaSkillDominan =
+            array_key_first($tertinggiSkill);
+
+    }
+}
 
         return[
         'id'=>$dusun->id,
@@ -124,44 +159,79 @@ $rts = Rt::with(
 
         foreach($rw->rts as $rt){
 
-        $jumlahWarga += $rt->wargas->count();
+       foreach($rt->wargas as $warga){
 
-        foreach($rt->wargas as $warga){
+    if($warga->keterampilans->count() > 0){
 
-        foreach($warga->keterampilans as $skill){
+        $jumlahWarga++;
+
+    }
+
+    foreach($warga->keterampilans as $skill){
 
         $jumlahSkill++;
 
-        $semuaKategori[]=$skill->kategori->nama_kategori;
+        $semuaKategori[] =
+        $skill->kategori->nama_kategori;
 
-        $semuaNamaSkill[]=$skill->nama_keterampilan;
+        $semuaNamaSkill[] =
+        $skill->nama_keterampilan;
+
+    }
+
+}
+
+       
 
         }
 
-        }
+        $kategoriDominan = 'Belum tersedia';
 
-        }
+if(count($semuaKategori) > 0){
 
-        $kategoriDominan='Belum tersedia';
-        $namaSkillDominan='Belum tersedia';
+    $hitung = array_count_values($semuaKategori);
 
-        if(count($semuaKategori)>0){
+    $max = max($hitung);
 
-        $hitung=array_count_values($semuaKategori);
+    $tertinggi = array_filter(
+        $hitung,
+        fn($jumlah) => $jumlah == $max
+    );
 
-        arsort($hitung);
+    if(count($tertinggi) > 1){
 
-        $kategoriDominan=array_key_first($hitung);
-        }
+        $kategoriDominan = 'Tidak Ada Dominan';
 
-        if(count($semuaNamaSkill)>0){
+    }else{
 
-        $hitung2=array_count_values($semuaNamaSkill);
+        $kategoriDominan = array_key_first($tertinggi);
 
-        arsort($hitung2);
+    }
+}
+      $namaSkillDominan = 'Belum tersedia';
 
-        $namaSkillDominan=array_key_first($hitung2);
-        }
+if(count($semuaNamaSkill) > 0){
+
+    $hitung2 = array_count_values($semuaNamaSkill);
+
+    $maxSkill = max($hitung2);
+
+    $tertinggiSkill = array_filter(
+        $hitung2,
+        fn($jumlah) => $jumlah == $maxSkill
+    );
+
+    if(count($tertinggiSkill) > 1){
+
+        $namaSkillDominan = 'Tidak Ada Dominan';
+
+    }else{
+
+        $namaSkillDominan =
+            array_key_first($tertinggiSkill);
+
+    }
+}
 
         return[
         'id'=>$rw->id,
@@ -188,61 +258,112 @@ $rts = Rt::with(
     // =======================
     $dataRt = $rts->map(function($rt){
 
-        $jumlahSkill=0;
+    $jumlahWarga = 0;
 
-        $semuaKategori=[];
-        $semuaNamaSkill=[];
+    $jumlahSkill = 0;
+
+    $semuaKategori = [];
+
+    $semuaNamaSkill = [];
 
         foreach($rt->wargas as $warga){
 
-        foreach($warga->keterampilans as $skill){
+    if($warga->keterampilans->count() > 0){
+
+        $jumlahWarga++;
+
+    }
+
+    foreach($warga->keterampilans as $skill){
 
         $jumlahSkill++;
 
-        $semuaKategori[]=$skill->kategori->nama_kategori;
+        $semuaKategori[] =
+        $skill->kategori->nama_kategori;
 
-        $semuaNamaSkill[]=$skill->nama_keterampilan;
+        $semuaNamaSkill[] =
+        $skill->nama_keterampilan;
 
-        }
+    }
 
-        }
+}
 
-        $kategoriDominan='Belum tersedia';
-        $namaSkillDominan='Belum tersedia';
+        $kategoriDominan = 'Belum tersedia';
 
-        if(count($semuaKategori)>0){
+if(count($semuaKategori) > 0){
 
-        $hitung=array_count_values($semuaKategori);
+    $hitung = array_count_values($semuaKategori);
 
-        arsort($hitung);
+    $max = max($hitung);
 
-        $kategoriDominan=array_key_first($hitung);
-        }
+    $tertinggi = array_filter(
+        $hitung,
+        fn($jumlah) => $jumlah == $max
+    );
 
-        if(count($semuaNamaSkill)>0){
+    if(count($tertinggi) > 1){
 
-        $hitung2=array_count_values($semuaNamaSkill);
+        $kategoriDominan = 'Tidak Ada Dominan';
 
-        arsort($hitung2);
+    }else{
 
-        $namaSkillDominan=array_key_first($hitung2);
-        }
+        $kategoriDominan = array_key_first($tertinggi);
+
+    }
+}
+
+        $namaSkillDominan = 'Belum tersedia';
+
+if(count($semuaNamaSkill) > 0){
+
+    $hitung2 = array_count_values($semuaNamaSkill);
+
+    $maxSkill = max($hitung2);
+
+    $tertinggiSkill = array_filter(
+        $hitung2,
+        fn($jumlah) => $jumlah == $maxSkill
+    );
+
+    if(count($tertinggiSkill) > 1){
+
+        $namaSkillDominan = 'Tidak Ada Dominan';
+
+    }else{
+
+        $namaSkillDominan =
+            array_key_first($tertinggiSkill);
+
+    }
+}
 
         return[
-        'id'=>$rt->id,
-        'nama_rt'=>$rt->nomor_rt,
-        'nama_rw'=>optional($rt->rw)->nomor_rw,
-        'nama_dusun'=>optional(optional($rt->rw)->dusun)->nama_dusun,
-        'latitude'=>$rt->latitude,
-        'longitude'=>$rt->longitude,
-        'jumlah_warga'=>$rt->wargas->count(),
-        'jumlah_keterampilan'=>$jumlahSkill,
+    'id' => $rt->id,
 
-        'keterampilan_dominan'=>$kategoriDominan,
+    'rw_id' => $rt->rw_id,
 
-        'nama_keterampilan_dominan'=>$namaSkillDominan
+    'nama_rt' => $rt->nomor_rt,
 
-        ];
+    'nama_rw' => optional($rt->rw)->nomor_rw,
+
+    'nama_dusun' =>
+    optional(optional($rt->rw)->dusun)
+    ->nama_dusun,
+
+    'latitude' => $rt->latitude,
+
+    'longitude' => $rt->longitude,
+
+    'jumlah_warga' => $jumlahWarga,
+
+    'jumlah_keterampilan' => $jumlahSkill,
+
+    'keterampilan_dominan' =>
+    $kategoriDominan,
+
+    'nama_keterampilan_dominan' =>
+    $namaSkillDominan
+];
 
         });
 
@@ -267,5 +388,17 @@ public function detailRw($id)
     $rw = Rw::with('rts.wargas.keterampilans.kategori', 'dusun')->findOrFail($id);
 
     return view('admin.pemetaan.detail-rw', compact('rw'));
+}
+
+public function detailDusun($id)
+{
+    $dusun = Dusun::with(
+        'rws.rts.wargas.keterampilans.kategori'
+    )->findOrFail($id);
+
+    return view(
+        'admin.pemetaan.detail-dusun',
+        compact('dusun')
+    );
 }
 }

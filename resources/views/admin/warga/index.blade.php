@@ -611,6 +611,79 @@ thead .sticky-col{
         scale(1.15);
 
 }
+/* =========================
+   PAGINATION MODERN
+========================= */
+
+.pagination{
+
+    justify-content:center;
+
+    gap:6px;
+
+    margin-top:25px;
+
+}
+
+.page-item .page-link{
+
+    border:none;
+
+    border-radius:12px !important;
+
+    min-width:42px;
+
+    height:42px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:#475569;
+
+    font-weight:600;
+
+    transition:.3s ease;
+
+    box-shadow:
+        0 2px 8px rgba(0,0,0,.05);
+
+}
+
+.page-item .page-link:hover{
+
+    transform:translateY(-2px);
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+}
+
+.page-item.active .page-link{
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #3b82f6
+    );
+
+    color:white;
+
+    box-shadow:
+        0 8px 20px rgba(37,99,235,.25);
+
+}
+
+.page-item.disabled .page-link{
+
+    background:#f8fafc;
+
+    color:#94a3b8;
+
+}
 </style>
 
 <div class="card border-0 shadow-sm">
@@ -675,15 +748,16 @@ thead .sticky-col{
 
 
                 <!-- BUTTON TAMBAH -->
-                <a href="{{ route('admin.warga.create') }}"
-                      class="btn btn-save px-4">
+                <button
+    type="button"
+    class="btn btn-save px-4"
+    data-bs-toggle="modal"
+    data-bs-target="#modalTambahWarga">
 
     <i class="fa-solid fa-plus me-2"></i>
+    Tambah
 
-
-                    Tambah
-
-                </a>
+</button>
 
             </div>
 
@@ -692,37 +766,110 @@ thead .sticky-col{
 
 
         <!-- ALERT -->
-        @if(session('success'))
+        @if(session('tambah'))
 
-    <div class="custom-alert success-alert mb-4">
+<script>
 
-        <div class="d-flex align-items-center">
+Swal.fire({
 
-            <div class="alert-icon success-icon">
+    icon: 'success',
 
-                <i class="fa-solid fa-circle-check"></i>
+    title: 'Berhasil Ditambahkan',
 
-            </div>
+    text: "{{ session('tambah') }}",
 
-            <div class="ms-3">
+    showConfirmButton: false,
 
-                <div class="fw-bold">
+    timer: 2200,
 
-                    Berhasil
+    timerProgressBar: true,
 
-                </div>
+    backdrop: true
 
-                <small>
+});
 
-                    {{ session('success') }}
+</script>
 
-                </small>
+@endif
 
-            </div>
 
-        </div>
+@if(session('edit'))
 
-    </div>
+<script>
+
+Swal.fire({
+
+    icon: 'success',
+
+    title: 'Berhasil Diperbarui',
+
+    text: "{{ session('edit') }}",
+
+    showConfirmButton: false,
+
+    timer: 2200,
+
+    timerProgressBar: true,
+
+    backdrop: true
+
+});
+
+</script>
+
+@endif
+
+
+@if(session('hapus'))
+
+<script>
+
+Swal.fire({
+
+    icon: 'success',
+
+    title: 'Berhasil Dihapus',
+
+    text: "{{ session('hapus') }}",
+
+    showConfirmButton: false,
+
+    timer: 2200,
+
+    timerProgressBar: true,
+
+    backdrop: true
+
+});
+
+</script>
+
+@endif
+
+
+@if(session('success'))
+
+<script>
+
+Swal.fire({
+
+    icon: 'success',
+
+    title: 'Berhasil',
+
+    text: "{{ session('success') }}",
+
+    showConfirmButton: false,
+
+    timer: 2200,
+
+    timerProgressBar: true,
+
+    backdrop: true
+
+});
+
+</script>
 
 @endif
 
@@ -1137,4 +1284,154 @@ Swal.fire({
 </script>
 
 @endif
+<!-- Modal Pilihan Tambah -->
+
+<div class="modal fade"
+     id="modalTambahWarga"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content border-0 shadow">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+
+                    Tambah Data Warga
+
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="d-grid gap-3">
+
+                    <!-- MANUAL -->
+
+                    <a href="{{ route('admin.warga.create') }}"
+                       class="btn btn-primary btn-lg">
+
+                        <i class="fa-solid fa-user-plus me-2"></i>
+
+                        Tambah Manual
+
+                    </a>
+
+                    <!-- IMPORT -->
+
+                    <button
+                        class="btn btn-success btn-lg"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalImport"
+                        data-bs-dismiss="modal">
+
+                        <i class="fa-solid fa-file-excel me-2"></i>
+
+                        Import Excel
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- Modal Import -->
+
+<div class="modal fade"
+     id="modalImport"
+     tabindex="-1">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <form
+                action="{{ route('admin.warga.import') }}"
+                method="POST"
+                enctype="multipart/form-data">
+
+                @csrf
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+
+                        Import Data Warga
+
+                    </h5>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <label class="form-label">
+
+                        File Excel
+
+                    </label>
+
+                    <input
+                        type="file"
+                        name="file"
+                        class="form-control"
+                        accept=".xlsx,.xls,.csv"
+                        required>
+
+                    <small class="text-muted">
+
+                        Format: XLSX, XLS atau CSV
+
+                    </small>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+
+                        Batal
+
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn btn-success">
+
+                        <i class="fa-solid fa-upload me-2"></i>
+
+                        Import
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
 @endsection

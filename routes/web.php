@@ -72,14 +72,15 @@ Route::get(
 
     Route::resource('keterampilan', KeterampilanController::class);
 
-
     Route::get('/pemetaan', [PemetaanController::class, 'index'])->name('pemetaan.index');
-   
-    
     Route::get('/detail/rt/{id}', [PemetaanController::class, 'detailRt'])
     ->name('pemetaan.detail.rt');
 Route::get('/detail/rw/{id}', [PemetaanController::class, 'detailRw'])
     ->name('pemetaan.detail.rw');
+Route::get(
+    '/detail/dusun/{id}',
+    [PemetaanController::class,'detailDusun']
+)->name('pemetaan.detail.dusun');
 
     Route::get('/backup', [BackupController::class, 'index'])->name('backup.index');
 Route::post('/backup', [BackupController::class, 'store'])->name('backup.store');
