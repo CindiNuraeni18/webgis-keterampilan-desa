@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Rt;
 use App\Models\Warga;
+use App\Models\Dusun;
+use App\Models\Rw;
+use App\Models\KategoriKeterampilan;
 use App\Imports\WargaImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
@@ -11,25 +14,95 @@ use Illuminate\Http\Request;
 class WargaController extends Controller
 {
     public function index(Request $request)
-    {
-        $search = $request->search;
+{
+    $search = $request->search;
 
-       $wargas = Warga::with(
+    $dusunId = $request->dusun_id;
+    $rwId = $request->rw_id;
+    $rtId = $request->rt_id;
+    $kategoriId = $request->kategori_id;
 
-    'rt.rw.dusun',
+    $wargas = Warga::with([
+        'rt.rw.dusun',
+        'keterampilans.kategori'
+    ])
 
-    'keterampilans.kategori'
+    ->when($search, function ($query) use ($search) {
 
-)
-            ->when($search, function ($query, $search) {
-                $query->where('nama', 'like', "%{$search}%")
-                      ->orWhere('nik', 'like', "%{$search}%");
-            })
-            ->latest()
-            ->paginate(20);
+        $query->where(function ($q) use ($search) {
 
-        return view('admin.warga.index', compact('wargas', 'search'));
-    }
+            $q->where('nama', 'like', "%{$search}%")
+              ->orWhere('nik', 'like', "%{$search}%");
+
+        });
+
+    })
+
+    ->when($dusunId, function ($query) use ($dusunId) {
+
+        $query->whereHas('rt.rw', function ($q) use ($dusunId) {
+
+            $q->where('dusun_id', $dusunId);
+
+        });
+
+    })
+
+    ->when($rwId, function ($query) use ($rwId) {
+
+        $query->whereHas('rt', function ($q) use ($rwId) {
+
+            $q->where('rw_id', $rwId);
+
+        });
+
+    })
+
+    ->when($rtId, function ($query) use ($rtId) {
+
+        $query->where('rt_id', $rtId);
+
+    })
+
+    ->when($kategoriId, function ($query) use ($kategoriId) {
+
+        $query->whereHas('keterampilans', function ($q) use ($kategoriId) {
+
+            $q->where('kategori_keterampilan_id', $kategoriId);
+
+        });
+
+    })
+
+    ->latest()
+    ->paginate(20)
+    ->withQueryString();
+
+    $dusuns = Dusun::orderBy('nama_dusun')->get();
+
+    $rws = Rw::with('dusun')
+        ->orderBy('nomor_rw')
+        ->get();
+
+    $rts = Rt::with('rw')
+        ->orderBy('nomor_rt')
+        ->get();
+
+    $kategoris = KategoriKeterampilan::orderBy('nama_kategori')
+        ->get();
+
+    return view(
+        'admin.warga.index',
+        compact(
+            'wargas',
+            'search',
+            'dusuns',
+            'rws',
+            'rts',
+            'kategoris'
+        )
+    );
+}
 
     public function create()
     {

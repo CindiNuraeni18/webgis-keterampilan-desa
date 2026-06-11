@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dusun;
 use App\Models\Rw;
 use App\Models\Rt;
+use App\Models\Keterampilan;
 
 class PemetaanController extends Controller
 {
@@ -127,20 +128,20 @@ if(count($semuaNamaSkill) > 0){
 }
 
         return[
-        'id'=>$dusun->id,
-        'nama_dusun'=>$dusun->nama_dusun,
-        'latitude'=>$dusun->latitude,
-        'longitude'=>$dusun->longitude,
-        'jumlah_rw'=>$dusun->rws->count(),
-        'jumlah_rt'=>$jumlahRt,
-        'jumlah_warga'=>$jumlahWarga,
-        'jumlah_keterampilan'=>$jumlahSkill,
+    'id' => $dusun->id,
+    'nama_dusun' => $dusun->nama_dusun,
 
-        'keterampilan_dominan'=>$kategoriDominan,
+    'latitude' => $dusun->rws->avg('latitude'),
+    'longitude' => $dusun->rws->avg('longitude'),
 
-        'nama_keterampilan_dominan'=>$namaSkillDominan
+    'jumlah_rw' => $dusun->rws->count(),
+    'jumlah_rt' => $jumlahRt,
+    'jumlah_warga' => $jumlahWarga,
+    'jumlah_keterampilan' => $jumlahSkill,
 
-        ];
+    'keterampilan_dominan' => $kategoriDominan,
+    'nama_keterampilan_dominan' => $namaSkillDominan
+];
 
         });
 
@@ -378,27 +379,72 @@ if(count($semuaNamaSkill) > 0){
 
 public function detailRt($id)
 {
-    $rt = Rt::with('wargas.keterampilans.kategori', 'rw.dusun')->findOrFail($id);
+    $rt = Rt::with('rw.dusun')
+        ->findOrFail($id);
 
-    return view('admin.pemetaan.detail-rt', compact('rt'));
+    $wargas = $rt->wargas()
+        ->with('keterampilans.kategori')
+        ->paginate(10);
+
+    return view(
+        'admin.pemetaan.detail-rt',
+        compact(
+            'rt',
+            'wargas'
+        )
+    );
 }
 
 public function detailRw($id)
 {
-    $rw = Rw::with('rts.wargas.keterampilans.kategori', 'dusun')->findOrFail($id);
+    $rw = Rw::with(
+        'rts.wargas',
+        'dusun'
+    )->findOrFail($id);
 
-    return view('admin.pemetaan.detail-rw', compact('rw'));
+    $wargaIds = $rw->rts
+        ->flatMap(fn($rt) => $rt->wargas)
+        ->pluck('id');
+
+    $skills = \App\Models\Keterampilan::with([
+        'kategori',
+        'warga.rt.rw.dusun'
+    ])
+    ->whereIn('warga_id', $wargaIds)
+    ->paginate(10);
+
+    return view(
+        'admin.pemetaan.detail-rw',
+        compact(
+            'rw',
+            'skills'
+        )
+    );
 }
 
 public function detailDusun($id)
 {
-    $dusun = Dusun::with(
-        'rws.rts.wargas.keterampilans.kategori'
-    )->findOrFail($id);
+    $dusun = Dusun::with('rws.rts')
+        ->findOrFail($id);
+
+    $wargaIds = $dusun->rws
+        ->flatMap(fn($rw) => $rw->rts)
+        ->flatMap(fn($rt) => $rt->wargas)
+        ->pluck('id');
+
+    $skills = \App\Models\Keterampilan::with([
+        'kategori',
+        'warga.rt.rw.dusun'
+    ])
+    ->whereIn('warga_id', $wargaIds)
+    ->paginate(10);
 
     return view(
         'admin.pemetaan.detail-dusun',
-        compact('dusun')
+        compact(
+            'dusun',
+            'skills'
+        )
     );
 }
 }

@@ -12,6 +12,7 @@ class PesanController extends Controller
 {
     $request->validate([
         'nama' => 'required',
+        'nik' => 'required|digits:16',
         'nomor_hp' => 'required',
         'dusun' => 'required',
         'pesan' => 'required',
@@ -26,21 +27,23 @@ class PesanController extends Controller
 
     Pesan::create([
         'nama' => $request->nama,
-        'email' => $request->email,
+        'nik' => $request->nik,
         'nomor_hp' => $nomor,
         'dusun' => $request->dusun,
         'rw' => $request->rw,
         'rt' => $request->rt,
+          'kategori_keterampilan_id' =>
+        $request->kategori_keterampilan_id,
+
         'keterampilan' => $request->keterampilan,
         'pesan' => $request->pesan,
         'status' => 'Menunggu',
         'status_baca' => false,
     ]);
 
-    return back()->with(
-        'success',
-        'Pengajuan berhasil dikirim'
-    );
+    return redirect()
+    ->route('landing', ['#' => 'kontak'])
+    ->with('success', 'Pengajuan berhasil dikirim');
 }
 
     // tampil data admin
@@ -52,7 +55,7 @@ class PesanController extends Controller
             'status_baca' => true
         ]);
 
-    $pesans = Pesan::latest()->get();
+    $pesans = Pesan::latest()->paginate(20);
 
     return view(
         'admin.pesan.index',

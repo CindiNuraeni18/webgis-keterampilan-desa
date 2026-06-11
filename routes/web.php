@@ -30,7 +30,10 @@ Route::get('/home', function () {
 })->middleware('auth')->name('home');
 
  Route::get('/api/pemetaan', [PemetaanController::class, 'api']);
- 
+ Route::get('/', [LandingPageController::class, 'index'])
+    ->name('landing');
+
+
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
       Route::get('/dashboard', [HomeController::class, 'index'])
     ->name('dashboard');
@@ -85,6 +88,10 @@ Route::get(
     Route::get('/backup', [BackupController::class, 'index'])->name('backup.index');
 Route::post('/backup', [BackupController::class, 'store'])->name('backup.store');
 Route::get('/backup/download/{id}', [BackupController::class, 'download'])->name('backup.download');
+Route::post(
+    '/backup/{id}/restore',
+    [BackupController::class, 'restore']
+)->name('backup.restore');
 
 Route::get('/pesan', [PesanController::class, 'index'])
     ->name('pesan.index');
@@ -96,4 +103,5 @@ Route::put('/pesan/{id}/setujui',
 Route::put('/pesan/{id}/tolak',
     [PesanController::class, 'tolak'])
     ->name('pesan.tolak');
+
 });

@@ -1,9 +1,9 @@
 @extends('layouts.sidebar-admin')
 
-@section('title', 'Pesan Masyarakat')
+@section('title', 'Pengajuan Keterampilan')
 
 @section('content')
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
         /* ==================================================== */
         /* ANIMASI GLOBAL & LAYOUT (DIADOPSI DARI KETERAMPILAN) */
@@ -14,8 +14,13 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         @keyframes slideInUp {
@@ -23,6 +28,7 @@
                 opacity: 0;
                 transform: translateY(25px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -34,6 +40,7 @@
                 opacity: 0;
                 transform: translateX(-25px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -45,6 +52,7 @@
                 opacity: 0;
                 transform: scale(0.95);
             }
+
             to {
                 opacity: 1;
                 transform: scale(1);
@@ -116,7 +124,7 @@
             left: -5px;
             width: 5px;
             height: 100%;
-            background: linear-gradient(to left, rgba(0,0,0,0.05), rgba(0,0,0,0));
+            background: linear-gradient(to left, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0));
             pointer-events: none;
         }
 
@@ -158,6 +166,7 @@
         .modal {
             z-index: 99999 !important;
         }
+
         .modal-backdrop {
             z-index: 99998 !important;
         }
@@ -165,7 +174,7 @@
         .modal-content-premium {
             border: none;
             border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.12) !important;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12) !important;
             overflow: hidden;
         }
 
@@ -211,6 +220,170 @@
             color: #991b1b;
             line-height: 1.6;
         }
+
+        .pagination {
+
+            justify-content: center;
+
+            gap: 6px;
+
+            margin-top: 25px;
+
+        }
+
+        .page-item .page-link {
+
+            border: none;
+
+            border-radius: 12px !important;
+
+            min-width: 42px;
+
+            height: 42px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: #475569;
+
+            font-weight: 600;
+
+            transition: .3s ease;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, .05);
+
+        }
+
+        .page-item .page-link:hover {
+
+            transform: translateY(-2px);
+
+            background: #eff6ff;
+
+            color: #2563eb;
+
+        }
+
+        .page-item.active .page-link {
+
+            background: linear-gradient(135deg,
+                    #2563eb,
+                    #3b82f6);
+
+            color: white;
+
+            box-shadow:
+                0 8px 20px rgba(37, 99, 235, .25);
+
+        }
+
+        .page-item.disabled .page-link {
+
+            background: #f8fafc;
+
+            color: #94a3b8;
+
+        }
+
+        /* DETAIL */
+        .btn-detail-modern {
+            border: none;
+            border-radius: 12px;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg,
+                    #0ea5e9,
+                    #38bdf8);
+            color: white;
+            transition: .3s ease;
+            box-shadow: 0 4px 10px rgba(14, 165, 233, .2);
+        }
+
+        .btn-detail-modern:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 18px rgba(14, 165, 233, .35);
+            color: white;
+        }
+
+        /* SETUJUI */
+        .btn-approve-modern {
+            border: none;
+            border-radius: 12px;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg,
+                    #22c55e,
+                    #16a34a);
+            color: white;
+            transition: .3s ease;
+            box-shadow: 0 4px 10px rgba(34, 197, 94, .2);
+        }
+
+        .btn-approve-modern:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 18px rgba(34, 197, 94, .35);
+            color: white;
+        }
+
+        /* TOLAK */
+        .btn-delete-modern {
+            border: none;
+            border-radius: 12px;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg,
+                    #ef4444,
+                    #dc2626);
+            color: white;
+            transition: .3s ease;
+            box-shadow: 0 4px 10px rgba(239, 68, 68, .2);
+        }
+
+        .btn-delete-modern:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 18px rgba(239, 68, 68, .35);
+            color: white;
+        }
+
+        /* ANIMASI ICON DETAIL */
+        .btn-detail-modern i {
+            transition: .3s ease;
+        }
+
+        .btn-detail-modern:hover i {
+            transform: scale(1.12);
+        }
+
+        /* ANIMASI ICON SETUJUI */
+        .btn-approve-modern i {
+            transition: .3s ease;
+        }
+
+        .btn-approve-modern:hover i {
+            transform: rotate(-10deg);
+        }
+
+        /* ANIMASI ICON TOLAK */
+        .btn-delete-modern i {
+            transition: .3s ease;
+        }
+
+        .btn-delete-modern:hover i {
+            transform: scale(1.12);
+        }
     </style>
 
     <div class="card border-0 shadow-sm fade-in">
@@ -218,8 +391,8 @@
 
             <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
                 <div>
-                    <h4 class="mb-1 title-animate fw-bold">Pesan Masyarakat</h4>
-                    <p class="text-muted title-animate mb-0">Daftar pesan dan keterampilan dari masyarakat desa.</p>
+                    <h4 class="mb-1 title-animate">Pengajuan Keterampilan</h4>
+                    <p class="text-muted title-animate mb-0">Daftar pengajuan keterampilan dari masyarakat desa.</p>
                 </div>
                 <div class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill">
                     Total: {{ $pesans->count() }} Pesan
@@ -233,9 +406,8 @@
                             <tr>
                                 <th width="60">No</th>
                                 <th>Nama</th>
-                                <th>Email</th>
                                 <th>Wilayah</th>
-                                <th>Kontak</th>
+                                <th>Kategori</th>
                                 <th>Keterampilan</th>
                                 <th>Status</th>
                                 <th width="180" class="sticky-col">Aksi</th>
@@ -244,18 +416,14 @@
                         <tbody>
                             @forelse($pesans as $item)
                                 <tr style="animation-delay: {{ $loop->index * 0.05 }}s">
-                                    <td class="text-center fw-semibold">{{ $loop->iteration }}</td>
+                                    <td class="text-center fw-semibold">{{ $pesans->firstItem() + $loop->index }}</td>
                                     <td class="fw-semibold text-dark">{{ $item->nama }}</td>
-                                    <td><span class="text-secondary small">{{ $item->email ?? '-' }}</span></td>
                                     <td>
                                         <div>{{ $item->dusun }}</div>
-                                        <small class="text-muted text-xs">RW {{ $item->rw ?? '-' }} / RT {{ $item->rt ?? '-' }}</small>
+                                        <small class="text-muted text-xs">RT
+                                            {{ $item->rt ?? '-' }} / RW {{ $item->rw ?? '-' }}</small>
                                     </td>
-                                    <td>
-                                        <a href="https://wa.me/{{ $item->nomor_hp }}" target="_blank" class="text-decoration-none fw-medium text-primary">
-                                           {{ $item->nomor_hp }}
-                                        </a>
-                                    </td>
+                                    <td>{{ $item->kategori->nama_kategori ?? '-' }}</td>
                                     <td>{{ $item->keterampilan ?? '-' }}</td>
                                     <td class="text-center">
                                         @if ($item->status == 'Disetujui')
@@ -263,28 +431,46 @@
                                         @elseif($item->status == 'Ditolak')
                                             <span class="badge bg-danger px-2.5 py-1.5 rounded-pill small">Ditolak</span>
                                         @else
-                                            <span class="badge bg-warning text-dark px-2.5 py-1.5 rounded-pill small">Menunggu</span>
+                                            <span
+                                                class="badge bg-warning text-dark px-2.5 py-1.5 rounded-pill small">Menunggu</span>
                                         @endif
                                     </td>
                                     <td class="text-center sticky-col">
-                                        <div class="d-flex justify-content-center gap-3">
-                                            <button class="btn btn-info btn-sm text-white click-animate" data-bs-toggle="modal" data-bs-target="#detailModal{{ $item->id }}" title="Detail Berkas">
-                                                <i class="bi bi-eye"></i>
+                                        <div class="d-flex justify-content-center gap-2">
+
+                                            <!-- DETAIL -->
+                                            <button class="btn-detail-modern" data-bs-toggle="modal"
+                                                data-bs-target="#detailModal{{ $item->id }}" title="Detail">
+
+                                                <i class="bi bi-eye-fill"></i>
+
                                             </button>
 
                                             @if ($item->status == 'Menunggu')
-                                                <form action="{{ route('admin.pesan.setujui', $item->id) }}" method="POST" class="d-inline m-0 p-0">
+                                                <!-- SETUJUI -->
+                                                <form action="{{ route('admin.pesan.setujui', $item->id) }}" method="POST"
+                                                    class="d-inline">
+
                                                     @csrf
                                                     @method('PUT')
-                                                    <button class="btn btn-success btn-sm click-animate" title="Setujui Pengajuan">
-                                                        <i class="bi bi-check-circle"></i>
+
+                                                    <button class="btn-approve-modern" title="Setujui">
+
+                                                        <i class="bi bi-check-lg"></i>
+
                                                     </button>
+
                                                 </form>
 
-                                                <button class="btn btn-danger btn-sm click-animate" data-bs-toggle="modal" data-bs-target="#tolakModal{{ $item->id }}" title="Tolak Pengajuan">
-                                                    <i class="bi bi-x-circle"></i>
+                                                <!-- TOLAK -->
+                                                <button class="btn-delete-modern" data-bs-toggle="modal"
+                                                    data-bs-target="#tolakModal{{ $item->id }}" title="Tolak">
+
+                                                    <i class="bi bi-x-lg"></i>
+
                                                 </button>
                                             @endif
+
                                         </div>
                                     </td>
                                 </tr>
@@ -298,16 +484,18 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
 
+            </div>
+            <div class="mt-3">{{ $pesans->links() }}</div>
         </div>
     </div>
 
-    @foreach($pesans as $item)
+    @foreach ($pesans as $item)
         <div class="modal fade" id="detailModal{{ $item->id }}" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content modal-content-premium">
-                    <div class="modal-header bg-white border-0 pt-4 px-4 pb-2 d-flex align-items-center justify-content-between">
+                    <div
+                        class="modal-header bg-white border-0 pt-4 px-4 pb-2 d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center gap-3">
                             <div class="bg-primary-subtle p-2.5 rounded-3 text-primary d-inline-flex">
                                 <i class="bi bi-envelope-open-fill fs-5"></i>
@@ -317,7 +505,8 @@
                                 <span class="text-muted small">Informasi berkas pengajuan masuk masyarakat</span>
                             </div>
                         </div>
-                        <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                     </div>
 
                     <div class="modal-body px-4 pt-3 pb-4">
@@ -330,15 +519,16 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="info-detail-card">
-                                    <div class="info-label">Alamat Email</div>
-                                    <div class="info-value">{{ $item->email ?? '-' }}</div>
+                                    <div class="info-label">NIK</div>
+                                    <div class="info-value">{{ $item->nik }}</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="info-detail-card">
                                     <div class="info-label">Nomor WhatsApp</div>
                                     <div class="info-value">
-                                        <a href="https://wa.me/{{ $item->nomor_hp }}" target="_blank" class="text-decoration-none">
+                                        <a href="https://wa.me/{{ $item->nomor_hp }}" target="_blank"
+                                            class="text-decoration-none">
                                             {{ $item->nomor_hp }} <i class="bi bi-box-arrow-up-right small ms-1"></i>
                                         </a>
                                     </div>
@@ -346,14 +536,25 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="info-detail-card">
-                                    <div class="info-label">Keterampilan / Bidang</div>
-                                    <div class="info-value"><span class="badge bg-dark-subtle text-dark px-2 py-1">{{ $item->keterampilan ?? '-' }}</span></div>
+                                    <div class="info-label">Kategori</div>
+                                    <div class="info-value">
+                                        {{ $item->kategori->nama_kategori ?? '-' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="info-detail-card">
+                                    <div class="info-label">Keterampilan</div>
+                                    <div class="info-value"><span
+                                            class="badge bg-dark-subtle text-dark px-2 py-1">{{ $item->keterampilan ?? '-' }}</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="info-detail-card">
                                     <div class="info-label">Cakupan Wilayah Tempat Tinggal</div>
-                                    <div class="info-value">Dusun {{ $item->dusun }}, RW {{ $item->rw ?? '-' }}, RT {{ $item->rt ?? '-' }}</div>
+                                    <div class="info-value">Dusun {{ $item->dusun }}, RW {{ $item->rw ?? '-' }}, RT
+                                        {{ $item->rt ?? '-' }}</div>
                                 </div>
                             </div>
                         </div>
@@ -361,7 +562,8 @@
                         <div class="mb-3">
                             <div class="d-flex align-items-center gap-2 mb-2 px-1">
                                 <i class="bi bi-chat-left-text text-secondary small"></i>
-                                <span class="text-uppercase fw-bold text-secondary" style="font-size:0.75rem; letter-spacing: 0.5px;">Isi Pesan / Lampiran Aduan</span>
+                                <span class="text-uppercase fw-bold text-secondary"
+                                    style="font-size:0.75rem; letter-spacing: 0.5px;">Isi Pesan / Lampiran Aduan</span>
                             </div>
                             <div class="message-display-box fw-medium">
                                 {!! nl2br(e($item->pesan)) !!}
@@ -372,7 +574,8 @@
                             <div class="mt-3">
                                 <div class="d-flex align-items-center gap-2 mb-2 px-1">
                                     <i class="bi bi-exclamation-triangle text-danger small"></i>
-                                    <span class="text-uppercase fw-bold text-danger" style="font-size:0.75rem; letter-spacing: 0.5px;">Alasan Penolakan Tim Admin</span>
+                                    <span class="text-uppercase fw-bold text-danger"
+                                        style="font-size:0.75rem; letter-spacing: 0.5px;">Alasan Penolakan Tim Admin</span>
                                 </div>
                                 <div class="reject-display-box">
                                     {{ $item->alasan_penolakan }}
@@ -391,17 +594,22 @@
                         @csrf
                         @method('PUT')
                         <div class="modal-header border-0 pt-4 px-4 pb-2">
-                            <h5 class="fw-bold text-danger mb-0"><i class="bi bi-x-circle-fill me-2"></i>Tolak Pengajuan</h5>
-                            <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <h5 class="fw-bold text-danger mb-0"><i class="bi bi-x-circle-fill me-2"></i>Tolak Pengajuan
+                            </h5>
+                            <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <div class="modal-body px-4 py-3">
                             <div class="mb-2">
-                                <label class="form-label text-secondary fw-semibold small">Berikan Alasan Penolakan Yang Jelas:</label>
-                                <textarea name="alasan_penolakan" class="form-control border-secondary-subtle rounded-3 p-3" rows="4" placeholder="Masukkan alasan penolakan berkas..." required></textarea>
+                                <label class="form-label text-secondary fw-semibold small">Berikan Alasan Penolakan Yang
+                                    Jelas:</label>
+                                <textarea name="alasan_penolakan" class="form-control border-secondary-subtle rounded-3 p-3" rows="4"
+                                    placeholder="Masukkan alasan penolakan berkas..." required></textarea>
                             </div>
                         </div>
                         <div class="modal-footer border-0 px-4 pb-4 pt-2 d-flex gap-2 justify-content-end">
-                            <button type="button" class="btn btn-light rounded-pill px-4 fw-medium" data-bs-dismiss="modal">Batal</button>
+                            <button type="button" class="btn btn-light rounded-pill px-4 fw-medium"
+                                data-bs-dismiss="modal">Batal</button>
                             <button class="btn btn-danger rounded-pill px-4 fw-semibold">Konfirmasi Tolak</button>
                         </div>
                     </form>

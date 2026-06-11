@@ -8,23 +8,50 @@ use App\Models\Dusun;
 use App\Models\Warga;
 use App\Models\Keterampilan;
 use App\Models\KategoriKeterampilan;
+use App\Models\Pesan;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class LandingPageController extends Controller
 {
-    public function index()
-    {
-        $totalRw = Rw::count();
+   public function index(Request $request)
+{
+   $hasil = null;
+$jenis = null;
 
-        $totalRt = Rt::count();
+if ($request->filled('nik')) {
 
-        $totalDusun = Dusun::count();
+    $warga = Warga::with([
+    'rt.rw.dusun',
+    'keterampilans.kategori'
+])->where('nik', $request->nik)->first();
 
-        $totalWarga = Warga::count();
+    if ($warga) {
 
-        $totalSkill = Warga::has('keterampilans')->count();
+        $hasil = $warga;
+        $jenis = 'warga';
 
-        $totalKategori = KategoriKeterampilan::count();
+    } else {
+
+        $pesan = Pesan::with('kategori')
+    ->where('nik', $request->nik)
+    ->latest()
+    ->first();
+
+        if ($pesan) {
+            $hasil = $pesan;
+            $jenis = 'pesan';
+        }
+    }
+}
+
+    $totalRw = Rw::count();
+    $totalRt = Rt::count();
+    $totalDusun = Dusun::count();
+    $totalWarga = Warga::count();
+    $totalSkill = Warga::has('keterampilans')->count();
+    $totalKategori = KategoriKeterampilan::count();
+
 
         // statistik kategori
         $kategoriChart = Keterampilan::join(
@@ -89,15 +116,31 @@ class LandingPageController extends Controller
 ->orderByDesc('total_skill')
 ->get();
 
+$dusuns = Dusun::all();
+
+$rws = Rw::with('dusun')->get();
+
+$rts = Rt::with('rw.dusun')->get();
+
+$kategoriKeterampilans = KategoriKeterampilan::orderBy('nama_kategori')->get();
+
         return view('welcome', compact(
-            'totalRw',
-            'totalRt',
-            'totalDusun',
-            'totalWarga',
-            'totalSkill',
-            'totalKategori',
-            'kategoriChart',
-            'statistikDusun'
-        ));
+     'totalRw',
+    'totalRt',
+    'totalDusun',
+    'totalWarga',
+    'totalSkill',
+    'totalKategori',
+    'kategoriChart',
+    'statistikDusun',
+    'dusuns',
+    'rws',
+    'rts',
+    'hasil',
+    'jenis',
+     'kategoriKeterampilans'
+));
     }
+
+    
 }

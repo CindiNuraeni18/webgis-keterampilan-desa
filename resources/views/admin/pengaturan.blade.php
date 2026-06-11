@@ -146,28 +146,6 @@
         color: var(--text-muted);
         cursor: pointer;
     }
-
-    .btn-submit {
-        background: var(--primary);
-        color: white;
-        border: none;
-        border-radius: 14px;
-        padding: 14px 30px;
-        font-weight: 700;
-        width: 100%;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-    }
-
-    .btn-submit:hover {
-        background: var(--primary-dark);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(67, 97, 238, 0.25);
-    }
-
     .text-error {
         color: #dc2626;
         font-size: 0.82rem;
@@ -178,6 +156,150 @@
         .form-card { padding: 1.5rem; }
         .page-title { font-size: 1.35rem; }
     }
+    .btn-save{
+
+    position: relative;
+
+    overflow: hidden;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #3b82f6
+    );
+
+    color: white !important;
+
+    font-weight: 600;
+
+    transition: all .35s ease;
+
+    box-shadow:
+        0 6px 18px rgba(37,99,235,.25);
+
+}
+
+
+
+/* EFEK PUTIH */
+.btn-save::before{
+
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+
+    left: -75%;
+
+    width: 50%;
+
+    height: 100%;
+
+    background: rgba(255,255,255,.22);
+
+    transform: skewX(-25deg);
+
+    transition: .7s;
+
+}
+
+
+
+/* HOVER */
+.btn-save:hover{
+
+    transform:
+        translateY(-2px)
+        scale(1.03);
+
+    box-shadow:
+        0 10px 24px rgba(37,99,235,.35);
+
+    color: white !important;
+
+}
+
+
+
+/* GERAK PUTIH */
+.btn-save:hover::before{
+
+    left: 130%;
+
+}
+
+
+
+/* ICON */
+.btn-save i{
+
+    transition: .3s ease;
+
+}
+
+
+
+/* ICON HOVER */
+.btn-save:hover i{
+
+    transform: rotate(-10deg);
+
+}
+
+
+
+/* SAAT DIKLIK */
+.btn-save:active{
+
+    transform: scale(0.97);
+
+    color: white !important;
+
+}
+
+
+
+/* FOCUS & VISITED */
+.btn-save:focus,
+.btn-save:visited{
+
+    color: white !important;
+
+    outline: none;
+
+    box-shadow:
+        0 10px 24px rgba(37,99,235,.35) !important;
+
+}
+
+
+
+/* SPAN TEXT */
+.btn-save span{
+
+    color: white !important;
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+
+
+/* ICON Z-INDEX */
+.btn-save i{
+
+    position: relative;
+
+    z-index: 2;
+
+}
 </style>
 
 <main class="settings-page">
@@ -197,7 +319,7 @@
                     <h5>Edit Profil</h5>
                 </div>
 
-                <div class="row g-4">
+                <div class="row g-3">
                     <div class="col-12">
                         <label class="form-label">Foto Profil Baru</label>
                         <div class="avatar-upload-wrapper">
@@ -260,8 +382,8 @@
                     </div>
                 </div>
 
-                <div class="mt-5">
-                    <button type="submit" class="btn-submit">
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-save w-100">
                         <i class="bi bi-cloud-arrow-up-fill"></i>
                         Simpan Profil
                     </button>
@@ -280,7 +402,7 @@
                     <h5>Keamanan & Password</h5>
                 </div>
 
-                <div class="row g-4 mb-4">
+                <div class="row 3 mb-3">
                     <div class="col-12">
                         <p class="text-muted small mb-0">
                             <i class="bi bi-info-circle me-1"></i>
@@ -288,7 +410,7 @@
                         </p>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label class="form-label">Password Saat Ini</label>
                         <div class="password-group">
                             <input type="password" name="current_password" id="current_password" class="form-control" placeholder="••••••••">
@@ -301,7 +423,7 @@
                         @enderror
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label class="form-label">Password Baru</label>
                         <div class="password-group">
                             <input type="password" name="password" id="password" class="form-control" placeholder="••••••••">
@@ -314,7 +436,7 @@
                         @enderror
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label class="form-label">Konfirmasi Password</label>
                         <div class="password-group">
                             <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="••••••••">
@@ -325,8 +447,8 @@
                     </div>
                 </div>
 
-                <div class="mt-5">
-                    <button type="submit" class="btn-submit">
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-save w-100">
                         <i class="bi bi-shield-check"></i>
                         Simpan Password
                     </button>
@@ -375,7 +497,7 @@
             timer: 2000,
             showConfirmButton: false,
             customClass: { popup: 'rounded-4' }
-        });z
+        });
         @endif
 
         @if(session('success_password'))

@@ -1025,7 +1025,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-section-title mt-2">Laporan</li>
+                    {{-- <li class="nav-section-title mt-2">Laporan</li>
 
                     <li class="nav-item">
                         <a href="{{ route('admin.keterampilan.statistik') }}"
@@ -1035,7 +1035,7 @@
                             <span class="nav-text">Statistik</span>
                             <i class="bi bi-chevron-right nav-arrow"></i>
                         </a>
-                    </li>
+                    </li> --}}
 
                     <li class="nav-item">
                         <a href="{{ route('admin.keterampilan.laporan') }}"
@@ -1068,7 +1068,7 @@
 
                             <span class="nav-text d-flex align-items-center justify-content-between w-100">
 
-                                Pesan Masyarakat
+                                Pengajuan Keterampilan
 
                                 @if ($notifPesan > 0)
                                     <span class="badge bg-danger rounded-pill ms-2">

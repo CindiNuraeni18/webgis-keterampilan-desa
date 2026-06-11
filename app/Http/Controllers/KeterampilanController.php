@@ -31,7 +31,7 @@ class KeterampilanController extends Controller
                     });
             })
             ->latest()
-            ->paginate(10);
+            ->paginate(20);
 
         return view('admin.keterampilan.index', compact('keterampilans', 'search'));
     }
@@ -160,46 +160,10 @@ public function laporan(Request $request)
     $kategori = $request->kategori;
     $tahun = $request->tahun;
 
-    $laporans = Keterampilan::with(
-        'warga.rt.rw.dusun',
-        'kategori'
-    )
-
-    ->when($search, function ($query) use ($search) {
-    $query->whereHas('warga', function ($q) use ($search) {
-        $q->where('nama', 'like', "%$search%")
-          ->orWhere('nik', 'like', "%$search%");
-    });
-})
-
-    ->when($dusun, function ($query) use ($dusun) {
-        $query->whereHas('warga.rt.rw.dusun', function ($q) use ($dusun) {
-            $q->where('id', $dusun);
-        });
-    })
-
-    ->when($rw, function ($query) use ($rw) {
-        $query->whereHas('warga.rt.rw', function ($q) use ($rw) {
-            $q->where('id', $rw);
-        });
-    })
-
-    ->when($rt, function ($query) use ($rt) {
-        $query->whereHas('warga.rt', function ($q) use ($rt) {
-            $q->where('id', $rt);
-        });
-    })
-
-    ->when($kategori, function ($query) use ($kategori) {
-        $query->where('kategori_keterampilan_id', $kategori);
-    })
-
-    ->when($tahun, function ($query) use ($tahun) {
-    $query->whereYear('created_at', $tahun);
-})
-
+    $laporans = $this->getFilteredLaporan($request)
     ->latest()
-    ->paginate(10);
+    ->paginate(20)
+    ->withQueryString();
 
     $dusuns = Dusun::all();
     $rws = Rw::all();
@@ -222,57 +186,206 @@ public function laporan(Request $request)
     ));
 }
 
- public function exportPdf()
-    {
-        // 🔥 OPTIMASI DATA (biar cepat)
-        $laporans = Keterampilan::select(
-                'id','warga_id','kategori_keterampilan_id','nama_keterampilan'
-            )
-            ->with([
-                'warga:id,nama,nik,rt_id',
-                'warga.rt:id,nomor_rt,rw_id',
-                'warga.rt.rw:id,nomor_rw,dusun_id',
-                'warga.rt.rw.dusun:id,nama_dusun',
-                'kategori:id,nama_kategori'
-            ])
-            ->limit(100)
-            ->get();
+public function exportPdf(Request $request)
+{
+    $laporans = $this->getFilteredLaporan($request)
+        ->latest()
+        ->get();
 
-        $options = new Options();
-        $options->set('isRemoteEnabled', false);
+    // Ringkasan
+    $totalWarga = $laporans->pluck('warga_id')
+        ->unique()
+        ->count();
 
-        $dompdf = new Dompdf($options);
+    $totalKategori = $laporans->pluck('kategori_keterampilan_id')
+        ->unique()
+        ->count();
 
-        $html = view('admin.keterampilan.pdf', compact('laporans'))->render();
+    $totalKeterampilan = $laporans->count();
 
-        $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'portrait');
-        $dompdf->render();
+    // Statistik kategori
+    $statistikKategori = $laporans
+        ->groupBy(function ($item) {
+            return $item->kategori->nama_kategori ?? 'Tanpa Kategori';
+        })
+        ->map(function ($items) {
+            return $items->count();
+        });
 
-        return response($dompdf->output(), 200)
-            ->header('Content-Type', 'application/pdf')
-            ->header('Content-Disposition', 'attachment; filename="laporan_keterampilan.pdf"');
+    // Filter aktif
+    $filterAktif = [];
+
+    if ($request->search) {
+        $filterAktif['Pencarian'] = $request->search;
     }
 
-public function exportExcel()
+    if ($request->dusun) {
+        $dusun = Dusun::find($request->dusun);
+        $filterAktif['Dusun'] = $dusun?->nama_dusun;
+    }
+
+    if ($request->rw) {
+        $rw = Rw::find($request->rw);
+        $filterAktif['RW'] = $rw?->nomor_rw;
+    }
+
+    if ($request->rt) {
+        $rt = Rt::find($request->rt);
+        $filterAktif['RT'] = $rt?->nomor_rt;
+    }
+
+    if ($request->kategori) {
+        $kategori = KategoriKeterampilan::find($request->kategori);
+        $filterAktif['Kategori'] = $kategori?->nama_kategori;
+    }
+
+    if ($request->tahun) {
+        $filterAktif['Tahun'] = $request->tahun;
+    }
+
+    $options = new Options();
+    $options->set('isRemoteEnabled', false);
+
+    $dompdf = new Dompdf($options);
+
+    $html = view(
+        'admin.keterampilan.pdf',
+        compact(
+            'laporans',
+            'totalWarga',
+            'totalKategori',
+            'totalKeterampilan',
+            'statistikKategori',
+            'filterAktif'
+        )
+    )->render();
+
+    $dompdf->loadHtml($html);
+    $dompdf->setPaper('A4', 'landscape');
+    $dompdf->render();
+
+    return response($dompdf->output(), 200)
+        ->header('Content-Type', 'application/pdf')
+        ->header(
+            'Content-Disposition',
+            'attachment; filename="laporan_keterampilan.pdf"'
+        );
+}
+
+public function exportExcel(Request $request)
 {
-    $laporans = Keterampilan::with(
-        'warga.rt.rw.dusun',
-        'kategori'
-    )->get();
+    $laporans = $this->getFilteredLaporan($request)
+        ->latest()
+        ->get();
+
+    $totalWarga = $laporans->pluck('warga_id')
+        ->unique()
+        ->count();
+
+    $totalKategori = $laporans->pluck('kategori_keterampilan_id')
+        ->unique()
+        ->count();
+
+    $totalKeterampilan = $laporans->count();
+
+    $statistikKategori = $laporans
+        ->groupBy(function ($item) {
+            return $item->kategori->nama_kategori ?? 'Tanpa Kategori';
+        })
+        ->map(function ($items) {
+            return $items->count();
+        });
+
+    $filterAktif = [];
+
+    if ($request->search) {
+        $filterAktif['Pencarian'] = $request->search;
+    }
+
+    if ($request->dusun) {
+        $dusun = Dusun::find($request->dusun);
+        $filterAktif['Dusun'] = $dusun?->nama_dusun;
+    }
+
+    if ($request->rw) {
+        $rw = Rw::find($request->rw);
+        $filterAktif['RW'] = $rw?->nomor_rw;
+    }
+
+    if ($request->rt) {
+        $rt = Rt::find($request->rt);
+        $filterAktif['RT'] = $rt?->nomor_rt;
+    }
+
+    if ($request->kategori) {
+        $kategori = KategoriKeterampilan::find($request->kategori);
+        $filterAktif['Kategori'] = $kategori?->nama_kategori;
+    }
+
+    if ($request->tahun) {
+        $filterAktif['Tahun'] = $request->tahun;
+    }
 
     $filename = "laporan_keterampilan.xls";
 
     $headers = [
         "Content-Type" => "application/vnd.ms-excel",
-        "Content-Disposition" => "attachment; filename=$filename"
+        "Content-Disposition" => "attachment; filename={$filename}"
     ];
 
     return response()->view(
         'admin.keterampilan.excel',
-        compact('laporans'),
+        compact(
+            'laporans',
+            'totalWarga',
+            'totalKategori',
+            'totalKeterampilan',
+            'statistikKategori',
+            'filterAktif'
+        ),
         200,
         $headers
     );
+}
+
+private function getFilteredLaporan(Request $request)
+{
+    return Keterampilan::with(
+        'warga.rt.rw.dusun',
+        'kategori'
+    )
+
+    ->when($request->search, function ($query) use ($request) {
+        $query->whereHas('warga', function ($q) use ($request) {
+            $q->where('nama', 'like', "%{$request->search}%")
+              ->orWhere('nik', 'like', "%{$request->search}%");
+        });
+    })
+
+    ->when($request->dusun, function ($query) use ($request) {
+        $query->whereHas('warga.rt.rw.dusun', function ($q) use ($request) {
+            $q->where('id', $request->dusun);
+        });
+    })
+
+    ->when($request->rw, function ($query) use ($request) {
+        $query->whereHas('warga.rt.rw', function ($q) use ($request) {
+            $q->where('id', $request->rw);
+        });
+    })
+
+    ->when($request->rt, function ($query) use ($request) {
+        $query->whereHas('warga.rt', function ($q) use ($request) {
+            $q->where('id', $request->rt);
+        });
+    })
+
+    ->when($request->kategori, function ($query) use ($request) {
+        $query->where('kategori_keterampilan_id', $request->kategori);
+    })
+
+    ->when($request->tahun, function ($query) use ($request) {
+        $query->whereYear('created_at', $request->tahun);
+    });
 }
 }

@@ -12,7 +12,6 @@ class Backup extends Model
     protected $fillable = [
         'nama_file',
         'file_path',
-        'user_id',
-        'tahun'
+        'last_restored_at'
     ];
 }
