@@ -2829,18 +2829,16 @@
 
         </div>
     </footer>
-
-    <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
+    
+    /* =========================================================
+   ANIMASI COUNTER STATISTIK
+   Menampilkan efek angka bertambah
+   pada Total Warga, RW, RT, Dusun,
+   dan Kategori Keterampilan
+========================================================= */
     <script>
-        /* =========================================================
-                            SCRIPT COUNTER ANGKA STATISTIK
-                            Fungsi ini membuat angka statistik naik otomatis saat
-                            halaman dimuat agar tampil lebih menarik.
-                       ========================================================= */
         const counters = document.querySelectorAll(".stat-number");
-
         counters.forEach(counter => {
             const target = +counter.getAttribute("data-target");
             const increment = Math.ceil(target / 100);
@@ -2861,53 +2859,38 @@
     </script>
 
     <script>
-      
+    /* =========================================================
+   ANIMASI SCROLL HALAMAN
+   Menampilkan efek fade dan zoom
+   saat section masuk viewport
+========================================================= */
         (() => {
             const animatedElements = Array.from(document.querySelectorAll('.scroll-animate'));
             if (!animatedElements.length) return;
 
-            /* -----------------------------------------------
-               Konfigurasi utama animasi
-            ----------------------------------------------- */
             const CONFIG = {
-                baseDelay: 100, // jarak stagger antar elemen
-                randomJitter: 20, // random kecil agar natural
-                enterDuration: 1000, // masuk lebih halus
-                exitDuration: 700, // keluar lebih cepat
+                baseDelay: 100, 
+                randomJitter: 20, 
+                enterDuration: 1000, 
+                exitDuration: 700,
                 enterThreshold: 0.16,
                 rootMargin: '0px 0px -10% 0px'
             };
 
-            /* -----------------------------------------------
-               Easing berbeda untuk enter & exit
-            ----------------------------------------------- */
             const EASING = {
-                enter: 'cubic-bezier(0.22, 1, 0.36, 1)', // smooth, natural
-                exit: 'ease-in-out' // lebih cepat saat keluar
+                enter: 'cubic-bezier(0.22, 1, 0.36, 1)', 
+                exit: 'ease-in-out' 
             };
 
-            /* -----------------------------------------------
-               Helper: random kecil agar animasi terasa tidak robotik
-            ----------------------------------------------- */
             const randomBetween = (min, max) =>
                 Math.floor(Math.random() * (max - min + 1)) + min;
 
-            /* -----------------------------------------------
-               Helper: cari group/container terdekat
-               Tujuan:
-               elemen-elemen yang masih satu area akan distagger
-               bersama-sama, bukan seluruh halaman sekaligus
-            ----------------------------------------------- */
             function getAnimationGroup(el) {
                 return el.closest(
                     '.row, .container, .hero, section, .hero-card, .map-card, .data-box, .contact-card'
                 ) || document.body;
             }
 
-            /* -----------------------------------------------
-               Buat registry group
-               Setiap group menyimpan daftar elemen .scroll-animate di dalamnya
-            ----------------------------------------------- */
             const groupMap = new Map();
 
             animatedElements.forEach((el, globalIndex) => {
@@ -2919,17 +2902,11 @@
 
                 groupMap.get(group).push(el);
 
-                /* Simpan global index untuk fallback */
                 el.dataset.saGlobalIndex = globalIndex;
 
-                /* Simpan jitter random per elemen agar konsisten saat repeat */
                 el.dataset.saJitter = randomBetween(0, CONFIG.randomJitter);
             });
 
-            /* -----------------------------------------------
-               Simpan index lokal dalam group
-               Ini dipakai untuk stagger masuk & reverse stagger keluar
-            ----------------------------------------------- */
             groupMap.forEach((groupElements) => {
                 groupElements.forEach((el, localIndex) => {
                     el.dataset.saIndex = localIndex;
@@ -2937,12 +2914,6 @@
                 });
             });
 
-            /* -----------------------------------------------
-               Helper: set transition variables per elemen
-               mode:
-               - enter => muncul satu per satu
-               - exit  => hilang reverse stagger
-            ----------------------------------------------- */
             function applyDynamicTiming(el, mode = 'enter') {
                 const index = Number(el.dataset.saIndex || 0);
                 const total = Number(el.dataset.saGroupSize || 1);
@@ -2953,12 +2924,10 @@
                 let easing = EASING.enter;
 
                 if (mode === 'enter') {
-                    /* Muncul satu per satu sesuai urutan */
                     delay = (index * CONFIG.baseDelay) + jitter;
                     duration = CONFIG.enterDuration + randomBetween(-30, 40);
                     easing = EASING.enter;
                 } else {
-                    /* Keluar satu per satu dengan urutan terbalik */
                     const reverseIndex = Math.max(total - 1 - index, 0);
                     delay = (reverseIndex * (CONFIG.baseDelay * 0.9)) + Math.floor(jitter * 0.5);
                     duration = CONFIG.exitDuration + randomBetween(-20, 20);
@@ -2970,9 +2939,6 @@
                 el.style.setProperty('--sa-ease', easing);
             }
 
-            /* -----------------------------------------------
-               Helper: reset awal supaya semua elemen benar-benar hidden
-            ----------------------------------------------- */
             function prepareInitialState() {
                 animatedElements.forEach((el) => {
                     el.classList.remove('in-view', 'is-leaving');
@@ -2982,9 +2948,6 @@
 
             prepareInitialState();
 
-            /* -----------------------------------------------
-               Track state agar tidak memicu operasi berulang-ulang
-            ----------------------------------------------- */
             const stateMap = new WeakMap();
 
             animatedElements.forEach((el) => {
@@ -2995,9 +2958,6 @@
                 });
             });
 
-            /* -----------------------------------------------
-               IntersectionObserver utama
-            ----------------------------------------------- */
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
                     const el = entry.target;
@@ -3005,12 +2965,7 @@
                     if (!state) return;
 
                     if (entry.isIntersecting) {
-                        /* -----------------------------------
-                           ENTER:
-                           - remove leaving state
-                           - set timing enter
-                           - tampilkan elemen
-                        ----------------------------------- */
+                       
                         if (!state.visible || state.leaving) {
                             state.visible = true;
                             state.entering = true;
@@ -3019,13 +2974,10 @@
                             el.classList.remove('is-leaving');
                             applyDynamicTiming(el, 'enter');
 
-                            /* requestAnimationFrame agar browser
-                               sempat membaca perubahan transition vars */
                             requestAnimationFrame(() => {
                                 el.classList.add('in-view');
                             });
 
-                            /* Tandai selesai enter */
                             const enterDone = () => {
                                 state.entering = false;
                                 el.removeEventListener('transitionend', enterDone);
@@ -3033,12 +2985,6 @@
                             el.addEventListener('transitionend', enterDone);
                         }
                     } else {
-                        /* -----------------------------------
-                           EXIT:
-                           - set timing exit (lebih cepat)
-                           - reverse stagger
-                           - remove in-view
-                        ----------------------------------- */
                         if (state.visible || state.entering) {
                             state.visible = false;
                             state.entering = false;
@@ -3068,11 +3014,6 @@
 
             animatedElements.forEach((el) => observer.observe(el));
 
-            /* -----------------------------------------------
-               Optional enhancement:
-               Jika layout berubah (misalnya map / resize),
-               kita refresh sedikit timing agar tetap natural
-            ----------------------------------------------- */
             let resizeTimer = null;
             window.addEventListener('resize', () => {
                 clearTimeout(resizeTimer);
@@ -3091,57 +3032,51 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-        // 1. BASE LAYERS
-
-        const streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+       //Pemetaan ====
+      // =================
+         const streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap'
         });
 
         const satelliteLayer = L.tileLayer(
             'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-                attribution: 'Tiles &copy; Esri &mdash; Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EBP, and the GIS User Community'
+                attribution: 'Tiles &copy; Esri'
             });
 
         const terrainLayer = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-            attribution: 'Map data: &copy; OpenStreetMap, SRTM | Style: &copy; OpenTopoMap'
+            attribution: 'Map data: &copy; OpenStreetMap | Style: &copy; OpenTopoMap'
         });
 
-        // Inisialisasi Map
+        // 2. INISIALISASI MAP
         const map = L.map('map', {
             center: [-6.39963, 108.11848],
             zoom: 14,
             layers: [streetLayer]
         });
-        // ======================
-        // PANE
-        // ======================
 
-        map.createPane('dusunPane');
-        map.createPane('rwPane');
-        map.createPane('rtPane');
+        // Nonaktifkan interaksi sampai peta diklik
+        map.scrollWheelZoom.disable();
+        map.dragging.disable();
 
-        map.getPane('dusunPane').style.zIndex = 450;
-        map.getPane('rwPane').style.zIndex = 650;
-        map.getPane('rtPane').style.zIndex = 700;
-        map.getPane('dusunPane').style.pointerEvents = 'none';
+        map.once('click', function() {
+            map.scrollWheelZoom.enable();
+            map.dragging.enable();
+        });
 
-        // ======================
-        // LAYER
-        // ======================
+        // 3. LAYER GROUPS
+       // Pindahkan ini ke atas (sebelum fungsi loadData)
+const polygonLayer = L.layerGroup().addTo(map);
+const dusunLayer = L.layerGroup().addTo(map);
+const rwLayer = L.layerGroup().addTo(map); 
+const rtLayer = L.layerGroup().addTo(map);
 
-        const polygonLayer = L.layerGroup().addTo(map);
-        const dusunLayer = L.layerGroup().addTo(map);
-        const rwLayer = L.layerGroup().addTo(map);
-        const rtLayer = L.layerGroup().addTo(map);
+// Tambafhkan variabel penampung data global
+let globalData = { rw: [], rt: [] };
 
-        // ======================
-        // BATAS DESA KARANGMULYA
-        // ======================
-
+        // 4. LOAD GEOJSON BATAS DESA (outline biru)
         fetch("{{ asset('geojson/karangmulya.geojson') }}")
             .then(res => res.json())
             .then(data => {
-
                 const geojson = L.geoJSON(data, {
                     style: {
                         color: '#0d6efd',
@@ -3151,558 +3086,257 @@
                 }).addTo(polygonLayer);
 
                 polygonLayer.bringToBack();
-
-                if (geojson.getBounds().isValid()) {
+                try {
                     map.fitBounds(geojson.getBounds());
-                }
-
-            })
-            .catch(err => {
-                console.error('Karangmulya GeoJSON Error:', err);
+                } catch (e) {}
             });
 
+        // 5. FUNGSI WARNA KATEGORI
         function warnaKategori(kategori) {
-
-            if (
-                !kategori ||
-                kategori === 'Tidak Ada Dominan'
-            ) {
-                return '#6c757d';
-            }
-
-            let warnaList = [
-                '#198754',
-                '#0d6efd',
-                '#fd7e14',
-                '#6f42c1',
-                '#20c997',
-                '#dc3545',
-                '#6610f2',
-                '#d63384',
-                '#1982c4',
-                '#8ac926',
-                '#ffca3a',
-                '#ff595e'
+            if (!kategori) return '#6c757d';
+            const warnaList = [
+                '#198754', '#0d6efd', '#fd7e14', '#6f42c1',
+                '#20c997', '#dc3545', '#6610f2', '#d63384',
+                '#1982c4', '#8ac926', '#ffca3a', '#ff595e'
             ];
-
             let index = 0;
-
             for (let i = 0; i < kategori.length; i++) {
                 index += kategori.charCodeAt(i);
             }
-
-            return warnaList[
-                index % warnaList.length
-            ];
+            return warnaList[index % warnaList.length];
         }
 
-        function warnaPopup(kategori) {
-            return warnaKategori(kategori);
-        }
-
-        function isiFilter(data) {
-
-            const dusunSelect =
-                document.getElementById('filterDusun');
-
-            const rwSelect =
-                document.getElementById('filterRw');
-
-            const rtSelect =
-                document.getElementById('filterRt');
-
-            dusunSelect.innerHTML =
-                '<option value="">Semua Dusun</option>';
-
-            rwSelect.innerHTML =
-                '<option value="">Semua RW</option>';
-
-            rtSelect.innerHTML =
-                '<option value="">Semua RT</option>';
-
-            let dusunSet = new Set();
-
-            data.dusun.forEach(d => {
-
-                dusunSet.add(
-                    d.nama_dusun
-                );
-
-            });
-
-            dusunSet.forEach(item => {
-
-                dusunSelect.innerHTML +=
-                    `<option value="${item}">
-            ${item}
-        </option>`;
-
-            });
-
-            data.rw.forEach(rw => {
-
-                if (
-                    filterDusun &&
-                    rw.nama_dusun != filterDusun
-                ) {
-                    return;
-                }
-
-                rwSelect.innerHTML +=
-                    `<option value="${rw.id}">
-    RW ${rw.nama_rw}
-</option>`;
-
-            });
-
-            let rtSet = new Set();
-
-            data.rt.forEach(rt => {
-
-                if (
-                    filterDusun &&
-                    rt.nama_dusun != filterDusun
-                ) {
-                    return;
-                }
-
-                rtSet.add(rt.nama_rt);
-
-            });
-
-            [...rtSet]
-            .sort()
-                .forEach(rtNomor => {
-
-                    rtSelect.innerHTML += `
-        <option value="${rtNomor}">
-            RT ${rtNomor}
-        </option>
-    `;
-
-                });
-
-            dusunSelect.value = filterDusun;
-            rwSelect.value = filterRw;
-            rtSelect.value = filterRt;
-        }
-
-        let semuaData = null;
-
-        let filterDusun = '';
-        let filterRw = '';
-        let filterRt = '';
-
-        // 3. LOAD DATA API (Dusun, RW, RT)
+        // 6. LOAD DATA (Dusun + RW + RT) — dipisah, tidak nested
         function loadData() {
-
             dusunLayer.clearLayers();
             rwLayer.clearLayers();
             rtLayer.clearLayers();
 
+            // Load polygon dusun
+            fetch("{{ asset('geojson/dusunreal.geojson') }}")
+                .then(res => res.json())
+                .then(data => {
+                    L.geoJSON(data, {
+                        interactive: false,
+                        pane: 'overlayPane',
+                        style: function(feature) {
+                            const nama = feature.properties.dusunbaru;
+                            if (nama === 'kemped') {
+                                return {
+                                    color: '#198754',
+                                    weight: 2,
+                                    fillColor: '#198754',
+                                    fillOpacity: 0.35
+                                };
+                            }
+                            if (nama === 'sukamelang') {
+                                return {
+                                    color: '#6f42c1',
+                                    weight: 2,
+                                    fillColor: '#6f42c1',
+                                    fillOpacity: 0.35
+                                };
+                            }
+                            return {
+                                color: '#0d6efd',
+                                weight: 2,
+                                fillColor: '#0d6efd',
+                                fillOpacity: 0.20
+                            };
+                        },
+                       onEachFeature: function(feature, layer) {
+
+    layer.bindPopup(`
+        <b>Dusun :</b>
+        ${feature.properties.dusunbaru}
+    `);
+
+    layer.on({
+        mouseover: function(e){
+            e.target.setStyle({
+                weight: 5,
+                fillOpacity: 0.7
+            });
+        },
+
+        mouseout: function(e){
+            e.target.setStyle({
+                weight: 2,
+                fillOpacity: 0.35
+            });
+        },
+
+        click: function(e){
+            layer.openPopup();
+        }
+    });
+
+}
+                    }).addTo(dusunLayer);
+
+                    dusunLayer.bringToBack();
+                    rwLayer.bringToFront();
+                    rtLayer.bringToFront();
+                })
+                .catch(err => console.log('GeoJSON Error:', err));
+
+            // Load marker RW & RT dari API
             fetch("{{ url('/api/pemetaan') }}")
                 .then(res => res.json())
-                .then(apiData => {
-                    semuaData = apiData;
-                    isiFilter(apiData);
-                    // =====================
-                    // polygon DUSUN
-                    // =====================
-                    fetch("{{ asset('geojson/dusunreal.geojson') }}")
-                        .then(response => response.json())
-                        .then(geojsonData => {
-
-                            console.log(geojsonData);
-
-
-
-                            L.geoJSON(geojsonData, {
-                                pane: 'dusunPane',
-                                interactive: false,
-                                bubblingMouseEvents: false,
-
-                                style: function(feature) {
-
-                                    let namaDusun =
-                                        feature.properties.dusunbaru ||
-                                        feature.properties.nama_dusun ||
-                                        feature.properties.NAMA_DUSUN ||
-                                        '';
-
-                                    namaDusun = namaDusun.toLowerCase();
-
-                                    let warna = '#0d6efd';
-
-                                    if (namaDusun.includes('kemped')) {
-                                        warna = '#198754';
-                                    }
-
-                                    if (namaDusun.includes('sukamelang')) {
-                                        warna = '#6f42c1';
-                                    }
-
-                                    let opacity = 0.35;
-                                    let weight = 2;
-
-                                    if (filterDusun) {
-
-                                        if (
-                                            !namaDusun.includes(
-                                                filterDusun.toLowerCase()
-                                            )
-                                        ) {
-                                            opacity = 0.01;
-                                            weight = 1;
-                                        } else {
-                                            opacity = 0.75;
-                                            weight = 5;
-                                        }
-
-                                    }
-
-                                    return {
-                                        color: warna,
-                                        weight: weight,
-                                        fillColor: warna,
-                                        fillOpacity: opacity
-                                    };
-                                },
-
-                                onEachFeature: function(feature, layer) {
-
-                                    let namaDusun =
-                                        feature.properties.dusunbaru ||
-                                        feature.properties.nama_dusun ||
-                                        feature.properties.NAMA_DUSUN ||
-                                        '';
-
-                                    const dusunData = apiData.dusun.find(d =>
-                                        d.nama_dusun.toLowerCase().includes(
-                                            namaDusun.toLowerCase()
-                                        )
-                                    );
-
-                                    if (dusunData) {
-
-                                        layer.bindPopup(`
-
-                                    <div class="popup-modern">
-
-                                    <div class="popup-header"
-                                    style="
-                                    background:${warnaPopup(
-                                        dusunData.keterampilan_dominan
-                                    )};
-                                    color:white;
-                                    ">
-
-                                    <div class="popup-title">
-                                    ${dusunData.nama_dusun}
-                                    </div>
-
-                                    <div class="popup-subtitle">
-                                    Wilayah Dusun
-                                    </div>
-
-                                    </div>
-
-                                    <div class="popup-body">
-
-                                    <div class="popup-row">
-                                    <span class="popup-label">
-                                    Jumlah RW
-                                    </span>
-                                    <span class="popup-value">
-                                    ${dusunData.jumlah_rw || 0}
-                                    </span>
-                                    </div>
-
-                                    <div class="popup-row">
-                                    <span class="popup-label">
-                                    Jumlah RT
-                                    </span>
-                                    <span class="popup-value">
-                                    ${dusunData.jumlah_rt || 0}
-                                    </span>
-                                    </div>
-
-                                    <div class="popup-row">
-                                    <span class="popup-label">
-                                    Total Warga
-                                    </span>
-                                    <span class="popup-value">
-                                    ${dusunData.jumlah_warga || 0}
-                                    </span>
-                                    </div>
-
-                                    <div class="popup-row">
-                                    <span class="popup-label">
-                                    Total Keterampilan
-                                    </span>
-                                    <span class="popup-value">
-                                    ${dusunData.jumlah_keterampilan || 0}
-                                    </span>
-                                    </div>
-
-                                    <div class="popup-row">
-                                    <span class="popup-label">
-                                    Kategori Dominan
-                                    </span>
-
-                                    <span class="popup-badge"
-                                    style="
-                                    background:${warnaPopup(
-                                        dusunData.keterampilan_dominan
-                                    )};
-                                    ">
-                                    ${dusunData.keterampilan_dominan || '-'}
-                                    </span>
-
-                                    </div>
-
-                                    <div class="popup-row">
-                                    <span class="popup-label">
-                                    Keterampilan Dominan
-                                    </span>
-
-                                    <span class="popup-value">
-                                    ${dusunData.nama_keterampilan_dominan || '-'}
-                                    </span>
-                                    </div>
-
-                                    <a href="#${dusunData.id}"
-                                    class="btn-popup"
-                                    style="
-                                    background:${warnaPopup(
-                                        dusunData.keterampilan_dominan
-                                    )};
-                                    ">
-
-                                    <i class="fa-solid fa-eye me-1"></i>
-                                    Lihat Detail Dusun
-
-                                    </a>
-
-                                    </div>
-
-                                    </div>
-
-                                    `);
-                                    }
-
-                                    layer.on({
-
-                                        mouseover: function(e) {
-                                            e.target.setStyle({
-                                                weight: 5,
-                                                fillOpacity: 0.7
-                                            });
-                                        },
-
-                                        mouseout: function(e) {
-                                            e.target.setStyle({
-                                                weight: 2,
-                                                fillOpacity: 0.35
-                                            });
-                                        },
-
-                                        click: function(e) {
-
-                                            layer.bindPopup(layer.getPopup().getContent())
-                                                .openPopup(e.latlng);
-
-                                        }
-
-                                    });
-
-                                }
-
-                            }).addTo(dusunLayer);
-                            dusunLayer.eachLayer(layer => {
-                                layer.off();
-                            });
-
-                            // @foreach ($dusuns as $dusun)
-
-                            // @if ($dusun->geojson)
-
-                            // fetch("{{ asset('storage/' . $dusun->geojson) }}")
-                            // .then(response => response.json())
-                            // .then(geojsonData => {
-
-                            //     L.geoJSON(geojsonData, {
-
-                            //         interactive: false,
-
-                            //         style: {
-                            //             color: '#198754',
-                            //             weight: 2,
-                            //             fillColor: '#198754',
-                            //             fillOpacity: 0.35
-                            //         }
-
-                            //     }).addTo(dusunLayer);
-
-                            // });
-
-                            // @endif
-
-                            // @endforeach
-
-                        })
-
-                        .catch(error => {
-
-                            console.log('GeoJSON Error:', error);
-
-                        });
-                    // MARKER RW
-                    // =====================
-                    apiData.rw.forEach(rw => {
-
-                        if (!rw.latitude || !rw.longitude) return;
-
-                        L.circleMarker(
-                                [Number(rw.latitude), Number(rw.longitude)], {
-                                    radius: 14,
-                                    color: '#0d6efd',
-                                    fillColor: '#0d6efd',
-                                    fillOpacity: 1
-                                }
-                            )
-                            .bindPopup(`RW ${rw.nama_rw}`)
-                            .addTo(map);
-
-                    });
-                    // =====================
-                    // MARKER RT
-                    // =====================
-                    apiData.rt.forEach(rt => {
-
-                        if (!rt.latitude || !rt.longitude) return;
-
-                        L.circleMarker(
-                                [Number(rt.latitude), Number(rt.longitude)], {
-                                    radius: 8,
-                                    color: '#dc3545',
-                                    fillColor: '#dc3545',
-                                    fillOpacity: 1
-                                }
-                            )
-                            .bindPopup(`RT ${rt.nama_rt}`)
-                            .addTo(map);
-
+                .then(data => {
+
+                    // Marker RW
+                    data.rw.forEach(rw => {
+                        if (rw.latitude && rw.longitude) {
+                            L.circleMarker([rw.latitude, rw.longitude], {
+                                radius: 12,
+                                color: warnaKategori(rw.keterampilan_dominan),
+                                fillColor: warnaKategori(rw.keterampilan_dominan),
+                                fillOpacity: 0.8
+                            }).bindPopup(`
+                            <div style="min-width:220px">
+                                <h6>RW ${rw.nama_rw}</h6>
+                                <hr>
+                                <p><b>Dusun :</b> ${rw.nama_dusun || '-'}</p>
+                                <p><b>Jumlah Warga :</b> ${rw.jumlah_warga || 0}</p>
+                                <p><b>Warga Berketerampilan :</b> ${rw.jumlah_keterampilan || 0}</p>
+                                <p><b>Kategori Dominan :</b> ${rw.keterampilan_dominan || '-'}</p>
+                                <p><b>Keterampilan Dominan :</b> ${rw.nama_keterampilan_dominan || '-'}</p>
+                            </div>
+                        `).addTo(rwLayer);
+                        }
                     });
 
-                });
+                    // Marker RT
+                    data.rt.forEach(rt => {
+                        if (rt.latitude && rt.longitude) {
+                            L.circleMarker([rt.latitude, rt.longitude], {
+                                radius: 4,
+                                color: warnaKategori(rt.keterampilan_dominan),
+                                fillColor: warnaKategori(rt.keterampilan_dominan),
+                                fillOpacity: 0.8
+                            }).bindPopup(`
+                            <div style="min-width:220px">
+                                <h6>RT ${rt.nama_rt}</h6>
+                                <hr>
+                                <p><b>RW :</b> ${rt.nama_rw || '-'}</p>
+                                <p><b>Dusun :</b> ${rt.nama_dusun || '-'}</p>
+                                <p><b>Jumlah Warga :</b> ${rt.jumlah_warga || 0}</p>
+                                <p><b>Warga Berketerampilan :</b> ${rt.jumlah_keterampilan || 0}</p>
+                                <p><b>Kategori Dominan :</b> ${rt.keterampilan_dominan || '-'}</p>
+                                <p><b>Keterampilan Dominan :</b> ${rt.nama_keterampilan_dominan || '-'}</p>
+                            </div>
+                        `).addTo(rtLayer);
+                        }
+                    });
+
+                })
+                .catch(err => console.log('API Error:', err));
         }
 
-        // Jalankan load data
         loadData();
-        // setInterval(loadData, 10000); // Sinkronisasi data tiap 10 detik
+        setInterval(loadData, 10000);
 
-        document.getElementById(
-            'filterDusun'
-        ).addEventListener('change', function() {
-
-            filterDusun = this.value;
-
-            filterRw = '';
-            filterRt = '';
-
-            isiFilter(semuaData);
-
-            loadData();
-
+        // 7. LAYER CONTROL CUSTOM
+        // Tambahkan tombol custom ke peta
+        const CustomControl = L.Control.extend({
+            options: {
+                position: 'topright'
+            },
+            onAdd: function() {
+                const div = L.DomUtil.create('div', 'custom-layer-ctrl');
+                div.innerHTML = `
+    <button class="ctrl-toggle" onclick="toggleLayerPanel(this)">
+        <svg width="20" height="20" fill="#0d6efd" viewBox="0 0 16 16">
+            <path d="M7.765 1.559a.5.5 0 0 1 .47 0l6.39 3.39a.5.5 0 0 1 0 .87l-6.39 3.39a.5.5 0 0 1-.47 0L1.375 5.819a.5.5 0 0 1 0-.87l6.39-3.39z"/>
+            <path d="m1.375 9.18 6.39 3.39a.5.5 0 0 0 .47 0l6.39-3.39a.5.5 0 0 0 0-.87l-6.39-3.39a.5.5 0 0 0-.47 0L1.375 8.31a.5.5 0 0 0 0 .87z"/>
+            <path d="m1.375 12.54 6.39 3.39a.5.5 0 0 0 .47 0l6.39-3.39a.5.5 0 0 0 0-.87l-6.39-3.39a.5.5 0 0 0-.47 0L1.375 11.67a.5.5 0 0 0 0 .87z"/>
+        </svg>
+    </button>
+    <div class="ctrl-panel" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <small style="font-weight:600; color:#555;">Layer</small>
+            <button onclick="closeLayerPanel(this)" style="background:none; border:none; cursor:pointer; font-size:16px; color:#999; line-height:1; padding:0;">&times;</button>
+        </div>
+        <div class="ctrl-section">
+            <label><input type="radio" name="basemap" value="street" checked onchange="switchBase(this)"> Peta Jalan</label>
+            <label><input type="radio" name="basemap" value="satellite" onchange="switchBase(this)"> Satelit</label>
+            <label><input type="radio" name="basemap" value="terrain" onchange="switchBase(this)"> Terrain</label>
+        </div>
+        <hr style="margin:6px 0;">
+        <div class="ctrl-section">
+            <label><input type="checkbox" checked onchange="toggleLayer('polygon', this)"> Batas Wilayah</label>
+            <label><input type="checkbox" checked onchange="toggleLayer('dusun', this)"> Dusun</label>
+            <label><input type="checkbox" checked onchange="toggleLayer('rw', this)"> RW</label>
+            <label><input type="checkbox" checked onchange="toggleLayer('rt', this)"> RT</label>
+        </div>
+    </div>
+`;
+                L.DomEvent.disableClickPropagation(div);
+                return div;
+            }
         });
+        new CustomControl().addTo(map);
 
-        document.getElementById(
-            'filterRw'
-        ).addEventListener('change', function() {
+        // Toggle panel
+        function toggleLayerPanel(btn) {
+            const panel = btn.nextElementSibling;
+            panel.style.display = 'block';
+            btn.style.display = 'none';
+        }
 
-            filterRw = this.value;
+        function closeLayerPanel(closeBtn) {
+            const panel = closeBtn.closest('.ctrl-panel');
+            const toggle = panel.previousElementSibling;
+            panel.style.display = 'none';
+            toggle.style.display = 'flex';
+        }
 
-            filterRt = '';
+        // Ganti base layer
+        function switchBase(radio) {
+            map.removeLayer(streetLayer);
+            map.removeLayer(satelliteLayer);
+            map.removeLayer(terrainLayer);
+            if (radio.value === 'street') map.addLayer(streetLayer);
+            if (radio.value === 'satellite') map.addLayer(satelliteLayer);
+            if (radio.value === 'terrain') map.addLayer(terrainLayer);
+        }
 
-            isiFilter(semuaData);
+        // Toggle overlay
+        function toggleLayer(name, cb) {
+            const layers = {
+                polygon: polygonLayer,
+                dusun: dusunLayer,
+                rw: rwLayer,
+                rt: rtLayer
+            };
+            if (cb.checked) map.addLayer(layers[name]);
+            else map.removeLayer(layers[name]);
+        }
 
-            loadData();
 
-        });
-
-        document.getElementById(
-            'filterRt'
-        ).addEventListener('change', function() {
-
-            filterRt = this.value;
-
-            loadData();
-
-        });
-
-        document
-            .getElementById('resetFilter')
-            .addEventListener('click', function() {
-
-                filterDusun = '';
-                filterRw = '';
-                filterRt = '';
-
-                document.getElementById(
-                    'filterDusun'
-                ).value = '';
-
-                document.getElementById(
-                    'filterRw'
-                ).value = '';
-
-                document.getElementById(
-                    'filterRt'
-                ).value = '';
-
-                loadData();
-
-            });
-
-        // 4. LAYER CONTROL (DROPDOWN)
-        const baseMaps = {
-            "<i class='bi bi-map'></i> Peta Jalan": streetLayer,
-            "<i class='bi bi-globe'></i> Satelit": satelliteLayer,
-            "<i class='bi bi-mountain'></i> Terrain": terrainLayer
-        };
-
-        const overlayMaps = {
-            "Batas Wilayah": polygonLayer,
-            "Titik Dusun": dusunLayer,
-            "Titik RW": rwLayer,
-            "Titik RT": rtLayer
-        };
-
-        // 'collapsed: true' akan mengubah menu menjadi ikon dropdown
-        L.control.layers(baseMaps, overlayMaps, {
-            collapsed: true,
-            position: 'topright'
-        }).addTo(map);
-
-        // Responsive adjustment
         window.addEventListener('resize', () => map.invalidateSize());
     </script>
+
+    /* =====================================================
+   NAVBAR ACTIVE MENU
+   Fungsi:
+   - Menandai menu navbar yang sedang aktif
+   - Aktif saat menu diklik
+   - Aktif saat user melakukan scroll halaman
+   - Menggunakan IntersectionObserver
+===================================================== */
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            /* Ambil semua link navbar yang mengarah ke section */
             const navLinks = document.querySelectorAll('.navbar .nav-link[href^="#"]');
-
-            /* Ambil semua section yang punya id sesuai href navbar */
             const sections = Array.from(navLinks)
                 .map(link => document.querySelector(link.getAttribute("href")))
                 .filter(section => section !== null);
 
-            /* Fungsi untuk menghapus active dari semua menu */
             function removeActiveClass() {
                 navLinks.forEach(link => link.classList.remove("active"));
             }
 
-            /* Fungsi untuk mengaktifkan menu berdasarkan id section */
             function setActiveLink(targetId) {
                 removeActiveClass();
 
@@ -3715,10 +3349,6 @@
                 }
             }
 
-            /* =====================================================
-               1. ACTIVE SAAT MENU DIKLIK
-               - Supaya user langsung melihat feedback saat klik
-            ===================================================== */
             navLinks.forEach(link => {
                 link.addEventListener("click", function() {
                     const targetId = this.getAttribute("href");
@@ -3726,11 +3356,6 @@
                 });
             });
 
-            /* =====================================================
-               2. ACTIVE SAAT SCROLL
-               - Observer akan mendeteksi section yang sedang dominan
-               - Saat section terlihat, menu terkait akan aktif
-            ===================================================== */
             const observerOptions = {
                 root: null,
                 threshold: 0.05,
@@ -3749,18 +3374,19 @@
                 sectionObserver.observe(section);
             });
 
-            /* =====================================================
-               3. DEFAULT ACTIVE SAAT HALAMAN PERTAMA KALI DIBUKA
-               - Jika posisi masih di atas, aktifkan Beranda
-            ===================================================== */
             if (window.scrollY < 100) {
                 setActiveLink("#beranda");
             }
         });
     </script>
+
+    /* =========================================================
+   FORM PENGAJUAN KETERAMPILAN
+   Menampilkan input kategori baru
+   jika pengguna memilih "Lainnya"
+========================================================= */
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-
     const kategoriSelect = document.getElementById('kategoriSelect');
     const kategoriLainnyaBox = document.getElementById('kategoriLainnyaBox');
     const kategoriLainnya = document.getElementById('kategoriLainnya');
@@ -3786,6 +3412,11 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+/* =========================================================
+   ALERT PENGAJUAN BERHASIL
+   Menampilkan notifikasi setelah
+   data pengajuan berhasil dikirim
+========================================================= */
 @if(session('success'))
 <script>
 Swal.fire({
@@ -3809,13 +3440,25 @@ window.addEventListener('load', function () {
 });
 </script>
 @endif
+
+/* =====================================================
+   FORM PENCARIAN NIK
+   Mengarahkan hasil pencarian kembali ke
+   section Pengajuan (#kontak) setelah form dikirim
+===================================================== */
 <script>
 document.getElementById('formCariNik').addEventListener('submit', function() {
     this.action = "{{ route('landing') }}#kontak";
 });
 </script>
-@if(request('nik'))
 
+/* =========================================================
+   ALERT HASIL PENCARIAN NIK
+   - Data warga ditemukan
+   - Data pengajuan ditemukan
+   - Data tidak ditemukan
+========================================================= */
+@if(request('nik'))
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
