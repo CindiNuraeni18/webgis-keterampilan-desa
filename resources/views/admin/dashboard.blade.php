@@ -1,6 +1,6 @@
 @extends('layouts.sidebar-admin')
 
-@section('title', 'Statistik Keterampilan')
+@section('title', 'Dashboard Admin')
 
 @section('content')
     <style>

@@ -2830,13 +2830,12 @@
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    
-    /* =========================================================
-   ANIMASI COUNTER STATISTIK
+  <!-- ===============================
+         ANIMASI COUNTER STATISTIK
    Menampilkan efek angka bertambah
    pada Total Warga, RW, RT, Dusun,
    dan Kategori Keterampilan
-========================================================= */
+    ================================ -->
     <script>
         const counters = document.querySelectorAll(".stat-number");
         counters.forEach(counter => {
@@ -2858,12 +2857,12 @@
         });
     </script>
 
-    <script>
-    /* =========================================================
-   ANIMASI SCROLL HALAMAN
+ <!-- ===============================
+         ANIMASI SCROLL HALAMAN
    Menampilkan efek fade dan zoom
    saat section masuk viewport
-========================================================= */
+    ================================ -->
+    <script>
         (() => {
             const animatedElements = Array.from(document.querySelectorAll('.scroll-animate'));
             if (!animatedElements.length) return;
@@ -3031,9 +3030,10 @@
     </script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+      <!-- ===============================
+         pemetaan
+    ================================ -->
     <script>
-       //Pemetaan ====
-      // =================
          const streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap'
         });
@@ -3318,14 +3318,14 @@ let globalData = { rw: [], rt: [] };
         window.addEventListener('resize', () => map.invalidateSize());
     </script>
 
-    /* =====================================================
-   NAVBAR ACTIVE MENU
+ <!-- ===============================
+         NAVBAR ACTIVE MENU
    Fungsi:
    - Menandai menu navbar yang sedang aktif
    - Aktif saat menu diklik
    - Aktif saat user melakukan scroll halaman
    - Menggunakan IntersectionObserver
-===================================================== */
+    ================================ -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const navLinks = document.querySelectorAll('.navbar .nav-link[href^="#"]');
@@ -3380,11 +3380,11 @@ let globalData = { rw: [], rt: [] };
         });
     </script>
 
-    /* =========================================================
-   FORM PENGAJUAN KETERAMPILAN
+  <!-- ===============================
+          FORM PENGAJUAN KETERAMPILAN
    Menampilkan input kategori baru
    jika pengguna memilih "Lainnya"
-========================================================= */
+    ================================ -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const kategoriSelect = document.getElementById('kategoriSelect');
@@ -3412,11 +3412,12 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-/* =========================================================
-   ALERT PENGAJUAN BERHASIL
+
+  <!-- ===============================
+         ALERT PENGAJUAN BERHASIL
    Menampilkan notifikasi setelah
    data pengajuan berhasil dikirim
-========================================================= */
+    ================================ -->
 @if(session('success'))
 <script>
 Swal.fire({
@@ -3441,23 +3442,23 @@ window.addEventListener('load', function () {
 </script>
 @endif
 
-/* =====================================================
+<!-- ===============================
    FORM PENCARIAN NIK
    Mengarahkan hasil pencarian kembali ke
    section Pengajuan (#kontak) setelah form dikirim
-===================================================== */
+  ================================ -->
 <script>
 document.getElementById('formCariNik').addEventListener('submit', function() {
     this.action = "{{ route('landing') }}#kontak";
 });
 </script>
 
-/* =========================================================
+<!-- ===============================
    ALERT HASIL PENCARIAN NIK
    - Data warga ditemukan
    - Data pengajuan ditemukan
    - Data tidak ditemukan
-========================================================= */
+  ================================ -->
 @if(request('nik'))
 <script>
 document.addEventListener('DOMContentLoaded', function() {
