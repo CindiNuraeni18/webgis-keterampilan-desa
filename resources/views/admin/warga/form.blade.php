@@ -509,9 +509,9 @@
 
             </label>
 
-            <input type="text" name="nik" class="form-control @error('nik') is-invalid @enderror"
-                value="{{ old('nik', $warga->nik ?? '') }}">
-
+            <input type="text" name="nik" maxlength="16" minlength="16" pattern="[0-9]{16}" inputmode="numeric"
+                class="form-control @error('nik') is-invalid @enderror" value="{{ old('nik', $warga->nik ?? '') }}"
+                placeholder="Masukkan 16 digit NIK">
             @error('nik')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -697,202 +697,182 @@
     <div id="skillWrapper">
 
         @php
-            $oldSkills = old(
-                'nama_keterampilan',
-                isset($warga) ? $warga->keterampilans->pluck('nama_keterampilan')->toArray() : [''],
-            );
-        @endphp
 
-        @foreach ($oldSkills as $i => $oldSkill)
-            <div class="skill-item">
+$oldSkills = old(
+    'nama_keterampilan',
+    isset($warga)
+        ? $warga->keterampilans->pluck('nama_keterampilan')->toArray()
+        : []
+);
+
+if (empty($oldSkills)) {
+
+    $oldSkills = [''];
+
+}
+
+@endphp
+
+       @foreach ($oldSkills as $i => $oldSkill)
+
+<div class="skill-item">
 
     <div class="row g-3 align-items-start">
 
-   <!-- KIRI -->
-<div class="col-lg-5">
+        <!-- KATEGORI -->
+        <div class="col-lg-5">
 
-    <!-- KATEGORI -->
-    <div class="mb-3">
+            <div class="mb-3">
 
-        <label class="form-label">
+                <label class="form-label">
+                    Kategori
+                </label>
 
-            Kategori
+                <select
+                    name="kategori_keterampilan_id[]"
+                    class="form-select kategori-select">
 
-        </label>
+                    <option value="">
+                        -- Pilih --
+                    </option>
 
-        <select
-    name="kategori_keterampilan_id[]"
-    class="form-select kategori-select">
+                    @foreach ($kategoris as $kategori)
 
-    <option value="">
-        -- Pilih --
-    </option>
+                        <option
+                            value="{{ $kategori->id }}"
+                            {{ old(
+                                'kategori_keterampilan_id.' . $i,
+                                isset($warga->keterampilans[$i])
+                                    ? $warga->keterampilans[$i]->kategori_keterampilan_id
+                                    : ''
+                            ) == $kategori->id ? 'selected' : '' }}>
 
-    @foreach($kategoris as $kategori)
+                            {{ $kategori->nama_kategori }}
 
-        <option
-            value="{{ $kategori->id }}"
+                        </option>
 
-            {{
-                old(
-                    'kategori_keterampilan_id.'.$i,
+                    @endforeach
+
+                    <option value="lainnya">
+                        Lainnya
+                    </option>
+
+                </select>
+
+                <div class="kategori-baru-wrapper d-none mt-2">
+
+                    <input
+                        type="text"
+                        name="kategori_baru[]"
+                        class="form-control"
+                        placeholder="Masukkan kategori baru">
+
+                </div>
+
+            </div>
+
+            <label class="form-label">
+                Keterampilan
+            </label>
+
+            <input
+                type="text"
+                name="nama_keterampilan[]"
+                class="form-control"
+                placeholder="Contoh: Menjahit"
+                value="{{ old(
+                    'nama_keterampilan.' . $i,
                     isset($warga->keterampilans[$i])
-                        ? $warga->keterampilans[$i]
-                            ->kategori_keterampilan_id
+                        ? $warga->keterampilans[$i]->nama_keterampilan
                         : ''
-                ) == $kategori->id
-                    ? 'selected'
-                    : ''
-            }}>
+                ) }}">
 
-            {{ $kategori->nama_kategori }}
+        </div>
 
-        </option>
+        <!-- PENGALAMAN -->
+        <div class="col-lg-6">
 
-    @endforeach
+            <label class="form-label">
+                Pengalaman
+            </label>
 
-    <option value="lainnya">
+            <textarea
+                name="pengalaman[]"
+                rows="5"
+                class="form-control"
+                placeholder="Contoh: Pengalaman 2 tahun">{{ old(
+                    'pengalaman.' . $i,
+                    isset($warga->keterampilans[$i])
+                        ? $warga->keterampilans[$i]->pengalaman
+                        : ''
+                ) }}</textarea>
 
-       Lainnya
+        </div>
 
-    </option>
+        <!-- HAPUS -->
+        <div class="col-lg-1">
 
-</select>
-<div class="kategori-baru-wrapper d-none mt-2">
+            <label class="form-label opacity-0">
+                Hapus
+            </label>
 
-    <input
-        type="text"
-        name="kategori_baru[]"
-        class="form-control"
-        placeholder="Masukkan kategori baru">
+            <button
+                type="button"
+                class="btn-remove-skill btnHapusSkill w-100">
 
-</div>
+                <i class="bi bi-trash"></i>
+
+            </button>
+
+        </div>
+
     </div>
 
-
-
-    <!-- KETERAMPILAN -->
-    <div>
-
-        <label class="form-label">
-
-            Keterampilan
-
-        </label>
-
-        <input type="text"
-            name="nama_keterampilan[]"
-            class="form-control"
-            placeholder="Contoh: Menjahit"
-
-            value="{{
-                old(
-                    'nama_keterampilan.'.$i,
-                    isset($warga->keterampilans[$i])
-                        ? $warga->keterampilans[$i]
-                            ->nama_keterampilan
-                        : ''
-                )
-            }}">
-    </div>
-
 </div>
 
-
-
-<!-- PENGALAMAN -->
-<div class="col-lg-6">
-
-    <label class="form-label">
-
-        Pengalaman
-
-    </label>
-
-    <textarea
-        name="pengalaman[]"
-        rows="5"
-        class="form-control"
-        placeholder="Contoh: Pengalaman 2 tahun, usaha sendiri, pernah bekerja, dll">{{
-
-        old(
-            'pengalaman.'.$i,
-            isset($warga->keterampilans[$i])
-                ? $warga->keterampilans[$i]
-                    ->pengalaman
-                : ''
-        )
-
-    }}</textarea>
-
-</div>
-
-
-
-<!-- HAPUS -->
-<div class="col-lg-1">
-
-    <label class="form-label opacity-0">
-
-        Hapus
-
-    </label>
-
-    <button type="button"
-        class="btn-remove-skill btnHapusSkill w-100">
-
-        <i class="bi bi-trash"></i>
-
-    </button>
-
-</div>
-
-</div>
-        @endforeach
+@endforeach
 
     </div>
 
 </div>
 
 <script>
+    document.addEventListener(
+        'change',
+        function(e) {
 
-document.addEventListener(
-'change',
-function(e){
+            if (
+                e.target.classList.contains(
+                    'kategori-select'
+                )
+            ) {
 
-    if(
-        e.target.classList.contains(
-            'kategori-select'
-        )
-    ){
+                let wrapper =
+                    e.target.parentElement
+                    .querySelector(
+                        '.kategori-baru-wrapper'
+                    );
 
-        let wrapper =
-        e.target.parentElement
-        .querySelector(
-            '.kategori-baru-wrapper'
-        );
+                if (
+                    e.target.value ==
+                    'lainnya'
+                ) {
 
-        if(
-            e.target.value ==
-            'lainnya'
-        ){
+                    wrapper.classList.remove(
+                        'd-none'
+                    );
 
-            wrapper.classList.remove(
-                'd-none'
-            );
+                } else {
 
-        }else{
+                    wrapper.classList.add(
+                        'd-none'
+                    );
 
-            wrapper.classList.add(
-                'd-none'
-            );
+                }
 
-        }
+            }
 
-    }
-
-});
-
+        });
 </script>
 <!-- SCRIPT -->
 <script>
@@ -921,22 +901,33 @@ function(e){
 
 
 
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function(e){
 
-        if (e.target.closest('.btnHapusSkill')) {
+    const btn = e.target.closest('.btnHapusSkill');
 
-            let items =
-                document.querySelectorAll('.skill-item');
+    if(!btn) return;
 
-            if (items.length > 1) {
+    const items =
+        document.querySelectorAll('.skill-item');
 
-                e.target
-                    .closest('.skill-item')
-                    .remove();
+    // Minimal sisakan 1 form skill kosong
+    if(items.length === 1){
 
-            }
+        btn.closest('.skill-item')
+            .querySelectorAll(
+                'input, textarea, select'
+            )
+            .forEach(el => {
 
-        }
+                el.value = '';
 
-    });
+            });
+
+        return;
+
+    }
+
+    btn.closest('.skill-item').remove();
+
+});
 </script>

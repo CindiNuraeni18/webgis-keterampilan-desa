@@ -665,6 +665,464 @@
             color: #94a3b8;
 
         }
+        .modal {
+    z-index: 99999 !important;
+}
+
+.modal-backdrop {
+    z-index: 99998 !important;
+}
+/* SWEETALERT DI ATAS NAVBAR */
+
+.swal2-container {
+    z-index: 999999 !important;
+}
+
+.swal2-backdrop-show {
+    z-index: 999998 !important;
+}
+/* =========================
+   MODAL TAMBAH WARGA PREMIUM
+========================= */
+
+.modal-tambah-modern {
+
+    border: none;
+
+    border-radius: 26px;
+
+    overflow: hidden;
+
+    background: #fff;
+
+    box-shadow:
+        0 25px 60px rgba(15,23,42,.18);
+
+    animation: modalZoom .35s ease;
+}
+
+@keyframes modalZoom {
+
+    from{
+        opacity:0;
+        transform:scale(.92);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+.menu-card {
+
+    position: relative;
+
+    overflow: hidden;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 16px;
+
+    padding: 18px;
+
+    border-radius: 20px;
+
+    text-decoration: none;
+
+    transition: all .35s ease;
+
+    color: white !important;
+
+    border: none;
+}
+
+/* EFEK PUTIH BERGERAK */
+
+.menu-card::before {
+
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+
+    left: -75%;
+
+    width: 50%;
+
+    height: 100%;
+
+    background: rgba(255,255,255,.22);
+
+    transform: skewX(-25deg);
+
+    transition: .7s;
+}
+
+/* HOVER */
+
+.menu-card:hover {
+
+    transform:
+        translateY(-3px)
+        scale(1.02);
+
+    color: white !important;
+}
+
+/* GERAK SHINE */
+
+.menu-card:hover::before {
+
+    left: 130%;
+}
+
+/* MANUAL */
+
+.menu-blue {
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #3b82f6
+        );
+
+    box-shadow:
+        0 8px 22px rgba(37,99,235,.25);
+}
+
+.menu-blue:hover {
+
+    box-shadow:
+        0 14px 30px rgba(37,99,235,.40);
+}
+
+/* IMPORT */
+
+.menu-green {
+
+    background:
+        linear-gradient(
+            135deg,
+            #16a34a,
+            #22c55e
+        );
+
+    box-shadow:
+        0 8px 22px rgba(34,197,94,.25);
+}
+
+.menu-green:hover {
+
+    box-shadow:
+        0 14px 30px rgba(34,197,94,.40);
+}
+
+/* ICON */
+
+.menu-icon {
+
+    width: 60px;
+
+    height: 60px;
+
+    border-radius: 18px;
+
+    background:
+        rgba(255,255,255,.18);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 24px;
+
+    flex-shrink: 0;
+
+    transition: .35s ease;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+/* ICON HOVER */
+
+.menu-card:hover .menu-icon {
+
+    transform:
+        rotate(-10deg)
+        scale(1.12);
+}
+
+/* TEXT */
+
+.menu-title {
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    margin-bottom: 2px;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+.menu-card small {
+
+    color:
+        rgba(255,255,255,.9);
+
+    position: relative;
+
+    z-index: 2;
+}
+
+/* PANAH */
+
+.menu-card .fa-chevron-right {
+
+    font-size: 16px;
+
+    opacity: .85;
+
+    transition: .3s ease;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+.menu-card:hover .fa-chevron-right {
+
+    transform:
+        translateX(6px);
+
+    opacity: 1;
+}
+
+/* HEADER MODAL */
+
+.modal-header {
+
+    padding: 24px 24px 10px;
+}
+
+.modal-header h4 {
+
+    color: #0f172a;
+
+    font-weight: 700;
+}
+
+.modal-header small {
+
+    color: #64748b;
+}
+
+/* TOMBOL CLOSE */
+
+.btn-close {
+
+    transition: .3s ease;
+}
+
+.btn-close:hover {
+
+    transform:
+        rotate(90deg)
+        scale(1.1);
+}
+/* =========================
+   MODAL IMPORT PREMIUM
+========================= */
+
+.modal-import-modern {
+
+    border: none;
+
+    border-radius: 26px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 25px 60px rgba(15,23,42,.18);
+
+    animation: modalImportShow .4s ease;
+}
+
+@keyframes modalImportShow {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(20px)
+            scale(.95);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+}
+
+.modal-import-header {
+
+    background:
+        linear-gradient(
+            135deg,
+            #16a34a,
+            #22c55e
+        );
+
+    color: white;
+
+    padding: 22px;
+}
+
+.modal-import-header h5 {
+
+    margin: 0;
+
+    font-weight: 700;
+}
+
+.modal-import-header .btn-close {
+
+    filter: brightness(0) invert(1);
+}
+
+.import-box {
+
+    border: 2px dashed #d1d5db;
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    text-align: center;
+
+    transition: .35s ease;
+
+    cursor: pointer;
+
+    background: #f8fafc;
+}
+
+.import-box:hover {
+
+    border-color: #22c55e;
+
+    background: #f0fdf4;
+
+    transform: translateY(-2px);
+}
+
+.import-box i {
+
+    font-size: 42px;
+
+    color: #16a34a;
+
+    margin-bottom: 12px;
+
+    transition: .35s ease;
+}
+
+.import-box:hover i {
+
+    transform:
+        scale(1.15)
+        rotate(-8deg);
+}
+
+.import-note {
+
+    font-size: 13px;
+
+    color: #64748b;
+}
+
+.btn-import-modern {
+
+    position: relative;
+
+    overflow: hidden;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #16a34a,
+            #22c55e
+        );
+
+    color: white;
+
+    font-weight: 600;
+
+    transition: .35s ease;
+
+    box-shadow:
+        0 8px 22px rgba(34,197,94,.25);
+}
+
+.btn-import-modern::before {
+
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+
+    left: -75%;
+
+    width: 50%;
+
+    height: 100%;
+
+    background: rgba(255,255,255,.25);
+
+    transform: skewX(-25deg);
+
+    transition: .7s;
+}
+
+.btn-import-modern:hover {
+
+    transform:
+        translateY(-2px)
+        scale(1.03);
+
+    box-shadow:
+        0 12px 28px rgba(34,197,94,.35);
+}
+
+.btn-import-modern:hover::before {
+
+    left: 130%;
+}
     </style>
 
     <div class="card border-0 shadow-sm">
@@ -678,7 +1136,7 @@
 
                     <h4 class="mb-1">
 
-                        Data Warga Terampil
+                        Data Warga
 
                     </h4>
 
@@ -904,27 +1362,69 @@
             @endif
 
 
-            @if (session('success'))
-                <script>
-                    Swal.fire({
+            @if(session('success'))
 
-                        icon: 'success',
+<script>
 
-                        title: 'Berhasil',
+document.addEventListener('DOMContentLoaded', function () {
 
-                        text: "{{ session('success') }}",
+    Swal.fire({
 
-                        showConfirmButton: false,
+        icon: 'success',
 
-                        timer: 2200,
+        title: 'Import Selesai',
 
-                        timerProgressBar: true,
+        html: `
 
-                        backdrop: true
+            <div class="text-start mt-3">
 
-                    });
-                </script>
-            @endif
+                <div class="mb-2">
+                    ✅ Warga Baru :
+                    <b>{{ session('success')['berhasil'] }}</b>
+                </div>
+
+                <div class="mb-2">
+                    👥 Warga Sudah Ada :
+                    <b>{{ session('success')['duplikat'] }}</b>
+                </div>
+
+                <div class="mb-2">
+                    🛠️ Keterampilan Ditambahkan :
+                    <b>{{ session('success')['skill'] }}</b>
+                </div>
+
+                <div class="mb-2">
+                    ❌ Gagal :
+                    <b>{{ session('success')['gagal'] }}</b>
+                </div>
+
+            </div>
+
+        `,
+
+        showConfirmButton: false,
+
+        timer: 3500,
+
+        timerProgressBar: true,
+
+        backdrop: `
+            rgba(0,0,0,.45)
+        `,
+
+        background: '#ffffff',
+
+        customClass: {
+            popup: 'rounded-4 shadow'
+        }
+
+    });
+
+});
+
+</script>
+
+@endif
 
 
 
@@ -1062,7 +1562,7 @@
 
                                         <span class="text-muted small">
 
-                                            -
+                                            Belum Ada Keterampilan
 
                                         </span>
                                     @endforelse
@@ -1095,7 +1595,7 @@
 
                                         <span class="text-muted small">
 
-                                            -
+                                            Belum Ada Keterampilan
 
                                         </span>
                                     @endforelse
@@ -1298,47 +1798,109 @@
     @endif
     <!-- Modal Pilihan Tambah -->
 
-    <div class="modal fade" id="modalTambahWarga" tabindex="-1">
+    <!-- MODAL TAMBAH WARGA MODERN -->
 
-        <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="modalTambahWarga" tabindex="-1">
 
-            <div class="modal-content border-0 shadow">
+    <div class="modal-dialog modal-dialog-centered">
 
-                <div class="modal-header">
+        <div class="modal-content modal-tambah-modern">
 
-                    <h5 class="modal-title">
+            <div class="modal-header border-0 pb-0">
 
+                <div>
+
+                    <h4 class="fw-bold mb-1">
                         Tambah Data Warga
+                    </h4>
 
-                    </h5>
-
-                    <button type="button" class="btn-close" data-bs-dismiss="modal">
-                    </button>
+                    <small class="text-muted">
+                        Pilih metode penambahan data warga
+                    </small>
 
                 </div>
 
-                <div class="modal-body">
+                <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal">
+                </button>
 
-                    <div class="d-grid gap-3">
+            </div>
 
-                        <!-- MANUAL -->
+            <div class="modal-body pt-3">
 
-                        <a href="{{ route('admin.warga.create') }}" class="btn btn-primary btn-lg">
+                <div class="row g-3">
 
-                            <i class="fa-solid fa-user-plus me-2"></i>
+                    <!-- MANUAL -->
 
-                            Tambah Manual
+                    <div class="col-12">
+
+                        <a href="{{ route('admin.warga.create') }}"
+                            class="menu-card menu-blue">
+
+                            <div class="menu-icon">
+
+                                <i class="fa-solid fa-user-plus"></i>
+
+                            </div>
+
+                            <div>
+
+                                <div class="menu-title">
+
+                                    Tambah Manual
+
+                                </div>
+
+                                <small>
+
+                                    Input data warga satu per satu
+
+                                </small>
+
+                            </div>
+
+                            <i class="fa-solid fa-chevron-right"></i>
 
                         </a>
 
-                        <!-- IMPORT -->
+                    </div>
 
-                        <button class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#modalImport"
+                    <!-- IMPORT -->
+
+                    <div class="col-12">
+
+                        <button
+                            class="menu-card menu-green w-100 border-0"
+
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalImport"
+
                             data-bs-dismiss="modal">
 
-                            <i class="fa-solid fa-file-excel me-2"></i>
+                            <div class="menu-icon">
 
-                            Import Excel
+                                <i class="fa-solid fa-file-excel"></i>
+
+                            </div>
+
+                            <div class="text-start">
+
+                                <div class="menu-title">
+
+                                    Import Excel
+
+                                </div>
+
+                                <small>
+
+                                    Upload banyak data sekaligus
+
+                                </small>
+
+                            </div>
+
+                            <i class="fa-solid fa-chevron-right"></i>
 
                         </button>
 
@@ -1351,74 +1913,109 @@
         </div>
 
     </div>
+
+</div>
     <!-- Modal Import -->
 
     <div class="modal fade" id="modalImport" tabindex="-1">
 
-        <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
 
-            <div class="modal-content">
+        <div class="modal-content modal-import-modern">
 
-                <form action="{{ route('admin.warga.import') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.warga.import') }}"
+                method="POST"
+                enctype="multipart/form-data">
 
-                    @csrf
+                @csrf
 
-                    <div class="modal-header">
+                <div class="modal-import-header d-flex justify-content-between align-items-center">
 
-                        <h5 class="modal-title">
+                    <div>
 
+                        <h5>
+                            <i class="fa-solid fa-file-excel me-2"></i>
                             Import Data Warga
-
                         </h5>
 
-                        <button type="button" class="btn-close" data-bs-dismiss="modal">
-                        </button>
-
-                    </div>
-
-                    <div class="modal-body">
-
-                        <label class="form-label">
-
-                            File Excel
-
-                        </label>
-
-                        <input type="file" name="file" class="form-control" accept=".xlsx,.xls,.csv" required>
-
-                        <small class="text-muted">
-
-                            Format: XLSX, XLS atau CSV
-
+                        <small>
+                            Upload file Excel warga
                         </small>
 
                     </div>
 
-                    <div class="modal-footer">
+                    <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                    </button>
 
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                </div>
 
-                            Batal
+                <div class="modal-body p-4">
 
-                        </button>
+                    <label for="fileExcel" class="import-box w-100">
 
-                        <button type="submit" class="btn btn-success">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
 
-                            <i class="fa-solid fa-upload me-2"></i>
+                        <div class="fw-semibold mb-1">
 
-                            Import
+                            Pilih File Excel
 
-                        </button>
+                        </div>
 
+                        <div class="import-note">
+
+                            Format XLSX, XLS atau CSV
+
+                        </div>
+
+                        <input
+                            id="fileExcel"
+                            type="file"
+                            name="file"
+                            accept=".xlsx,.xls,.csv"
+                            hidden
+                            required>
+
+                    </label>
+
+                    <div
+                        id="fileName"
+                        class="text-center mt-3 text-success fw-semibold">
                     </div>
 
-                </form>
+                </div>
 
-            </div>
+                <div class="modal-footer border-0 px-4 pb-4">
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary rounded-4 px-4"
+                        data-bs-dismiss="modal">
+
+                        Batal
+
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn btn-import-modern px-4">
+
+                        <i class="fa-solid fa-upload me-2"></i>
+
+                        Import
+
+                    </button>
+
+                </div>
+
+            </form>
 
         </div>
 
     </div>
+
+</div>
     <script>
         const filterForm =
             document.getElementById('filterForm');
@@ -1553,4 +2150,19 @@
 
             });
     </script>
+    <script>
+document
+.getElementById('fileExcel')
+.addEventListener('change', function(){
+
+    const fileName =
+        this.files[0]?.name || '';
+
+    document.getElementById('fileName')
+        .innerHTML =
+        '<i class="fa-solid fa-file-excel me-2"></i>' +
+        fileName;
+
+});
+</script>
 @endsection

@@ -8,9 +8,16 @@ use App\Models\Keterampilan;
 use App\Models\KategoriKeterampilan;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
+use Carbon\Carbon;
 
 class WargaImport implements ToModel, WithHeadingRow
 {
+    public $berhasil = 0;
+    public $duplikat = 0;
+    public $gagal = 0;
+    public $skillBaru = 0;
+
     public function model(array $row)
     {
         // Cari RT berdasarkan nomor_rt di Excel
@@ -56,27 +63,57 @@ if (!$rt) {
 
     return null;
 }
+if (
+    empty($row['nik']) ||
+    strlen(preg_replace('/\D/', '', $row['nik'])) != 16
+) {
+
+    \Log::warning(
+        'NIK tidak valid',
+        $row
+    );
+
+    return null;
+}
         // Simpan warga atau ambil jika sudah ada
-        $warga = Warga::firstOrCreate(
+        $warga = Warga::where(
+    'nik',
+    trim($row['nik'])
+)->first();
 
-            [
-                'nik' => $row['nik']
-            ],
+if (!$warga) {
 
-            [
-                'rt_id' => $rt->id,
+    $warga = Warga::create([
 
-                'nama' => $row['nama'],
+        'rt_id' => $rt->id,
 
-                'jenis_kelamin' => $row['jenis_kelamin'],
+        'nik' => trim($row['nik']),
 
-                'tempat_lahir' => $row['tempat_lahir'],
+        'nama' => $row['nama'],
 
-                'tanggal_lahir' => $row['tanggal_lahir'],
+        'jenis_kelamin' => $row['jenis_kelamin'],
 
-                'no_hp' => $row['no_hp'] ?? null,
-            ]
-        );
+        'tempat_lahir' => $row['tempat_lahir'],
+
+       'tanggal_lahir' => is_numeric($row['tanggal_lahir'])
+    ? Date::excelToDateTimeObject(
+        $row['tanggal_lahir']
+      )->format('Y-m-d')
+    : Carbon::parse(
+        $row['tanggal_lahir']
+      )->format('Y-m-d'),
+
+        'no_hp' => $row['no_hp'] ?? null,
+
+    ]);
+
+    $this->berhasil++;
+
+} else {
+
+    $this->duplikat++;
+
+}
 
         // Simpan keterampilan
         if (
@@ -104,22 +141,20 @@ if (!$rt) {
 
             if (!$cekSkill) {
 
-                Keterampilan::create([
+    Keterampilan::create([
 
-                    'warga_id' =>
-                    $warga->id,
+        'warga_id' => $warga->id,
 
-                    'kategori_keterampilan_id' =>
-                    $kategori->id,
+        'kategori_keterampilan_id' => $kategori->id,
 
-                    'nama_keterampilan' =>
-                    $row['nama_keterampilan'],
+        'nama_keterampilan' => $row['nama_keterampilan'],
 
-                    'pengalaman' =>
-                    $row['pengalaman'] ?? null,
+        'pengalaman' => $row['pengalaman'] ?? null,
 
-                ]);
-            }
+    ]);
+
+    $this->skillBaru++;
+}
         }
 
         return $warga;

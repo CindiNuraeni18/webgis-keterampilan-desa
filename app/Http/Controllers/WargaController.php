@@ -75,7 +75,7 @@ class WargaController extends Controller
     })
 
     ->latest()
-    ->paginate(20)
+    ->paginate(100)
     ->withQueryString();
 
     $dusuns = Dusun::orderBy('nama_dusun')->get();
@@ -121,7 +121,7 @@ return view(
     {
         $request->validate([
             'rt_id' => 'required|exists:rts,id',
-            'nik' => 'required|max:20|unique:wargas,nik',
+           'nik' => 'required|digits:16|unique:wargas,nik',
             'nama' => 'required|max:255',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
             'tempat_lahir' => 'required|max:255',
@@ -131,10 +131,10 @@ return view(
 'nullable',
 
 'nama_keterampilan.*' =>
-'required_with:kategori_keterampilan_id.*',
+'nullable|string|max:255',
 
 'kategori_keterampilan_id.*' =>
-'required_with:nama_keterampilan.*',
+'nullable',
 
 'pengalaman.*' =>
 'nullable|max:255',
@@ -162,7 +162,7 @@ return view(
    SIMPAN KETERAMPILAN
 ========================= */
 
-if($request->nama_keterampilan){
+if($request->filled('nama_keterampilan')){
 
     foreach($request->nama_keterampilan as $i => $skill){
 
@@ -238,13 +238,24 @@ if($request->nama_keterampilan){
         'file' => 'required|mimes:xlsx,xls,csv'
     ]);
 
-    Excel::import(
-        new WargaImport,
-        $request->file('file')
-    );
+    $import = new WargaImport();
 
-    return redirect()->route('admin.warga.index')
-        ->with('success', 'Data warga berhasil diimport.');
+Excel::import(
+    $import,
+    $request->file('file')
+);
+
+    return redirect()
+->route('admin.warga.index')
+->with(
+'success',
+[
+    'berhasil'  => $import->berhasil,
+    'duplikat'  => $import->duplikat,
+    'skill'     => $import->skillBaru,
+    'gagal'     => $import->gagal,
+]
+);
 }
 
     public function show(Warga $warga)
@@ -281,7 +292,7 @@ public function update(Request $request, Warga $warga)
         'required|exists:rts,id',
 
         'nik' =>
-        'required|max:20|unique:wargas,nik,' . $warga->id,
+'required|digits:16|unique:wargas,nik,' . $warga->id,
 
         'nama' =>
         'required|max:255',
@@ -302,10 +313,10 @@ public function update(Request $request, Warga $warga)
 'nullable',
 
         'nama_keterampilan.*' =>
-'required_with:kategori_keterampilan_id.*',
+'nullable|string|max:255',
 
 'kategori_keterampilan_id.*' =>
-'required_with:nama_keterampilan.*',
+'nullable',
 
         'pengalaman.*' =>
         'nullable|max:255',

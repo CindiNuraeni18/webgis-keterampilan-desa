@@ -100,18 +100,22 @@
             background: rgba(255, 255, 255, .10) !important;
             transform: translateY(-3px);
         }
+
+        html {
+            scroll-behavior: smooth;
+        }
     </style>
-   
+
 
     <div class="container-fluid py-4" style="background-color: #f8f9fa; min-height: 100vh;">
 
-        @php
+        {{-- @php
 
             $totalWarga = $statistikRt->sum(fn($rt) => $rt->wargas->count());
 
             $totalKeterampilan = $statistikRt->sum(fn($rt) => $rt->wargas->sum(fn($w) => $w->keterampilans->count()));
 
-        @endphp
+        @endphp --}}
 
         {{-- GRAFIK KESELURUHAN (HERO SECTION) --}}
         <div class="row mb-4">
@@ -121,17 +125,19 @@
                     <div class="card-body p-4">
                         <div class="row align-items-center">
                             <div class="col-md-7 text-white">
-                                 <h1 class="fw-bold dashboard-title">Selamat Datang Admin</h1>
+                                <h1 class="fw-bold dashboard-title">Selamat Datang Admin</h1>
                                 {{-- <h5 class="fw-bold mb-2 text-info">{{ Auth::user()->name }}</h5> --}}
                                 <p class="text-white-50 small mb-4">
                                     Menampilkan ringkasan jumlah warga dan total keterampilan yang terdata dalam sistem.
                                 </p>
                                 <div class="row g-3">
 
-                                    <div class="col-6">
+                                    {{-- TOTAL WARGA --}}
+                                    <div class="col-md-6">
 
                                         <div class="p-3 rounded-3 hero-box"
-                                            style="background: rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);">
+                                            style="background:rgba(255,255,255,.05);
+                   border:1px solid rgba(255,255,255,.1);">
 
                                             <h3 class="fw-bold mb-0 text-info">
                                                 {{ $totalWarga }}
@@ -145,20 +151,166 @@
 
                                     </div>
 
-                                    <div class="col-6">
+                                    {{-- WARGA KETERAMPILAN --}}
+                                    <div class="col-md-6">
 
                                         <div class="p-3 rounded-3 hero-box"
-                                            style="background: rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);">
+                                            style="background:rgba(255,255,255,.05);
+                   border:1px solid rgba(255,255,255,.1);">
 
                                             <h3 class="fw-bold mb-0 text-success">
-                                                {{ $totalKeterampilan }}
+                                                {{ $totalPunyaSkill }}
                                             </h3>
 
                                             <small class="text-white-50">
-                                                Total Keterampilan
+                                                Warga Keterampilan
                                             </small>
 
                                         </div>
+
+                                    </div>
+
+                                    {{-- DUSUN TERAMPIL --}}
+                                    <div class="col-md-4">
+
+                                        <a href="#dusunChartSection" class="text-decoration-none">
+
+                                            <div class="p-3 rounded-3 hero-box"
+                                                style="background:rgba(59,130,246,.15);
+                       border:1px solid rgba(59,130,246,.3);">
+
+                                                <small class="text-white-50">
+                                                    Dusun Terampil
+                                                </small>
+
+                                                <h6 class="fw-bold text-info mt-2">
+                                                    {{ $dusunTerampil->nama_dusun ?? '-' }}
+                                                </h6>
+
+                                            </div>
+
+                                        </a>
+
+                                    </div>
+
+                                    {{-- RW TERAMPIL --}}
+                                    <div class="col-md-4">
+
+                                        <a href="#rwChartSection" class="text-decoration-none">
+
+                                            <div class="p-3 rounded-3 hero-box"
+                                                style="background:rgba(34,197,94,.15);
+                       border:1px solid rgba(34,197,94,.3);">
+
+                                                <small class="text-white-50">
+                                                    RW Terampil
+                                                </small>
+
+                                                <h6 class="fw-bold text-success mt-2">
+                                                    RW {{ $rwTerampil->nomor_rw ?? '-' }}
+                                                </h6>
+
+                                            </div>
+
+                                        </a>
+
+                                    </div>
+
+                                    {{-- RT TERAMPIL --}}
+                                    <div class="col-md-4">
+
+                                        <a href="#rtChartSection" class="text-decoration-none">
+
+                                            <div class="p-3 rounded-3 hero-box"
+                                                style="background:rgba(245,158,11,.15);
+                       border:1px solid rgba(245,158,11,.3);">
+
+                                                <small class="text-white-50">
+                                                    RT Terampil
+                                                </small>
+
+                                                <h6 class="fw-bold text-warning mt-2">
+                                                    RT {{ $rtTerampil->nomor_rt ?? '-' }}
+                                                </h6>
+
+                                            </div>
+
+                                        </a>
+
+                                    </div>
+
+                                    {{-- KATEGORI TERBANYAK --}}
+                                    <div class="col-md-6">
+
+                                        <div class="p-3 rounded-3 hero-box"
+                                            style="background:rgba(168,85,247,.15);
+                   border:1px solid rgba(168,85,247,.3);">
+
+                                            <small class="text-white-50">
+                                                Kategori Terbanyak
+                                            </small>
+
+                                            <h6 class="fw-bold text-light mt-2">
+                                                {{ $kategoriTerbanyak->nama_kategori ?? '-' }}
+                                            </h6>
+
+                                            <small class="text-warning">
+                                                {{ $kategoriTerbanyak->total ?? 0 }} Data
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+                                    {{-- GENDER TERBANYAK --}}
+                                    <div class="col-md-6">
+
+                                        <a href="#genderChartSection" class="text-decoration-none">
+
+                                            <div class="p-3 rounded-3 hero-box"
+                                                style="background:rgba(236,72,153,.15);
+                       border:1px solid rgba(236,72,153,.3);">
+
+                                                <small class="text-white-50">
+                                                    Gender Terbanyak
+                                                </small>
+
+                                                <h6 class="fw-bold text-light mt-2">
+                                                    {{ $genderTerbanyak->jenis_kelamin ?? '-' }}
+                                                </h6>
+
+                                                <small class="text-info">
+                                                    {{ $genderTerbanyak->total ?? 0 }} Orang
+                                                </small>
+
+                                            </div>
+
+                                        </a>
+
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <a href="#usiaChartSection" class="text-decoration-none">
+
+                                            <div class="p-3 rounded-3 hero-box"
+                                                style="background:rgba(249,115,22,.15);
+            border:1px solid rgba(249,115,22,.3);">
+
+                                                <small class="text-white-50">
+
+                                                    Usia Dominan
+
+                                                </small>
+
+                                                <h6 class="fw-bold text-light mt-2">
+
+                                                    {{ $usiaTerbanyak }}
+
+                                                </h6>
+
+                                            </div>
+
+                                        </a>
 
                                     </div>
 
@@ -171,72 +323,305 @@
                                         style="position:absolute; top:38%; left:48%; transform:translate(-50%,-50%); display:flex; flex-direction:column; 
                                         align-items:center; justify-content:center; width:100px; height:100px;">
                                         <h2 class="text-white fw-bold mb-0" style="line-height:1; font-size:2rem;">
-                                            {{ $totalKeterampilan }}
+                                            {{ $totalWarga }}
                                         </h2>
 
                                         <span class="text-white-50" style="font-size:.85rem; margin-top:6px;">
-                                            Skill
+                                            Total Warga
                                         </span>
 
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        {{-- CHART UTAMA --}}
         <div class="row g-4 mb-4">
-            <div class="col-lg-8">
-                <div class="card border-0 shadow-sm fade-up h-100" style="border-radius: 15px;">
+
+            {{-- DUSUN --}}
+            <div class="col-lg-6" id="dusunChartSection">
+
+                <div class="card border-0 shadow-sm fade-up h-100" style="border-radius:15px;">
+
                     <div class="card-header bg-transparent border-0 pt-4 px-4">
-                        <h5 class="fw-bold mb-0 text-dark">Sebaran Keterampilan Warga per Dusun</h5>
-                        <small class="text-muted"> Menampilkan jumlah keterampilan yang dimiliki warga pada setiap
-                            dusun.</small>
+
+                        <h5 class="fw-bold mb-0 text-dark">
+                            Perbandingan Warga dan Warga Berketerampilan per Dusun
+                        </h5>
+
+                        <small class="text-muted">
+                            Menampilkan jumlah seluruh warga dan warga yang memiliki keterampilan pada setiap dusun.
+                        </small>
+
                     </div>
+
                     <div class="card-body px-4 pb-4">
-                        <div style="height: 320px;">
+
+                        <div style="height:320px">
+
                             <canvas id="dusunChart"></canvas>
+
                         </div>
+
                     </div>
+
                 </div>
+
             </div>
 
-            <div class="col-lg-4">
-                <div class="card border-0 shadow-sm h-100 fade-up" style="border-radius: 15px;">
-                    <div class="card-header bg-transparent border-0 pt-4 px-4 text-center">
-                        <h5 class="fw-bold mb-0 text-dark">Persentase Kategori Keterampilan</h5>
+            {{-- RW --}}
+            <div class="col-lg-6" id="rwChartSection">
+
+                <div class="card border-0 shadow-sm fade-up h-100" style="border-radius:15px;">
+
+                    <div class="card-header bg-transparent border-0 pt-4 px-4">
+
+                        <h5 class="fw-bold mb-1">
+                            Sebaran Warga per RW
+                        </h5>
+
+                        <small class="text-muted">
+                            Jumlah warga pada masing-masing RW.
+                        </small>
+
                     </div>
+
                     <div class="card-body px-4 pb-4">
 
-                        <div style="
-        position:relative;
-        height:320px;
-        ">
+                        <div style="height:320px">
 
-                            <canvas id="kategoriChart"></canvas>
-
-                            <div id="kategoriCenter" style="display:none;">
-
-                                <h3 id="kategoriPersen" class="fw-bold mb-0 text-dark">
-                                    0%
-                                </h3>
-
-                                <small id="kategoriNama" class="text-muted">
-                                    Kategori
-                                </small>
-
-                            </div>
+                            <canvas id="rwChart"></canvas>
 
                         </div>
 
                     </div>
+
                 </div>
+
             </div>
+
         </div>
 
+        <div class="row g-4 mb-4">
+
+            {{-- RT --}}
+            <div class="col-lg-12" id="rtChartSection">
+
+                <div class="card border-0 shadow-sm fade-up" style="border-radius:15px;">
+
+                    <div class="card-header bg-transparent border-0 pt-4 px-4">
+
+                        <h5 class="fw-bold mb-1">
+                            Sebaran Warga per RT
+                        </h5>
+
+                        <small class="text-muted">
+                            Distribusi jumlah warga pada setiap RT.
+                        </small>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div style="height:350px">
+
+                            <canvas id="rtChart"></canvas>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {{-- GRAFIK TAMBAHAN --}}
+        <div class="row g-4 mb-4">
+
+    {{-- KATEGORI --}}
+    <div class="col-lg-6">
+
+        <div class="card border-0 shadow-sm h-100 fade-up"
+            style="border-radius:15px;">
+
+            <div class="card-header bg-transparent border-0 pt-4 px-4 text-center">
+
+                <h5 class="fw-bold mb-0 text-dark">
+                    Persentase Kategori Keterampilan
+                </h5>
+
+            </div>
+
+            <div class="card-body px-4 pb-4">
+
+                <div style="position:relative;height:320px">
+
+                    <canvas id="kategoriChart"></canvas>
+
+                    <div id="kategoriCenter" style="display:none;">
+
+                        <h3 id="kategoriPersen"
+                            class="fw-bold mb-0 text-dark">
+                            0%
+                        </h3>
+
+                        <small id="kategoriNama"
+                            class="text-muted">
+                            Kategori
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {{-- GENDER --}}
+    <div class="col-lg-6"
+        id="genderChartSection">
+
+        <div class="card border-0 shadow-sm fade-up h-100"
+            style="border-radius:15px;">
+
+            <div class="card-header bg-transparent border-0 pt-4 px-4">
+
+                <h5 class="fw-bold mb-1">
+                    Keterampilan Berdasarkan Jenis Kelamin
+                </h5>
+
+                <small class="text-muted">
+                    Perbandingan warga laki-laki dan perempuan yang memiliki keterampilan.
+                </small>
+
+            </div>
+
+            <div class="card-body">
+
+                <div style="height:320px">
+
+                    <canvas id="genderSkillChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+        {{-- usia dan tahun--}}
+         {{-- PERTAHUN --}}
+           <div class="row g-4 mb-4">
+
+    <div class="col-lg-6">
+
+        <div class="card border-0 shadow-sm fade-up h-100"
+            style="border-radius:15px;">
+
+            <div class="card-header bg-transparent border-0 pt-4 px-4">
+
+                <h5 class="fw-bold mb-1">
+                    Warga Berketerampilan per Tahun
+                </h5>
+
+                <small class="text-muted">
+                    Berdasarkan tahun pendataan.
+                </small>
+
+            </div>
+
+            <div class="card-body">
+
+                <div style="height:320px">
+
+                    <canvas id="skillTahunChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-6" id="usiaChartSection">
+
+        <div class="card border-0 shadow-sm fade-up h-100"
+            style="border-radius:15px;">
+
+            <div class="card-header bg-transparent border-0 pt-4 px-4">
+
+                <h5 class="fw-bold mb-1">
+                    Kelompok Usia
+                </h5>
+
+                <small class="text-muted">
+                    Warga berketerampilan berdasarkan usia.
+                </small>
+
+            </div>
+
+            <div class="card-body">
+
+                <div style="height:320px">
+
+                    <canvas id="usiaChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+        <div class="row g-4 mb-4">
+
+            <div class="col-lg-12">
+
+                <div class="card border-0 shadow-sm fade-up" style="border-radius:15px;">
+
+                    <div class="card-header bg-transparent border-0 pt-4 px-4">
+
+                        <h5 class="fw-bold mb-1">
+                            Jumlah Warga Keterampilan per Kategori
+                        </h5>
+
+                        <small class="text-muted">
+                            Menampilkan jumlah warga berdasarkan kategori keterampilan.
+                        </small>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div style="height:400px">
+
+                            <canvas id="kategoriBarChart"></canvas>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
         {{-- TABLES --}}
         <div class="card border-0 shadow-sm mb-4 fade-up h-100" style="border-radius: 15px; overflow: hidden;">
             <div class="card-header bg-white border-0 pt-4 px-4">
@@ -275,7 +660,7 @@
                                 </th>
 
                                 <th class="text-center py-3 border-0">
-                                    Total Keterampilan
+                                    Total Warga Keterampilan
                                 </th>
 
                             </tr>
@@ -286,7 +671,9 @@
                                 @php
                                     $jumlahWarga = $rt->wargas->count();
 
-                                    $totalSkill = $rt->wargas->sum(fn($w) => $w->keterampilans->count());
+                                    $totalSkill = $rt->wargas
+                                        ->filter(fn($w) => $w->keterampilans->count() > 0)
+                                        ->count();
                                 @endphp
 
                                 <tr>
@@ -378,7 +765,7 @@
                                         </th>
 
                                         <th class="py-3 border-0 text-center px-4">
-                                            Total Keterampilan
+                                            Total Warga Keterampilan
                                         </th>
 
                                     </tr>
@@ -393,7 +780,9 @@
                                             $jumlahWarga = $rw->rts->sum(fn($rt) => $rt->wargas->count());
 
                                             $totalSkill = $rw->rts->sum(
-                                                fn($rt) => $rt->wargas->sum(fn($w) => $w->keterampilans->count()),
+                                                fn($rt) => $rt->wargas
+                                                    ->filter(fn($w) => $w->keterampilans->count() > 0)
+                                                    ->count(),
                                             );
                                         @endphp
 
@@ -512,15 +901,15 @@
             data: {
 
                 labels: [
-                    'Total Warga',
-                    'Total Keterampilan'
+                    'Punya Keterampilan',
+                    'Belum Punya Keterampilan'
                 ],
 
                 datasets: [{
 
                     data: [
-                        {{ $totalWarga }},
-                        {{ $totalKeterampilan }}
+                        {{ $totalPunyaSkill }},
+                        {{ $totalBelumSkill }}
                     ],
 
                     backgroundColor: [
@@ -575,19 +964,37 @@
             type: 'bar',
             data: {
                 labels: {!! json_encode($statistikDusun->pluck('nama_dusun')) !!},
-                datasets: [{
-                    label: 'Total Skill',
-                    data: {!! json_encode(
-                        $statistikDusun->map(
-                            fn($d) => $d->rws->sum(
-                                fn($rw) => $rw->rts->sum(fn($rt) => $rt->wargas->sum(fn($w) => $w->keterampilans->count())),
+                datasets: [
+
+                    {
+                        label: 'Total Warga',
+
+                        data: {!! json_encode(
+                            $statistikDusun->map(fn($d) => $d->rws->sum(fn($rw) => $rw->rts->sum(fn($rt) => $rt->wargas->count()))),
+                        ) !!},
+
+                        backgroundColor: '#3b82f6',
+                        borderRadius: 8
+
+                    },
+
+                    {
+                        label: 'Warga Berketerampilan',
+
+                        data: {!! json_encode(
+                            $statistikDusun->map(
+                                fn($d) => $d->rws->sum(
+                                    fn($rw) => $rw->rts->sum(fn($rt) => $rt->wargas->filter(fn($w) => $w->keterampilans->count() > 0)->count()),
+                                ),
                             ),
-                        ),
-                    ) !!},
-                    backgroundColor: gradient,
-                    borderRadius: 8,
-                    barThickness: 30,
-                }]
+                        ) !!},
+
+                        backgroundColor: '#22c55e',
+                        borderRadius: 8
+
+                    }
+
+                ]
             },
             options: {
                 responsive: true,
@@ -597,11 +1004,14 @@
                     duration: 1800,
                     easing: 'easeOutQuart'
                 },
+
                 plugins: {
                     legend: {
-                        display: false
+                        display: true,
+                        position: 'top'
                     }
                 },
+
                 scales: {
                     y: {
                         grid: {
@@ -740,8 +1150,359 @@
                 }
             }
         });
-        /* ANIMASI SAAT SCROLL */
 
+        new Chart(
+            document.getElementById('genderSkillChart'), {
+
+                type: 'pie',
+
+                data: {
+
+                    labels: {!! json_encode($genderSkillChart->pluck('jenis_kelamin')) !!},
+
+                    datasets: [{
+
+                        data: {!! json_encode($genderSkillChart->pluck('total')) !!},
+
+                        backgroundColor: [
+                            '#3b82f6',
+                            '#ec4899'
+                        ],
+
+                        borderWidth: 3,
+                        borderColor: '#fff'
+
+                    }]
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+
+                        legend: {
+
+                            position: 'bottom'
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+
+        new Chart(
+            document.getElementById('rwChart'), {
+
+                type: 'bar',
+
+                data: {
+
+                    labels: {!! json_encode($statistikRw->pluck('nomor_rw')->map(fn($rw) => 'RW ' . $rw)) !!},
+
+                    datasets: [
+
+                        {
+                            label: 'Total Warga',
+
+                            data: {!! json_encode($statistikRw->map(fn($rw) => $rw->rts->sum(fn($rt) => $rt->wargas->count()))) !!},
+
+                            backgroundColor: '#3b82f6',
+                            borderRadius: 8
+                        },
+
+                        {
+                            label: 'Warga Berketerampilan',
+
+                            data: {!! json_encode(
+                                $statistikRw->map(
+                                    fn($rw) => $rw->rts->sum(fn($rt) => $rt->wargas->filter(fn($w) => $w->keterampilans->count() > 0)->count()),
+                                ),
+                            ) !!},
+
+                            backgroundColor: '#22c55e',
+                            borderRadius: 8
+                        }
+
+                    ]
+
+                },
+
+                options: {
+
+                    responsive: true,
+                    maintainAspectRatio: false,
+
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        }
+                    },
+
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+
+                }
+
+            }
+        );
+
+        new Chart(
+            document.getElementById('rtChart'), {
+
+                type: 'bar',
+
+                data: {
+
+                    labels: {!! json_encode($statistikRt->pluck('nomor_rt')->map(fn($rt) => 'RT ' . $rt)) !!},
+
+                    datasets: [
+
+                        {
+                            label: 'Total Warga',
+
+                            data: {!! json_encode($statistikRt->map(fn($rt) => $rt->wargas->count())) !!},
+
+                            backgroundColor: '#3b82f6',
+                            borderRadius: 8
+                        },
+
+                        {
+                            label: 'Warga Berketerampilan',
+
+                            data: {!! json_encode(
+                                $statistikRt->map(fn($rt) => $rt->wargas->filter(fn($w) => $w->keterampilans->count() > 0)->count()),
+                            ) !!},
+
+                            backgroundColor: '#22c55e',
+                            borderRadius: 8
+                        }
+
+                    ]
+
+                },
+
+                options: {
+
+                    responsive: true,
+                    maintainAspectRatio: false,
+
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        }
+                    },
+
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+
+                }
+
+            }
+        );
+
+        new Chart(
+            document.getElementById('skillTahunChart'), {
+
+                type: 'bar',
+
+                data: {
+
+                    labels: {!! json_encode($skillPerTahun->pluck('tahun')) !!},
+
+                    datasets: [{
+
+                        label: 'Warga Memiliki Keterampilan',
+
+                        data: {!! json_encode($skillPerTahun->pluck('total')) !!},
+
+                        backgroundColor: '#10b981',
+
+                        borderRadius: 10,
+
+                        borderSkipped: false
+
+                    }]
+
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+
+                        legend: {
+                            display: false
+                        }
+
+                    },
+
+                    scales: {
+
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                precision: 0
+                            }
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+
+            anchor.addEventListener('click', function(e) {
+
+                e.preventDefault();
+
+                document
+                    .querySelector(
+                        this.getAttribute('href')
+                    )
+                    .scrollIntoView({
+
+                        behavior: 'smooth',
+
+                        block: 'start'
+
+                    });
+
+            });
+
+        });
+
+        new Chart(
+            document.getElementById('kategoriBarChart'), {
+                type: 'bar',
+
+                data: {
+
+                    labels: {!! json_encode($kategoriChart->pluck('nama_kategori')) !!},
+
+                    datasets: [{
+
+                        label: 'Jumlah Warga',
+
+                        data: {!! json_encode($kategoriChart->pluck('total')) !!},
+
+                        backgroundColor: [
+                            '#2563eb',
+                            '#0ea5e9',
+                            '#14b8a6',
+                            '#22c55e',
+                            '#f59e0b',
+                            '#ef4444',
+                            '#8b5cf6',
+                            '#ec4899'
+                        ],
+
+                        borderRadius: 8
+
+                    }]
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+
+                        legend: {
+
+                            display: false
+
+                        }
+
+                    },
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero: true
+
+                        }
+
+                    }
+
+                }
+            }
+        );
+        new Chart(
+            document.getElementById('usiaChart'), {
+
+                type: 'bar',
+
+                data: {
+
+                    labels: {!! json_encode(array_keys($usiaChart)) !!},
+
+                    datasets: [{
+
+                        label: 'Jumlah Warga',
+
+                        data: {!! json_encode(array_values($usiaChart)) !!},
+
+                        backgroundColor: '#f97316',
+
+                        borderRadius: 8
+
+                    }]
+
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+
+                        legend: {
+
+                            display: false
+
+                        }
+
+                    },
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero: true
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+
+        /* ANIMASI SAAT SCROLL */
         const observer = new IntersectionObserver(
             (entries) => {
 

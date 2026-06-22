@@ -996,7 +996,7 @@
                         <a href="{{ route('admin.warga.index') }}"
                             class="nav-link {{ request()->routeIs('admin.warga.*') ? 'active' : '' }}">
                             <span class="icon-wrap"><i class="bi bi-people-fill"></i></span>
-                            <span class="nav-text">Data Warga Keterampilan</span>
+                            <span class="nav-text">Data Warga</span>
                             <i class="bi bi-chevron-right nav-arrow"></i>
                         </a>
                     </li>

@@ -535,7 +535,15 @@ thead .sticky-col{
     }
 
 }
+/* SWEETALERT DI ATAS NAVBAR */
 
+.swal2-container {
+    z-index: 999999 !important;
+}
+
+.swal2-backdrop-show {
+    z-index: 999998 !important;
+}
 </style>
 
 

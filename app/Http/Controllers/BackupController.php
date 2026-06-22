@@ -67,7 +67,7 @@ class BackupController extends Controller
     'success' => 'Backup berhasil dibuat',
     'backup_file' => $filename,
     'jumlah_tabel' => count($tables)
-]);
+    ]);
     }
 
     public function download($id)
@@ -92,9 +92,9 @@ class BackupController extends Controller
                 {$sql}
                 SET FOREIGN_KEY_CHECKS=1;
             ");
-$backup->update([
-    'last_restored_at' => now()
-]);
+            $backup->update([
+                'last_restored_at' => now()
+            ]);
             return redirect()
                 ->route('admin.backup.index')
                 ->with('success', 'Database berhasil direstore.');

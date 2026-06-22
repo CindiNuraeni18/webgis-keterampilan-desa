@@ -384,7 +384,7 @@ public function detailRt($id)
 
     $wargas = $rt->wargas()
         ->with('keterampilans.kategori')
-        ->paginate(10);
+        ->paginate(50);
 
     return view(
         'admin.pemetaan.detail-rt',
@@ -411,7 +411,7 @@ public function detailRw($id)
         'warga.rt.rw.dusun'
     ])
     ->whereIn('warga_id', $wargaIds)
-    ->paginate(10);
+    ->paginate(50);
 
     return view(
         'admin.pemetaan.detail-rw',
@@ -437,7 +437,7 @@ public function detailDusun($id)
         'warga.rt.rw.dusun'
     ])
     ->whereIn('warga_id', $wargaIds)
-    ->paginate(10);
+    ->paginate(50);
 
     return view(
         'admin.pemetaan.detail-dusun',

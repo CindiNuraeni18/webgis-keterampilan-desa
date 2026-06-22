@@ -261,6 +261,82 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
                 max-width: 100%;
             }
         }
+         /* SWEETALERT DI ATAS NAVBAR */
+
+        .swal2-container {
+            z-index: 999999 !important;
+        }
+
+        .swal2-backdrop-show {
+            z-index: 999998 !important;
+        }
+        .pagination {
+
+            justify-content: center;
+
+            gap: 6px;
+
+            margin-top: 25px;
+
+        }
+
+        .page-item .page-link {
+
+            border: none;
+
+            border-radius: 12px !important;
+
+            min-width: 42px;
+
+            height: 42px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: #475569;
+
+            font-weight: 600;
+
+            transition: .3s ease;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, .05);
+
+        }
+
+        .page-item .page-link:hover {
+
+            transform: translateY(-2px);
+
+            background: #eff6ff;
+
+            color: #2563eb;
+
+        }
+
+        .page-item.active .page-link {
+
+            background: linear-gradient(135deg,
+                    #2563eb,
+                    #3b82f6);
+
+            color: white;
+
+            box-shadow:
+                0 8px 20px rgba(37, 99, 235, .25);
+
+        }
+
+        .page-item.disabled .page-link {
+
+            background: #f8fafc;
+
+            color: #94a3b8;
+
+        }
     </style>
 
     <div class="card border-0 shadow-sm fade-in">
@@ -300,12 +376,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 </a>
                 </div>
             </div>
-
-            @if (session('success'))
-                <div class="alert alert-success border-0 shadow-sm fade-in">
-                    <i class="bi bi-check-circle me-2"></i> {{ session('success') }}
-                </div>
-            @endif
 
             <div class="table-responsive">
                 <table class="table table-bordered table-striped table-hover align-middle">
@@ -355,11 +425,38 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
                 </table>
             </div>
 
-            <div class="mt-4">
+            <div class="mt-3">
                 {{ $kategoris->links() }}
             </div>
 
         </div>
     </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if(session('success'))
 
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+
+    Swal.fire({
+
+        icon: 'success',
+
+        title: 'Berhasil Ditambahkan',
+
+        text: '{{ session("success") }}',
+
+        showConfirmButton: false,
+
+        timer: 2200,
+
+        timerProgressBar: true,
+
+        backdrop: true
+
+    });
+
+});
+</script>
+
+@endif
 @endsection

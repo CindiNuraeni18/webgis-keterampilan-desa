@@ -162,7 +162,7 @@ public function laporan(Request $request)
 
     $laporans = $this->getFilteredLaporan($request)
     ->latest()
-    ->paginate(20)
+    ->paginate(100)
     ->withQueryString();
 
     $dusuns = Dusun::all();

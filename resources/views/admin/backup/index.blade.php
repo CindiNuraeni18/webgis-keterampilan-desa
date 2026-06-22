@@ -166,8 +166,8 @@
         }
 
         /* =========================
-       PAGINATION MODERN
-    ========================= */
+           PAGINATION MODERN
+        ========================= */
         .pagination {
             justify-content: center;
             gap: 6px;
@@ -246,6 +246,16 @@
         .btn-restore-modern:hover i {
             transform: rotate(-180deg);
         }
+
+        /* SWEETALERT DI ATAS NAVBAR */
+
+        .swal2-container {
+            z-index: 999999 !important;
+        }
+
+        .swal2-backdrop-show {
+            z-index: 999998 !important;
+        }
     </style>
     <div class="card border-0 shadow-sm">
 
@@ -315,7 +325,7 @@
                                                     class="text-muted"> File cadangan sistem </small>
                                             </div>
                                         </div>
-                                    </td> 
+                                    </td>
                                     <td>
                                         <div class="fw-semibold small">
                                             {{ \Carbon\Carbon::parse($item->created_at)->locale('id')->timezone('Asia/Jakarta')->translatedFormat('d F Y') }}
