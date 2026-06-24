@@ -1923,17 +1923,21 @@
         .footer-desa i {
             color: #68d391;
         }
-        .swal-kecil{
-    width: 380px !important;
-    padding: 1rem !important;
-}
 
-.swal-title-kecil{
-    font-size: 1.2rem !important;
-}
+        .swal-kecil {
+            width: 380px !important;
+            padding: 1rem !important;
+        }
 
-.swal-icon-kecil{
-    zoom: 0.75;
+        .swal-title-kecil {
+            font-size: 1.2rem !important;
+        }
+
+        .swal-icon-kecil {
+            zoom: 0.75;
+        }
+      .leaflet-pane.dusunPane {
+    pointer-events: none;
 }
     </style>
 </head>
@@ -2182,25 +2186,19 @@
 
                 </div>
 
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-4 col-md-6">
 
                     <div class="filter-group">
 
-                        <i class="fa-solid fa-building filter-icon"></i>
+                        <i class="fa-solid fa-tags filter-icon"></i>
 
-                        <select id="filterRw" class="form-select filter-select"></select>
+                        <select id="filterKategori" class="form-select filter-select">
 
-                    </div>
+                            <option value="">
+                                Semua Kategori
+                            </option>
 
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-
-                    <div class="filter-group">
-
-                        <i class="fa-solid fa-house filter-icon"></i>
-
-                        <select id="filterRt" class="form-select filter-select"></select>
+                        </select>
 
                     </div>
 
@@ -2236,15 +2234,10 @@
 
                         <hr>
 
-                        <p>
-                            <span class="bulat besar"></span>
-                            Marker RW
-                        </p>
+                        <p><span class="bulat besar"></span> Keterampilan Warga</p>
 
-                        <p>
-                            <span class="bulat kecil"></span>
-                            Marker RT
-                        </p>
+                <small>Warna: Kategori | Ukuran: Jumlah Warga</small>
+
                     </div>
                 </div>
             </div>
@@ -2593,7 +2586,7 @@
                             </p>
                         </div>
 
-                      <form action="{{ route('landing') }}#kontak" method="GET">
+                        <form action="{{ route('landing') }}#kontak" method="GET">
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">
                                     Nomor Induk Kependudukan (NIK)
@@ -2690,38 +2683,33 @@
                                         </div>
                                     </div>
                                 </div>
-<div class="col-md-6">
-    <label class="form-label">
-        Kategori Keterampilan
-    </label>
+                                <div class="col-md-6">
+                                    <label class="form-label">
+                                        Kategori Keterampilan
+                                    </label>
 
-    <select name="kategori_keterampilan_id"
-            id="kategoriSelect"
-            class="form-select"
-            required>
-        <option value="">-- Pilih Kategori Keterampilan --</option>
+                                    <select name="kategori_keterampilan_id" id="kategoriSelect" class="form-select"
+                                        required>
+                                        <option value="">-- Pilih Kategori Keterampilan --</option>
 
-        @foreach($kategoriKeterampilans as $kategori)
-            <option value="{{ $kategori->id }}">
-                {{ $kategori->nama_kategori }}
-            </option>
-        @endforeach
+                                        @foreach ($kategoriKeterampilans as $kategori)
+                                            <option value="{{ $kategori->id }}">
+                                                {{ $kategori->nama_kategori }}
+                                            </option>
+                                        @endforeach
 
-        <option value="lainnya">Lainnya</option>
-    </select>
-</div>
+                                        <option value="lainnya">Lainnya</option>
+                                    </select>
+                                </div>
 
-<div class="col-md-6 d-none" id="kategoriLainnyaBox">
-    <label class="form-label">
-        Nama Kategori Baru
-    </label>
+                                <div class="col-md-6 d-none" id="kategoriLainnyaBox">
+                                    <label class="form-label">
+                                        Nama Kategori Baru
+                                    </label>
 
-    <input type="text"
-           name="kategori_lainnya"
-           id="kategoriLainnya"
-           class="form-control"
-           placeholder="Masukkan kategori keterampilan baru">
-</div>
+                                    <input type="text" name="kategori_lainnya" id="kategoriLainnya"
+                                        class="form-control" placeholder="Masukkan kategori keterampilan baru">
+                                </div>
                                 <div class="col-md-6">
                                     <label class="form-label">
                                         Keterampilan
@@ -2830,7 +2818,7 @@
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- ===============================
+    <!-- ===============================
          ANIMASI COUNTER STATISTIK
    Menampilkan efek angka bertambah
    pada Total Warga, RW, RT, Dusun,
@@ -2857,7 +2845,7 @@
         });
     </script>
 
- <!-- ===============================
+    <!-- ===============================
          ANIMASI SCROLL HALAMAN
    Menampilkan efek fade dan zoom
    saat section masuk viewport
@@ -2868,17 +2856,17 @@
             if (!animatedElements.length) return;
 
             const CONFIG = {
-                baseDelay: 100, 
-                randomJitter: 20, 
-                enterDuration: 1000, 
+                baseDelay: 100,
+                randomJitter: 20,
+                enterDuration: 1000,
                 exitDuration: 700,
                 enterThreshold: 0.16,
                 rootMargin: '0px 0px -10% 0px'
             };
 
             const EASING = {
-                enter: 'cubic-bezier(0.22, 1, 0.36, 1)', 
-                exit: 'ease-in-out' 
+                enter: 'cubic-bezier(0.22, 1, 0.36, 1)',
+                exit: 'ease-in-out'
             };
 
             const randomBetween = (min, max) =>
@@ -2964,7 +2952,7 @@
                     if (!state) return;
 
                     if (entry.isIntersecting) {
-                       
+
                         if (!state.visible || state.leaving) {
                             state.visible = true;
                             state.entering = true;
@@ -3030,11 +3018,11 @@
     </script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-      <!-- ===============================
+    <!-- ===============================
          pemetaan
     ================================ -->
     <script>
-         const streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        const streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap'
         });
 
@@ -3053,7 +3041,13 @@
             zoom: 14,
             layers: [streetLayer]
         });
+        map.createPane('dusunPane');
+        map.createPane('rwPane');
+        map.createPane('rtPane');
 
+        map.getPane('dusunPane').style.zIndex = 300;
+        map.getPane('rwPane').style.zIndex = 700;
+        map.getPane('rtPane').style.zIndex = 750;
         // Nonaktifkan interaksi sampai peta diklik
         map.scrollWheelZoom.disable();
         map.dragging.disable();
@@ -3064,27 +3058,49 @@
         });
 
         // 3. LAYER GROUPS
-       // Pindahkan ini ke atas (sebelum fungsi loadData)
-const polygonLayer = L.layerGroup().addTo(map);
-const dusunLayer = L.layerGroup().addTo(map);
-const rwLayer = L.layerGroup().addTo(map); 
-const rtLayer = L.layerGroup().addTo(map);
+        // Pindahkan ini ke atas (sebelum fungsi loadData)
+        const polygonLayer = L.layerGroup().addTo(map);
+        const dusunLayer = L.layerGroup().addTo(map);
+        const skillLayer = L.layerGroup().addTo(map);
 
-// Tambafhkan variabel penampung data global
-let globalData = { rw: [], rt: [] };
+        // Tambafhkan variabel penampung data global
+        let globalData = {
+            rw: [],
+            rt: []
+        };
 
         // 4. LOAD GEOJSON BATAS DESA (outline biru)
         fetch("{{ asset('geojson/karangmulya.geojson') }}")
             .then(res => res.json())
             .then(data => {
                 const geojson = L.geoJSON(data, {
-                    style: {
-                        color: '#0d6efd',
-                        weight: 3,
-                        fillOpacity: 0
-                    }
-                }).addTo(polygonLayer);
 
+                    pane: 'dusunPane',
+
+                    style: function(feature) {
+
+                        let nama =
+                            (
+                                feature.properties.dusunbaru ||
+                                feature.properties.nama_dusun ||
+                                ''
+                            ).toLowerCase();
+
+                        return {
+
+                            color: nama.includes('kemped') ?
+                                '#198754' : '#6f42c1',
+
+                            fillColor: nama.includes('kemped') ?
+                                '#198754' : '#6f42c1',
+
+                            weight: 2,
+                            fillOpacity: 0.10
+                        };
+                    }
+
+                }).addTo(dusunLayer);
+                polygonLayer.bringToBack();
                 polygonLayer.bringToBack();
                 try {
                     map.fitBounds(geojson.getBounds());
@@ -3093,149 +3109,395 @@ let globalData = { rw: [], rt: [] };
 
         // 5. FUNGSI WARNA KATEGORI
         function warnaKategori(kategori) {
-            if (!kategori) return '#6c757d';
-            const warnaList = [
-                '#198754', '#0d6efd', '#fd7e14', '#6f42c1',
-                '#20c997', '#dc3545', '#6610f2', '#d63384',
-                '#1982c4', '#8ac926', '#ffca3a', '#ff595e'
-            ];
-            let index = 0;
-            for (let i = 0; i < kategori.length; i++) {
-                index += kategori.charCodeAt(i);
-            }
-            return warnaList[index % warnaList.length];
-        }
 
+            if (!kategori) return '#6c757d';
+
+            let hash = 0;
+
+            for (let i = 0; i < kategori.length; i++) {
+                hash = kategori.charCodeAt(i) +
+                    ((hash << 5) - hash);
+            }
+
+            const warna =
+                (hash & 0x00FFFFFF)
+                .toString(16)
+                .toUpperCase();
+
+            return "#" +
+                "000000".substring(
+                    0,
+                    6 - warna.length
+                ) + warna;
+        }
+        let semuaData = null;
+
+        let filterDusun = '';
+        let filterKategori = '';
+
+        function isiFilter(data) {
+
+            const dusunSelect =
+                document.getElementById('filterDusun');
+
+            const kategoriSelect =
+                document.getElementById('filterKategori');
+
+            if (!dusunSelect || !kategoriSelect) return;
+
+            dusunSelect.innerHTML =
+                '<option value="">Semua Dusun</option>';
+
+            kategoriSelect.innerHTML =
+                '<option value="">Semua Kategori</option>';
+
+            [...new Set(
+                data.kategori.map(item => item.dusun)
+            )]
+            .forEach(dusun => {
+
+                dusunSelect.innerHTML +=
+                    `<option value="${dusun}">
+            ${dusun}
+        </option>`;
+
+            });
+
+            [...new Set(
+                data.kategori.map(item => item.kategori)
+            )]
+            .forEach(kategori => {
+
+                kategoriSelect.innerHTML +=
+                    `<option value="${kategori}">
+            ${kategori}
+        </option>`;
+
+            });
+
+        }
         // 6. LOAD DATA (Dusun + RW + RT) — dipisah, tidak nested
         function loadData() {
             dusunLayer.clearLayers();
-            rwLayer.clearLayers();
-            rtLayer.clearLayers();
+            skillLayer.clearLayers();
 
             // Load polygon dusun
             fetch("{{ asset('geojson/dusunreal.geojson') }}")
                 .then(res => res.json())
                 .then(data => {
-                    L.geoJSON(data, {
-                        interactive: false,
-                        pane: 'overlayPane',
-                        style: function(feature) {
-                            const nama = feature.properties.dusunbaru;
-                            if (nama === 'kemped') {
-                                return {
-                                    color: '#198754',
-                                    weight: 2,
-                                    fillColor: '#198754',
-                                    fillOpacity: 0.35
-                                };
-                            }
-                            if (nama === 'sukamelang') {
-                                return {
-                                    color: '#6f42c1',
-                                    weight: 2,
-                                    fillColor: '#6f42c1',
-                                    fillOpacity: 0.35
-                                };
-                            }
-                            return {
-                                color: '#0d6efd',
-                                weight: 2,
-                                fillColor: '#0d6efd',
-                                fillOpacity: 0.20
-                            };
-                        },
-                       onEachFeature: function(feature, layer) {
 
-    layer.bindPopup(`
-        <b>Dusun :</b>
-        ${feature.properties.dusunbaru}
-    `);
+                  L.geoJSON(data, {
 
-    layer.on({
-        mouseover: function(e){
-            e.target.setStyle({
-                weight: 5,
-                fillOpacity: 0.7
-            });
-        },
+    interactive: false,
 
-        mouseout: function(e){
-            e.target.setStyle({
-                weight: 2,
-                fillOpacity: 0.35
-            });
-        },
+    style: function(feature){
 
-        click: function(e){
-            layer.openPopup();
-        }
-    });
+        let nama =
+        (
+            feature.properties.dusunbaru ||
+            feature.properties.nama_dusun ||
+            ''
+        ).toLowerCase();
 
-}
-                    }).addTo(dusunLayer);
+        return {
 
-                    dusunLayer.bringToBack();
-                    rwLayer.bringToFront();
-                    rtLayer.bringToFront();
-                })
-                .catch(err => console.log('GeoJSON Error:', err));
+            color:
+                nama.includes('kemped')
+                ? '#198754'
+                : '#6f42c1',
+
+            fillColor:
+                nama.includes('kemped')
+                ? '#198754'
+                : '#6f42c1',
+
+            weight: 3,
+            fillOpacity: 0.15
+        };
+    },
+
+    onEachFeature: function(feature, layer){
+
+        const namaDusun =
+        (
+            feature.properties.dusunbaru ||
+            feature.properties.nama_dusun ||
+            ''
+        ).toLowerCase();
+
+        const dusunData =
+        window.dataDusun?.find(d =>
+
+            d.nama_dusun.toLowerCase()
+            === namaDusun
+
+        );
+
+        if(!dusunData) return;
+
+        layer.bindPopup(`
+
+<div class="popup-modern">
+
+<div class="popup-header"
+style="
+background:${warnaKategori(
+    dusunData.keterampilan_dominan
+)};
+color:white;
+">
+
+<div class="popup-title">
+${dusunData.nama_dusun}
+</div>
+
+<div class="popup-subtitle">
+Wilayah Dusun
+</div>
+
+</div>
+
+<div class="popup-body">
+
+<div class="popup-row">
+<span class="popup-label">
+Jumlah RW
+</span>
+<span class="popup-value">
+${dusunData.jumlah_rw || 0}
+</span>
+</div>
+
+<div class="popup-row">
+<span class="popup-label">
+Jumlah RT
+</span>
+<span class="popup-value">
+${dusunData.jumlah_rt || 0}
+</span>
+</div>
+
+<div class="popup-row">
+<span class="popup-label">
+Total Warga
+</span>
+<span class="popup-value">
+${dusunData.jumlah_warga || 0}
+</span>
+</div>
+
+<div class="popup-row">
+<span class="popup-label">
+Kategori Dominan
+</span>
+
+<span class="popup-badge"
+style="
+background:${warnaKategori(
+    dusunData.keterampilan_dominan
+)};
+">
+
+${dusunData.keterampilan_dominan || '-'}
+
+</span>
+
+</div>
+
+<div class="popup-row">
+<span class="popup-label">
+Skill Dominan
+</span>
+
+<span class="popup-value">
+${dusunData.nama_keterampilan_dominan || '-'}
+</span>
+</div>
+
+</div>
+
+</div>
+
+`);
+
+        layer.on({
+
+            mouseover: function(e){
+
+                e.target.setStyle({
+                    weight: 5,
+                    fillOpacity: 0.25
+                });
+
+            },
+
+            mouseout: function(e){
+
+                e.target.setStyle({
+                    weight: 3,
+                    fillOpacity: 0.15
+                });
+
+            }
+
+        });
+
+    }
+
+}).addTo(dusunLayer);
+dusunLayer.bringToBack();
+                });
 
             // Load marker RW & RT dari API
             fetch("{{ url('/api/pemetaan') }}")
                 .then(res => res.json())
                 .then(data => {
+                    
+                    if (!semuaData) {
 
-                    // Marker RW
-                    data.rw.forEach(rw => {
-                        if (rw.latitude && rw.longitude) {
-                            L.circleMarker([rw.latitude, rw.longitude], {
-                                radius: 12,
-                                color: warnaKategori(rw.keterampilan_dominan),
-                                fillColor: warnaKategori(rw.keterampilan_dominan),
-                                fillOpacity: 0.8
-                            }).bindPopup(`
-                            <div style="min-width:220px">
-                                <h6>RW ${rw.nama_rw}</h6>
-                                <hr>
-                                <p><b>Dusun :</b> ${rw.nama_dusun || '-'}</p>
-                                <p><b>Jumlah Warga :</b> ${rw.jumlah_warga || 0}</p>
-                                <p><b>Warga Berketerampilan :</b> ${rw.jumlah_keterampilan || 0}</p>
-                                <p><b>Kategori Dominan :</b> ${rw.keterampilan_dominan || '-'}</p>
-                                <p><b>Keterampilan Dominan :</b> ${rw.nama_keterampilan_dominan || '-'}</p>
-                            </div>
-                        `).addTo(rwLayer);
+                        semuaData = data;
+window.dataDusun = data.dusun;
+                        isiFilter(data);
+
+                    }
+                    console.log(data.kategori);
+                    data.kategori.forEach(item => {
+                        if (
+                            filterDusun &&
+                            item.dusun !== filterDusun
+                        ) {
+                            return;
                         }
+
+                        if (
+                            filterKategori &&
+                            item.kategori !== filterKategori
+                        ) {
+                            return;
+                        }
+                        if (!item.latitude || !item.longitude) return;
+
+                        const ukuran =
+                            data.max_jumlah > 0 ?
+                            5 + ((item.jumlah_warga / data.max_jumlah) * 12) :
+                            5;
+                        if (!window.rtPosisi) {
+                            window.rtPosisi = {};
+                        }
+
+                        const key = item.rt + '-' + item.rw;
+
+                        if (!window.rtPosisi[key]) {
+                            window.rtPosisi[key] = 0;
+                        }
+
+                        const index = window.rtPosisi[key];
+                        window.rtPosisi[key]++;
+
+                        let lat = parseFloat(item.latitude);
+                        let lng = parseFloat(item.longitude);
+
+                        const offset = 0.00200;
+
+                        const posisi = [
+                            [0, 0],
+                            [offset, 0],
+                            [-offset, 0],
+                            [0, offset],
+                            [0, -offset],
+                            [offset, offset],
+                            [-offset, -offset],
+                            [offset, -offset],
+                            [-offset, offset]
+                        ];
+
+                        lat += posisi[index % posisi.length][0];
+                        lng += posisi[index % posisi.length][1];
+                        L.circleMarker(
+                                [lat, lng], {
+                                    radius: ukuran,
+                                    color: '#ffffff',
+                                    color: warnaKategori(item.kategori),
+                                    fillColor: warnaKategori(item.kategori),
+                                    fillOpacity: 0.9,
+                                    weight: 2
+                                }
+                            )
+                            .bindPopup(`
+
+<div class="popup-modern">
+
+    <div class="popup-header"
+         style="background:${warnaKategori(item.kategori)};">
+
+        <div class="popup-title">
+            ${item.kategori}
+        </div>
+
+        <div class="popup-subtitle">
+            Kategori Keterampilan
+        </div>
+
+    </div>
+
+    <div class="popup-body">
+
+        <div class="popup-row">
+            <span class="popup-label">
+                Jumlah Warga
+            </span>
+
+            <span class="popup-value">
+                ${item.jumlah_warga} Orang
+            </span>
+        </div>
+
+        <div class="popup-row">
+            <span class="popup-label">
+                RT
+            </span>
+
+            <span class="popup-value">
+                ${item.rt}
+            </span>
+        </div>
+
+        <div class="popup-row">
+            <span class="popup-label">
+                RW
+            </span>
+
+            <span class="popup-value">
+                ${item.rw}
+            </span>
+        </div>
+
+        <div class="popup-row">
+            <span class="popup-label">
+                Dusun
+            </span>
+
+            <span class="popup-value">
+                ${item.dusun}
+            </span>
+        </div>
+
+    </div>
+
+</div>
+
+`, {
+                                maxWidth: 320,
+                                className: 'custom-popup'
+                            })
+                            .addTo(skillLayer);
+
                     });
 
-                    // Marker RT
-                    data.rt.forEach(rt => {
-                        if (rt.latitude && rt.longitude) {
-                            L.circleMarker([rt.latitude, rt.longitude], {
-                                radius: 4,
-                                color: warnaKategori(rt.keterampilan_dominan),
-                                fillColor: warnaKategori(rt.keterampilan_dominan),
-                                fillOpacity: 0.8
-                            }).bindPopup(`
-                            <div style="min-width:220px">
-                                <h6>RT ${rt.nama_rt}</h6>
-                                <hr>
-                                <p><b>RW :</b> ${rt.nama_rw || '-'}</p>
-                                <p><b>Dusun :</b> ${rt.nama_dusun || '-'}</p>
-                                <p><b>Jumlah Warga :</b> ${rt.jumlah_warga || 0}</p>
-                                <p><b>Warga Berketerampilan :</b> ${rt.jumlah_keterampilan || 0}</p>
-                                <p><b>Kategori Dominan :</b> ${rt.keterampilan_dominan || '-'}</p>
-                                <p><b>Keterampilan Dominan :</b> ${rt.nama_keterampilan_dominan || '-'}</p>
-                            </div>
-                        `).addTo(rtLayer);
-                        }
-                    });
-
-                })
-                .catch(err => console.log('API Error:', err));
+                });
         }
 
         loadData();
-        setInterval(loadData, 10000);
 
         // 7. LAYER CONTROL CUSTOM
         // Tambahkan tombol custom ke peta
@@ -3307,18 +3569,45 @@ let globalData = { rw: [], rt: [] };
             const layers = {
                 polygon: polygonLayer,
                 dusun: dusunLayer,
-                rw: rwLayer,
-                rt: rtLayer
+                skill: skillLayer
             };
             if (cb.checked) map.addLayer(layers[name]);
             else map.removeLayer(layers[name]);
         }
 
+        document.addEventListener('change', function(e) {
 
+            if (e.target.id === 'filterDusun') {
+
+                filterDusun = e.target.value;
+
+                loadData();
+            }
+
+            if (e.target.id === 'filterKategori') {
+
+                filterKategori = e.target.value;
+
+                loadData();
+            }
+
+        });
+        document.getElementById('resetFilter')
+?.addEventListener('click', function () {
+
+    filterDusun = '';
+    filterKategori = '';
+
+    document.getElementById('filterDusun').value = '';
+    document.getElementById('filterKategori').value = '';
+
+    loadData();
+
+});
         window.addEventListener('resize', () => map.invalidateSize());
     </script>
 
- <!-- ===============================
+    <!-- ===============================
          NAVBAR ACTIVE MENU
    Fungsi:
    - Menandai menu navbar yang sedang aktif
@@ -3380,110 +3669,110 @@ let globalData = { rw: [], rt: [] };
         });
     </script>
 
-  <!-- ===============================
+    <!-- ===============================
           FORM PENGAJUAN KETERAMPILAN
    Menampilkan input kategori baru
    jika pengguna memilih "Lainnya"
     ================================ -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const kategoriSelect = document.getElementById('kategoriSelect');
-    const kategoriLainnyaBox = document.getElementById('kategoriLainnyaBox');
-    const kategoriLainnya = document.getElementById('kategoriLainnya');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const kategoriSelect = document.getElementById('kategoriSelect');
+            const kategoriLainnyaBox = document.getElementById('kategoriLainnyaBox');
+            const kategoriLainnya = document.getElementById('kategoriLainnya');
 
-    kategoriSelect.addEventListener('change', function () {
+            kategoriSelect.addEventListener('change', function() {
 
-        if (this.value === 'lainnya') {
+                if (this.value === 'lainnya') {
 
-            kategoriLainnyaBox.classList.remove('d-none');
-            kategoriLainnya.required = true;
+                    kategoriLainnyaBox.classList.remove('d-none');
+                    kategoriLainnya.required = true;
 
-        } else {
+                } else {
 
-            kategoriLainnyaBox.classList.add('d-none');
-            kategoriLainnya.required = false;
-            kategoriLainnya.value = '';
+                    kategoriLainnyaBox.classList.add('d-none');
+                    kategoriLainnya.required = false;
+                    kategoriLainnya.value = '';
 
-        }
+                }
 
-    });
+            });
 
-});
-</script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
-  <!-- ===============================
+    <!-- ===============================
          ALERT PENGAJUAN BERHASIL
    Menampilkan notifikasi setelah
    data pengajuan berhasil dikirim
     ================================ -->
-@if(session('success'))
-<script>
-Swal.fire({
-    icon: 'success',
-    title: 'Berhasil Dikirim',
-    text: '{{ session("success") }}',
-    confirmButtonColor: '#2f855a'
-});
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil Dikirim',
+                text: '{{ session('success') }}',
+                confirmButtonColor: '#2f855a'
+            });
 
-history.replaceState(null, null, '#kontak');
+            history.replaceState(null, null, '#kontak');
 
-window.addEventListener('load', function () {
-    const kontak = document.getElementById('kontak');
+            window.addEventListener('load', function() {
+                const kontak = document.getElementById('kontak');
 
-    if (kontak) {
-        kontak.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
-    }
-});
-</script>
-@endif
+                if (kontak) {
+                    kontak.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        </script>
+    @endif
 
-<!-- ===============================
+    <!-- ===============================
    FORM PENCARIAN NIK
    Mengarahkan hasil pencarian kembali ke
    section Pengajuan (#kontak) setelah form dikirim
   ================================ -->
-<script>
-document.getElementById('formCariNik').addEventListener('submit', function() {
-    this.action = "{{ route('landing') }}#kontak";
-});
-</script>
+    <script>
+        document.getElementById('formCariNik').addEventListener('submit', function() {
+            this.action = "{{ route('landing') }}#kontak";
+        });
+    </script>
 
-<!-- ===============================
+    <!-- ===============================
    ALERT HASIL PENCARIAN NIK
    - Data warga ditemukan
    - Data pengajuan ditemukan
    - Data tidak ditemukan
   ================================ -->
-@if(request('nik'))
-<script>
-document.addEventListener('DOMContentLoaded', function() {
+    @if (request('nik'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
 
-    const kontak = document.getElementById('kontak');
+                const kontak = document.getElementById('kontak');
 
-    if (kontak) {
-        setTimeout(() => {
-            kontak.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }, 100);
-    }
+                if (kontak) {
+                    setTimeout(() => {
+                        kontak.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }, 100);
+                }
 
-    @if($hasil)
+                @if ($hasil)
 
-        @if($jenis == 'warga')
+                    @if ($jenis == 'warga')
 
-        Swal.fire({
-            icon: 'success',
-            title: 'Data Ditemukan',
-            width: '400px',
-            confirmButtonColor: '#2f855a',
-            html: `
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Data Ditemukan',
+                            width: '400px',
+                            confirmButtonColor: '#2f855a',
+                            html: `
                 <div style="text-align:left;font-size:14px;line-height:1.7">
 
                     <b>Nama:</b> {{ $hasil->nama }}<br>
@@ -3510,20 +3799,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 </div>
             `
-        });
+                        });
+                    @else
 
-        @else
-
-        Swal.fire({
-    icon: '{{ $hasil->status == "Disetujui" ? "success" : ($hasil->status == "Ditolak" ? "error" : "info") }}',
-    title: 'Data Pengajuan Ditemukan',
-    confirmButtonColor: '#2f855a',
-    customClass: {
-        popup: 'swal-kecil',
-        title: 'swal-title-kecil',
-        icon: 'swal-icon-kecil'
-    },
-    html: `
+                        Swal.fire({
+                            icon: '{{ $hasil->status == 'Disetujui' ? 'success' : ($hasil->status == 'Ditolak' ? 'error' : 'info') }}',
+                            title: 'Data Pengajuan Ditemukan',
+                            confirmButtonColor: '#2f855a',
+                            customClass: {
+                                popup: 'swal-kecil',
+                                title: 'swal-title-kecil',
+                                icon: 'swal-icon-kecil'
+                            },
+                            html: `
         
                 <div style="text-align:left;font-size:14px;line-height:1.7">
 
@@ -3548,7 +3836,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <b>Status:</b>
                     <strong>{{ $hasil->status }}</strong>
 
-                    @if($hasil->status == 'Ditolak')
+                    @if ($hasil->status == 'Ditolak')
                     <br><br>
                     <b>Alasan Penolakan:</b><br>
                     {{ $hasil->alasan_penolakan }}
@@ -3556,26 +3844,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 </div>
             `
-        });
+                        });
+                    @endif
+                @else
 
-        @endif
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Data Tidak Ditemukan',
+                        text: 'NIK belum ditemukan pada data warga maupun data pengajuan.',
+                        confirmButtonColor: '#f59e0b',
+                        width: '400px'
+                    });
+                @endif
 
-    @else
-
-        Swal.fire({
-            icon: 'warning',
-            title: 'Data Tidak Ditemukan',
-            text: 'NIK belum ditemukan pada data warga maupun data pengajuan.',
-            confirmButtonColor: '#f59e0b',
-            width: '400px'
-        });
-
+            });
+        </script>
     @endif
-
-});
-</script>
-
-@endif
 </body>
 
 </html>

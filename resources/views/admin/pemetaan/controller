@@ -79,15 +79,12 @@ $rts = Rt::with(
         }
 
         $kategoriDominan = 'Belum tersedia';
-$jumlahKategoriDominan = 0;
 
 if(count($semuaKategori) > 0){
 
     $hitung = array_count_values($semuaKategori);
 
-  $max = max($hitung);
-
-$jumlahKategoriDominan = $max;
+    $max = max($hitung);
 
     $tertinggi = array_filter(
         $hitung,
@@ -143,6 +140,7 @@ if(count($semuaNamaSkill) > 0){
     'jumlah_keterampilan' => $jumlahSkill,
 
     'keterampilan_dominan' => $kategoriDominan,
+    'nama_keterampilan_dominan' => $namaSkillDominan
 ];
 
         });
@@ -188,16 +186,13 @@ if(count($semuaNamaSkill) > 0){
 
         }
 
-       $kategoriDominan = 'Belum tersedia';
-$jumlahKategoriDominan = 0;
+        $kategoriDominan = 'Belum tersedia';
 
 if(count($semuaKategori) > 0){
 
     $hitung = array_count_values($semuaKategori);
 
-   $max = max($hitung);
-
-$jumlahKategoriDominan = $max;
+    $max = max($hitung);
 
     $tertinggi = array_filter(
         $hitung,
@@ -294,16 +289,13 @@ if(count($semuaNamaSkill) > 0){
 
 }
 
-       $kategoriDominan = 'Belum tersedia';
-$jumlahKategoriDominan = 0;
+        $kategoriDominan = 'Belum tersedia';
 
 if(count($semuaKategori) > 0){
 
     $hitung = array_count_values($semuaKategori);
 
-   $max = max($hitung);
-
-$jumlahKategoriDominan = $max;
+    $max = max($hitung);
 
     $tertinggi = array_filter(
         $hitung,
@@ -371,84 +363,69 @@ if(count($semuaNamaSkill) > 0){
     $kategoriDominan,
 
     'nama_keterampilan_dominan' =>
-    $namaSkillDominan,
-
-    'jumlah_kategori_dominan' =>
-$jumlahKategoriDominan
+    $namaSkillDominan
 ];
 
         });
 
-$kategoriMap = [];
+// =======================
+// DATA KATEGORI
+// =======================
+
+$dataKategori = collect();
 
 foreach ($rts as $rt) {
-
-    $kategoriCounter = [];
 
     foreach ($rt->wargas as $warga) {
 
         foreach ($warga->keterampilans as $skill) {
 
-            $kategori =
-                $skill->kategori->nama_kategori;
+            $dataKategori->push([
 
-            if (!isset($kategoriCounter[$kategori])) {
-                $kategoriCounter[$kategori] = 0;
-            }
+                'id' => $skill->id,
 
-            $kategoriCounter[$kategori]++;
+                'kategori' =>
+                optional($skill->kategori)
+                ->nama_kategori,
+
+                'nama_keterampilan' =>
+                $skill->nama_keterampilan,
+
+                'nama_warga' =>
+                $warga->nama,
+
+                'nama_rt' =>
+                $rt->nomor_rt,
+
+                'nama_rw' =>
+                optional($rt->rw)
+                ->nomor_rw,
+
+                'nama_dusun' =>
+                optional(optional($rt->rw)->dusun)
+                ->nama_dusun,
+
+                'latitude' =>
+                $rt->latitude,
+
+                'longitude' =>
+                $rt->longitude
+
+            ]);
+
         }
+
     }
 
-    foreach ($kategoriCounter as $kategori => $jumlah) {
-
-        if (
-            !isset($kategoriMap[$kategori]) ||
-            $jumlah > $kategoriMap[$kategori]['jumlah_warga']
-        ) {
-
-            $kategoriMap[$kategori] = [
-
-                'kategori' => $kategori,
-
-                'jumlah_warga' => $jumlah,
-
-                'latitude' => $rt->latitude,
-
-                'longitude' => $rt->longitude,
-
-                'rt' => $rt->nomor_rt,
-
-                'rw' => optional($rt->rw)->nomor_rw,
-
-                'dusun' =>
-                    optional(optional($rt->rw)->dusun)
-                    ->nama_dusun
-
-            ];
-        }
-    }
 }
 
-$maxJumlah =
-collect($kategoriMap)
-->max('jumlah_warga');
-
-return response()->json([
-
+    return response()->json([
     'dusun' => $dataDusun,
-
-    'rw' => $dataRw,
-
-    'rt' => $dataRt,
-
-    'kategori' => array_values($kategoriMap),
-
-    'max_jumlah' => $maxJumlah
-
+    'kategori' => $dataKategori
 ]);
-
 }
+
+
 
 public function detailRt($id)
 {
@@ -505,44 +482,19 @@ public function detailDusun($id)
         ->flatMap(fn($rt) => $rt->wargas)
         ->pluck('id');
 
-    $allSkills = \App\Models\Keterampilan::with([
-    'kategori',
-    'warga.rt.rw.dusun'
-])
-->whereIn('warga_id', $wargaIds)
-->get();
+    $skills = \App\Models\Keterampilan::with([
+        'kategori',
+        'warga.rt.rw.dusun'
+    ])
+    ->whereIn('warga_id', $wargaIds)
+    ->paginate(50);
 
-$skills = \App\Models\Keterampilan::with([
-    'kategori',
-    'warga.rt.rw.dusun'
-])
-->whereIn('warga_id', $wargaIds)
-->paginate(50);
-$grafikKategori = $allSkills
-    ->groupBy(function ($item) {
-        return $item->kategori->nama_kategori;
-    })
-    ->map(function ($items) {
-        return $items->count();
-    });
-    $kategoriDominan =
-    $grafikKategori->sortDesc();
-
-$namaKategoriDominan =
-    $kategoriDominan->keys()->first();
-
-$jumlahKategoriDominan =
-    $kategoriDominan->first();
     return view(
-    'admin.pemetaan.detail-dusun',
-    compact(
-    'dusun',
-    'skills',
-    'allSkills',
-    'grafikKategori',
-    'namaKategoriDominan',
-        'jumlahKategoriDominan'
-)
+        'admin.pemetaan.detail-dusun',
+        compact(
+            'dusun',
+            'skills'
+        )
     );
 }
 }

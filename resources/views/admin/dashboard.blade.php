@@ -444,37 +444,69 @@
         {{-- GRAFIK TAMBAHAN --}}
         <div class="row g-4 mb-4">
 
-    {{-- KATEGORI --}}
-    <div class="col-lg-6">
+            {{-- KATEGORI --}}
+            <div class="col-lg-6">
 
-        <div class="card border-0 shadow-sm h-100 fade-up"
-            style="border-radius:15px;">
+                <div class="card border-0 shadow-sm h-100 fade-up" style="border-radius:15px;">
 
-            <div class="card-header bg-transparent border-0 pt-4 px-4 text-center">
+                    <div class="card-header bg-transparent border-0 pt-4 px-4 text-center">
 
-                <h5 class="fw-bold mb-0 text-dark">
-                    Persentase Kategori Keterampilan
-                </h5>
+                        <h5 class="fw-bold mb-0 text-dark">
+                            Persentase Kategori Keterampilan
+                        </h5>
+
+                    </div>
+
+                    <div class="card-body px-4 pb-4">
+
+                        <div style="position:relative;height:320px">
+
+                            <canvas id="kategoriChart"></canvas>
+
+                            <div id="kategoriCenter" style="display:none;">
+
+                                <h3 id="kategoriPersen" class="fw-bold mb-0 text-dark">
+                                    0%
+                                </h3>
+
+                                <small id="kategoriNama" class="text-muted">
+                                    Kategori
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
-            <div class="card-body px-4 pb-4">
+            {{-- GENDER --}}
+            <div class="col-lg-6" id="genderChartSection">
 
-                <div style="position:relative;height:320px">
+                <div class="card border-0 shadow-sm fade-up h-100" style="border-radius:15px;">
 
-                    <canvas id="kategoriChart"></canvas>
+                    <div class="card-header bg-transparent border-0 pt-4 px-4">
 
-                    <div id="kategoriCenter" style="display:none;">
+                        <h5 class="fw-bold mb-1">
+                            Keterampilan Berdasarkan Jenis Kelamin
+                        </h5>
 
-                        <h3 id="kategoriPersen"
-                            class="fw-bold mb-0 text-dark">
-                            0%
-                        </h3>
-
-                        <small id="kategoriNama"
-                            class="text-muted">
-                            Kategori
+                        <small class="text-muted">
+                            Perbandingan warga laki-laki dan perempuan yang memiliki keterampilan.
                         </small>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div style="height:320px">
+
+                            <canvas id="genderSkillChart"></canvas>
+
+                        </div>
 
                     </div>
 
@@ -484,110 +516,71 @@
 
         </div>
 
-    </div>
+        {{-- usia dan tahun --}}
+        {{-- PERTAHUN --}}
+        <div class="row g-4 mb-4">
 
-    {{-- GENDER --}}
-    <div class="col-lg-6"
-        id="genderChartSection">
+            <div class="col-lg-6">
 
-        <div class="card border-0 shadow-sm fade-up h-100"
-            style="border-radius:15px;">
+                <div class="card border-0 shadow-sm fade-up h-100" style="border-radius:15px;">
 
-            <div class="card-header bg-transparent border-0 pt-4 px-4">
+                    <div class="card-header bg-transparent border-0 pt-4 px-4">
 
-                <h5 class="fw-bold mb-1">
-                    Keterampilan Berdasarkan Jenis Kelamin
-                </h5>
+                        <h5 class="fw-bold mb-1">
+                            Warga Berketerampilan per Tahun
+                        </h5>
 
-                <small class="text-muted">
-                    Perbandingan warga laki-laki dan perempuan yang memiliki keterampilan.
-                </small>
+                        <small class="text-muted">
+                            Berdasarkan tahun pendataan.
+                        </small>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div style="height:320px">
+
+                            <canvas id="skillTahunChart"></canvas>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
-            <div class="card-body">
+            <div class="col-lg-6" id="usiaChartSection">
 
-                <div style="height:320px">
+                <div class="card border-0 shadow-sm fade-up h-100" style="border-radius:15px;">
 
-                    <canvas id="genderSkillChart"></canvas>
+                    <div class="card-header bg-transparent border-0 pt-4 px-4">
+
+                        <h5 class="fw-bold mb-1">
+                            Kelompok Usia
+                        </h5>
+
+                        <small class="text-muted">
+                            Warga berketerampilan berdasarkan usia.
+                        </small>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div style="height:320px">
+
+                            <canvas id="usiaChart"></canvas>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
             </div>
 
         </div>
-
-    </div>
-
-</div>
-
-        {{-- usia dan tahun--}}
-         {{-- PERTAHUN --}}
-           <div class="row g-4 mb-4">
-
-    <div class="col-lg-6">
-
-        <div class="card border-0 shadow-sm fade-up h-100"
-            style="border-radius:15px;">
-
-            <div class="card-header bg-transparent border-0 pt-4 px-4">
-
-                <h5 class="fw-bold mb-1">
-                    Warga Berketerampilan per Tahun
-                </h5>
-
-                <small class="text-muted">
-                    Berdasarkan tahun pendataan.
-                </small>
-
-            </div>
-
-            <div class="card-body">
-
-                <div style="height:320px">
-
-                    <canvas id="skillTahunChart"></canvas>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="col-lg-6" id="usiaChartSection">
-
-        <div class="card border-0 shadow-sm fade-up h-100"
-            style="border-radius:15px;">
-
-            <div class="card-header bg-transparent border-0 pt-4 px-4">
-
-                <h5 class="fw-bold mb-1">
-                    Kelompok Usia
-                </h5>
-
-                <small class="text-muted">
-                    Warga berketerampilan berdasarkan usia.
-                </small>
-
-            </div>
-
-            <div class="card-body">
-
-                <div style="height:320px">
-
-                    <canvas id="usiaChart"></canvas>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
 
         <div class="row g-4 mb-4">
 
@@ -622,6 +615,36 @@
             </div>
 
         </div>
+
+        <div class="row g-4 mb-4">
+
+            <div class="col-lg-12">
+
+                <div class="card border-0 shadow-sm fade-up" style="border-radius:15px;">
+
+                    <div class="card-header bg-transparent border-0 pt-4 px-4">
+
+                        <h5 class="fw-bold mb-1">
+                            Grafik Kategori Keterampilan per Dusun
+                        </h5>
+
+                        <small class="text-muted">
+                            Menampilkan perbandingan jumlah warga berdasarkan kategori keterampilan pada setiap dusun di Desa Karangmulya.
+                        </small>
+
+                    </div>
+
+                    <div class="card-body">
+                        <canvas id="grafikKategoriDusun"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
         {{-- TABLES --}}
         <div class="card border-0 shadow-sm mb-4 fade-up h-100" style="border-radius: 15px; overflow: hidden;">
             <div class="card-header bg-white border-0 pt-4 px-4">
@@ -1525,5 +1548,67 @@
         document
             .querySelectorAll('.fade-up')
             .forEach(el => observer.observe(el));
+    </script>
+    @php
+
+        $kategoriUnik = $grafikKategoriDusun->pluck('nama_kategori')->unique()->values();
+
+        $kemped = [];
+        $sukamelang = [];
+
+        foreach ($kategoriUnik as $kategori) {
+            $kemped[] = $grafikKategoriDusun
+                ->where('nama_dusun', 'Kemped')
+                ->where('nama_kategori', $kategori)
+                ->sum('total');
+
+            $sukamelang[] = $grafikKategoriDusun
+                ->where('nama_dusun', 'Sukamelang')
+                ->where('nama_kategori', $kategori)
+                ->sum('total');
+        }
+
+    @endphp
+
+    <script>
+        new Chart(
+            document.getElementById(
+                'grafikKategoriDusun'
+            ), {
+
+                type: 'bar',
+
+                data: {
+
+                    labels: @json($kategoriUnik),
+
+                    datasets: [
+
+                        {
+                            label: 'Dusun Kemped',
+                            data: @json($kemped),
+                            backgroundColor: '#198754'
+                        },
+
+                        {
+                            label: 'Dusun Sukamelang',
+                            data: @json($sukamelang),
+                            backgroundColor: '#6f42c1'
+                        }
+
+                    ]
+
+                },
+
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        }
+                    }
+                }
+
+            });
     </script>
 @endpush

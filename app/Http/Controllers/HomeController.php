@@ -229,6 +229,47 @@ $usiaTerbanyak = collect($usiaChart)
     ->keys()
     ->first();
 
+$grafikKategoriDusun = Keterampilan::join(
+    'kategori_keterampilans',
+    'keterampilans.kategori_keterampilan_id',
+    '=',
+    'kategori_keterampilans.id'
+)
+->join(
+    'wargas',
+    'keterampilans.warga_id',
+    '=',
+    'wargas.id'
+)
+->join(
+    'rts',
+    'wargas.rt_id',
+    '=',
+    'rts.id'
+)
+->join(
+    'rws',
+    'rts.rw_id',
+    '=',
+    'rws.id'
+)
+->join(
+    'dusuns',
+    'rws.dusun_id',
+    '=',
+    'dusuns.id'
+)
+->select(
+    'dusuns.nama_dusun',
+    'kategori_keterampilans.nama_kategori',
+    DB::raw('COUNT(*) as total')
+)
+->groupBy(
+    'dusuns.nama_dusun',
+    'kategori_keterampilans.nama_kategori'
+)
+->get();
+
         return view(
     'admin.dashboard',
     compact(
@@ -252,7 +293,8 @@ $usiaTerbanyak = collect($usiaChart)
          'kategoriTerbanyak',
         'genderTerbanyak',
         'usiaChart',
-        'usiaTerbanyak'
+        'usiaTerbanyak',
+        'grafikKategoriDusun'
     )
 );
     }

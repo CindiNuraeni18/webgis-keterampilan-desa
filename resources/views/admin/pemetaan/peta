@@ -1,4 +1,4 @@
-@extends('layouts.sidebar-admin')
+<!-- @extends('layouts.sidebar-admin')
 
 @section('title', 'Pemetaan')
 
@@ -157,8 +157,8 @@
         }
 
         /* =========================
-                       POPUP MODERN
-                    ========================= */
+       POPUP MODERN
+    ========================= */
 
         .leaflet-popup-content-wrapper {
             border-radius: 18px !important;
@@ -296,8 +296,8 @@
         }
 
         /* ==========================
-                       FILTER MODERN
-                    ========================== */
+       FILTER MODERN
+    ========================== */
 
         .filter-wrapper {
 
@@ -456,9 +456,9 @@
 
     <div class="card card-map border-0 shadow-sm">
         <div class="card-body">
-            <h4 class="mb-1">Pemetaan Desa Karangmulya</h4>
+            <h4 class="mb-1">Peta Desa Karangmulya</h4>
             <p class="text-muted mb-3">Visualisasi persebaran kategori keterampilan warga berdasarkan wilayah administrasi
-                desa</p>
+                desa.</p>
             <div class="row g-3 align-items-center">
 
                 <div class="col-lg-3 col-md-6">
@@ -472,23 +472,8 @@
                     </div>
 
                 </div>
-                <div class="col-lg-3 col-md-6">
 
-                    <div class="filter-group">
 
-                        <i class="fa-solid fa-layer-group filter-icon"></i>
-
-                        <select id="filterKategori" class="form-select filter-select">
-
-                            <option value="">
-                                Semua Kategori
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                </div>
 
                 <div class="col-lg-3 col-md-6">
 
@@ -522,10 +507,13 @@
 
                 <hr>
 
-                <p><span class="bulat besar"></span> Keterampilan Warga</p>
+                <p>
+                    Marker Warna = Kategori Keterampilan
+                </p>
 
-                <small>Warna: Kategori | Ukuran: Jumlah Warga</small>
-
+                <p>
+                    Klik marker untuk melihat detail keterampilan
+                </p>
 
             </div>
         </div>
@@ -551,6 +539,8 @@
             attribution: 'Map data: &copy; OpenStreetMap, SRTM | Style: &copy; OpenTopoMap'
         });
 
+let filterDusun = '';
+let semuaData = {};
         // Inisialisasi Map
         const map = L.map('map', {
             center: [-6.39963, 108.11848],
@@ -570,8 +560,8 @@
         // Layer Groups
         const polygonLayer = L.layerGroup().addTo(map);
         const dusunLayer = L.layerGroup().addTo(map);
-        const rwLayer = L.layerGroup().addTo(map);
-        const rtLayer = L.layerGroup().addTo(map);
+        const kategoriLayer =
+            L.layerGroup().addTo(map);
 
         // 2. LOAD GEOJSON (Outline Saja - Tanpa Warna Tengah)
         fetch("{{ asset('geojson/karangmulya.geojson') }}")
@@ -596,28 +586,37 @@
         // fungsi warna kategori
         function warnaKategori(kategori) {
 
-            if (!kategori ||
-                kategori === 'Tidak Ada Dominan') {
+            if (
+                !kategori ||
+                kategori === 'Tidak Ada Dominan'
+            ) {
                 return '#6c757d';
             }
 
-            let hash = 0;
+            let warnaList = [
+                '#198754',
+                '#0d6efd',
+                '#fd7e14',
+                '#6f42c1',
+                '#20c997',
+                '#dc3545',
+                '#6610f2',
+                '#d63384',
+                '#1982c4',
+                '#8ac926',
+                '#ffca3a',
+                '#ff595e'
+            ];
+
+            let index = 0;
 
             for (let i = 0; i < kategori.length; i++) {
-
-                hash = kategori.charCodeAt(i) +
-                    ((hash << 5) - hash);
-
+                index += kategori.charCodeAt(i);
             }
 
-            const warna =
-                (hash & 0x00FFFFFF)
-                .toString(16)
-                .toUpperCase();
-
-            return "#" +
-                "000000".substring(0, 6 - warna.length) +
-                warna;
+            return warnaList[
+                index % warnaList.length
+            ];
         }
 
         function warnaPopup(kategori) {
@@ -635,67 +634,30 @@
             let dusunSet = new Set();
 
             data.dusun.forEach(d => {
-                dusunSet.add(d.nama_dusun);
+
+                dusunSet.add(
+                    d.nama_dusun
+                );
+
             });
 
             dusunSet.forEach(item => {
 
-                dusunSelect.innerHTML += `
-            <option value="${item}">
-                ${item}
-            </option>
-        `;
+                dusunSelect.innerHTML +=
+                    `<option value="${item}">
+            ${item}
+        </option>`;
 
             });
 
             dusunSelect.value = filterDusun;
-
-
-            // =====================
-            // FILTER KATEGORI
-            // =====================
-
-            const kategoriSelect =
-                document.getElementById(
-                    'filterKategori'
-                );
-
-            kategoriSelect.innerHTML =
-                '<option value="">Semua Kategori</option>';
-
-            let kategoriSet = new Set();
-
-            data.kategori.forEach(item => {
-
-                kategoriSet.add(item.kategori);
-
-            });
-
-            kategoriSet.forEach(item => {
-
-                kategoriSelect.innerHTML += `
-            <option value="${item}">
-                ${item}
-            </option>
-        `;
-
-            });
-
-            kategoriSelect.value =
-                filterKategori;
         }
 
-
-
-        let semuaData = null;
-        let filterDusun = '';
-        let filterKategori = '';
         // 3. LOAD DATA API (Dusun, RW, RT)
         function loadData() {
 
             dusunLayer.clearLayers();
-            rwLayer.clearLayers();
-            rtLayer.clearLayers();
+            kategoriLayer.clearLayers();
 
             fetch("{{ url('/api/pemetaan') }}")
                 .then(res => res.json())
@@ -832,7 +794,14 @@ ${dusunData.jumlah_warga || 0}
 </span>
 </div>
 
-
+<div class="popup-row">
+<span class="popup-label">
+Total Keterampilan
+</span>
+<span class="popup-value">
+${dusunData.jumlah_keterampilan || 0}
+</span>
+</div>
 
 <div class="popup-row">
 <span class="popup-label">
@@ -850,7 +819,15 @@ ${dusunData.keterampilan_dominan || '-'}
 
 </div>
 
+<div class="popup-row">
+<span class="popup-label">
+Keterampilan Dominan
+</span>
 
+<span class="popup-value">
+${dusunData.nama_keterampilan_dominan || '-'}
+</span>
+</div>
 
 <a href="/admin/detail/dusun/${dusunData.id}"
 class="btn-popup"
@@ -936,179 +913,71 @@ Lihat Detail Dusun
                         });
 
 
-                    // =====================
-                    // MARKER RT
-                    // =====================
-                    if (apiData.kategori) {
+                    apiData.kategori.forEach(item => {
 
-                        apiData.kategori.forEach(item => {
+                        if (
+                            !item.latitude ||
+                            !item.longitude
+                        ) {
+                            return;
+                        }
 
-                            if (
-                                filterDusun &&
-                                item.dusun !== filterDusun
-                            ) {
-                                return;
-                            }
+                        const offsetLat =
+                            item.latitude +
+                            ((Math.random() - 0.5) * 0.0006);
 
-                            if (
-                                filterKategori &&
-                                item.kategori !== filterKategori
-                            ) {
-                                return;
-                            }
+                        const offsetLng =
+                            item.longitude +
+                            ((Math.random() - 0.5) * 0.0006);
 
-                            if (!item.latitude || !item.longitude) {
-                                return;
-                            }
+                        L.circleMarker(
+                                [
+                                    offsetLat,
+                                    offsetLng
+                                ], {
+                                    radius: 8,
 
-                            const maxJumlah =
-                                apiData.max_jumlah || 1;
+                                    color: warnaKategori(
+                                        item.kategori
+                                    ),
 
-                            let radius = Math.max(
-                                6,
-                                (
-                                    item.jumlah_warga /
-                                    maxJumlah
-                                ) * 20
-                            );
-                            // ======================
-                            // POSISI MARKER AGAR TIDAK BERTUMPUK
-                            // ======================
+                                    fillColor: warnaKategori(
+                                        item.kategori
+                                    ),
 
-                            if (!window.rtPosisi) {
-                                window.rtPosisi = {};
-                            }
+                                    fillOpacity: 0.9
+                                }
+                            )
+                            .bindPopup(`
 
-                            const key =
-                                item.rt + '-' +
-                                item.rw;
+<b>Kategori:</b>
+${item.kategori}<br>
 
-                            if (!window.rtPosisi[key]) {
-                                window.rtPosisi[key] = 0;
-                            }
+<b>Keterampilan:</b>
+${item.nama_keterampilan}<br>
 
-                            const index =
-                                window.rtPosisi[key];
+<b>Jumlah Warga:</b>
+1 Orang<br>
 
-                            window.rtPosisi[key]++;
+<hr>
 
-                            let lat =
-                                parseFloat(item.latitude);
+<b>Dusun:</b>
+${item.nama_dusun}<br>
 
-                            let lng =
-                                parseFloat(item.longitude);
+<b>RW:</b>
+${item.nama_rw}<br>
 
-                            const offset = 0.00200;
-
-                            const posisi = [
-
-                                [0, 0],
-
-                                [offset, 0],
-
-                                [-offset, 0],
-
-                                [0, offset],
-
-                                [0, -offset],
-
-                                [offset, offset],
-
-                                [-offset, -offset],
-
-                                [offset, -offset],
-
-                                [-offset, offset]
-
-                            ];
-
-                            lat += posisi[index % posisi.length][0];
-                            lng += posisi[index % posisi.length][1];
-                            L.circleMarker(
-                                    [lat, lng], {
-                                        pane: 'rtPane',
-                                        radius: radius,
-                                        color: warnaKategori(item.kategori),
-                                        fillColor: warnaKategori(item.kategori),
-                                        fillOpacity: 0.8,
-                                        weight: 2
-                                    }
-                                )
-                                .bindPopup(`
-
-<div class="popup-modern">
-
-<div class="popup-header"
-style="
-background:${warnaKategori(item.kategori)};
-">
-
-<div class="popup-title">
-${item.kategori}
-</div>
-
-<div class="popup-subtitle">
-Kategori Keterampilan
-</div>
-
-</div>
-
-<div class="popup-body">
-
-<div class="popup-row">
-<span class="popup-label">
-Jumlah Warga
-</span>
-
-<span class="popup-value">
-${item.jumlah_warga} Orang
-</span>
-</div>
-
-<div class="popup-row">
-<span class="popup-label">
-RT
-</span>
-
-<span class="popup-value">
-${item.rt}
-</span>
-</div>
-
-<div class="popup-row">
-<span class="popup-label">
-RW
-</span>
-
-<span class="popup-value">
-${item.rw}
-</span>
-</div>
-
-<div class="popup-row">
-<span class="popup-label">
-Dusun
-</span>
-
-<span class="popup-value">
-${item.dusun}
-</span>
-</div>
-
-</div>
-
-</div>
+<b>RT:</b>
+${item.nama_rt}
 
 `)
-                                .addTo(rtLayer);
+                            .addTo(kategoriLayer);
 
-                        });
+                    });
 
-                    }
+                });
+        }
 
-                }); // tutup .then(apiData => {})
-
-        } // 
         // Jalankan load data
         loadData();
         // setInterval(loadData, 10000); // Sinkronisasi data tiap 10 detik
@@ -1119,37 +988,29 @@ ${item.dusun}
 
             filterDusun = this.value;
 
+
+            isiFilter(semuaData);
+
             loadData();
+
         });
 
-        document.getElementById(
-            'filterKategori'
-        ).addEventListener(
-            'change',
-            function() {
 
-                filterKategori =
-                    this.value;
+
+        document
+            .getElementById('resetFilter')
+            .addEventListener('click', function() {
+
+                filterDusun = '';
+
+                document.getElementById(
+                    'filterDusun'
+                ).value = '';
 
                 loadData();
 
-            }
-        );
-        document.getElementById(
-            'resetFilter'
-        ).addEventListener('click', function() {
+            });
 
-            filterDusun = '';
-            filterKategori = '';
-            document.getElementById(
-                'filterDusun'
-            ).value = '';
-            document.getElementById(
-                'filterKategori'
-            ).value = '';
-            loadData();
-
-        });
         // 4. LAYER CONTROL (DROPDOWN)
         const baseMaps = {
             "<i class='bi bi-map'></i> Peta Jalan": streetLayer,
@@ -1159,8 +1020,8 @@ ${item.dusun}
 
         const overlayMaps = {
             "Batas Wilayah": polygonLayer,
-            "Titik Dusun": dusunLayer,
-
+            "Wilayah Dusun": dusunLayer,
+            "Kategori Keterampilan": kategoriLayer
         };
 
         // 'collapsed: true' akan mengubah menu menjadi ikon dropdown
@@ -1172,4 +1033,4 @@ ${item.dusun}
         // Responsive adjustment
         window.addEventListener('resize', () => map.invalidateSize());
     </script>
-@endpush
+@endpush -->

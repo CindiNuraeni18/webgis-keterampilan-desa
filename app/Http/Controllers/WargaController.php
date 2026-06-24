@@ -75,7 +75,7 @@ class WargaController extends Controller
     })
 
     ->latest()
-    ->paginate(100)
+    ->paginate(500)
     ->withQueryString();
 
     $dusuns = Dusun::orderBy('nama_dusun')->get();

@@ -143,7 +143,7 @@
                     </h3>
 
                     <p class="text-muted mb-0">
-                        Informasi warga dan keterampilan pada wilayah dusun
+                        Analisis keterampilan warga pada Dusun {{ $dusun->nama_dusun }}
                     </p>
                 </div>
 
@@ -161,27 +161,42 @@
 
                 $totalRt = $dusun->rws->flatMap(fn($rw) => $rw->rts)->count();
 
-                $totalWarga = $skills->pluck('warga_id')->unique()->count();
+                $totalWarga = $allSkills->pluck('warga_id')->unique()->count();
 
-                $totalSkill = $skills->total();
+                $totalSkill = $allSkills->count();
 
-                $kategoriTerbanyak = $skills
-                    ->groupBy('kategori_id')
-                    ->sortByDesc(fn($items) => $items->count())
-                    ->first();
+                $kategoriTerbanyak = $grafikKategori->sortDesc();
 
                 $namaKategoriTerbanyak = '-';
                 $jumlahKategoriTerbanyak = 0;
 
-                if ($kategoriTerbanyak) {
-                    $namaKategoriTerbanyak = $kategoriTerbanyak->first()->kategori->nama_kategori;
+                if ($kategoriTerbanyak->count() > 0) {
+                    $namaKategoriTerbanyak = $kategoriTerbanyak->keys()->first();
 
-                    $jumlahKategoriTerbanyak = $kategoriTerbanyak->count();
+                    $jumlahKategoriTerbanyak = $kategoriTerbanyak->first();
                 }
 
+                $skillTerbanyak = $allSkills
+                    ->groupBy('nama_keterampilan')
+                    ->sortByDesc(fn($items) => $items->count())
+                    ->first();
+
+                $namaSkillTerbanyak = '-';
+
+                if ($skillTerbanyak) {
+                    $namaSkillTerbanyak = $skillTerbanyak->first()->nama_keterampilan;
+                }
             @endphp
             <div class="row g-3 mb-4">
-
+                <div class="col-md-3">
+                    <div class="card stat-card border-0 bg-info text-white">
+                        <div class="card-body text-center">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <h4>{{ $totalRt }}</h4>
+                            <small>Total RT</small>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-3">
                     <div class="card stat-card border-0 bg-info text-white">
                         <div class="card-body text-center">
@@ -203,31 +218,41 @@
                 </div>
 
                 <div class="col-md-3">
-                    <div class="card stat-card border-0 bg-success text-white">
-                        <div class="card-body text-center">
-                            <i class="fas fa-tools"></i>
-                            <h4>{{ $totalSkill }}</h4>
-                            <small>Total Keterampilan</small>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
                     <div class="card stat-card border-0 bg-warning text-white">
                         <div class="card-body text-center">
-                            <i class="fas fa-trophy"></i>
+
+                            <i class="fas fa-chart-pie"></i>
 
                             <h6 class="fw-bold">
-                                {{ $namaKategoriTerbanyak }}
+                                {{ $namaKategoriDominan }}
                             </h6>
 
                             <small>
-                                {{ $jumlahKategoriTerbanyak }} Keterampilan
+                                Kategori Dominan
                             </small>
+
+                            <div class="mt-2">
+                                <span class="badge text-white">
+                                    {{ $jumlahKategoriDominan }} warga
+                                </span>
+                            </div>
+
                         </div>
                     </div>
                 </div>
 
+            </div>
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-chart-bar me-2"></i>
+                    Grafik Sebaran Kategori Keterampilan
+                </div>
+
+                <div class="card-body">
+
+                    <canvas id="grafikKategori" height="100"></canvas>
+
+                </div>
             </div>
             <div class="table-responsive">
 
@@ -297,5 +322,47 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('grafikKategori');
 
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {!! json_encode($grafikKategori->keys()) !!},
+
+                datasets: [{
+                    label: 'Jumlah Keterampilan',
+
+                    data: {!! json_encode($grafikKategori->values()) !!},
+
+                    backgroundColor: [
+                        '#0d6efd',
+                        '#198754',
+                        '#dc3545',
+                        '#ffc107',
+                        '#6f42c1',
+                        '#20c997',
+                        '#fd7e14'
+                    ]
+                }]
+            },
+
+            options: {
+                responsive: true,
+
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 @endsection
