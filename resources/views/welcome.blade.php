@@ -1936,9 +1936,7 @@
         .swal-icon-kecil {
             zoom: 0.75;
         }
-      .leaflet-pane.dusunPane {
-    pointer-events: none;
-}
+      
     </style>
 </head>
 
