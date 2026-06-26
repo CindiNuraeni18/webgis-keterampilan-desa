@@ -3057,9 +3057,9 @@
 
         // 3. LAYER GROUPS
         // Pindahkan ini ke atas (sebelum fungsi loadData)
-        const polygonLayer = L.layerGroup().addTo(map);
-        const dusunLayer = L.layerGroup().addTo(map);
-        const skillLayer = L.layerGroup().addTo(map);
+        const polygonLayer = L.featureGroup().addTo(map);
+        const dusunLayer = L.featureGroup().addTo(map);
+        const skillLayer = L.featureGroup().addTo(map);
 
         // Tambafhkan variabel penampung data global
         let globalData = {
@@ -3179,173 +3179,6 @@
             dusunLayer.clearLayers();
             skillLayer.clearLayers();
 
-            // Load polygon dusun
-            fetch("{{ asset('geojson/dusunreal.geojson') }}")
-                .then(res => res.json())
-                .then(data => {
-
-                  L.geoJSON(data, {
-
-    interactive: false,
-
-    style: function(feature){
-
-        let nama =
-        (
-            feature.properties.dusunbaru ||
-            feature.properties.nama_dusun ||
-            ''
-        ).toLowerCase();
-
-        return {
-
-            color:
-                nama.includes('kemped')
-                ? '#198754'
-                : '#6f42c1',
-
-            fillColor:
-                nama.includes('kemped')
-                ? '#198754'
-                : '#6f42c1',
-
-            weight: 3,
-            fillOpacity: 0.15
-        };
-    },
-
-    onEachFeature: function(feature, layer){
-
-        const namaDusun =
-        (
-            feature.properties.dusunbaru ||
-            feature.properties.nama_dusun ||
-            ''
-        ).toLowerCase();
-
-        const dusunData =
-        window.dataDusun?.find(d =>
-
-            d.nama_dusun.toLowerCase()
-            === namaDusun
-
-        );
-
-        if(!dusunData) return;
-
-        layer.bindPopup(`
-
-<div class="popup-modern">
-
-<div class="popup-header"
-style="
-background:${warnaKategori(
-    dusunData.keterampilan_dominan
-)};
-color:white;
-">
-
-<div class="popup-title">
-${dusunData.nama_dusun}
-</div>
-
-<div class="popup-subtitle">
-Wilayah Dusun
-</div>
-
-</div>
-
-<div class="popup-body">
-
-<div class="popup-row">
-<span class="popup-label">
-Jumlah RW
-</span>
-<span class="popup-value">
-${dusunData.jumlah_rw || 0}
-</span>
-</div>
-
-<div class="popup-row">
-<span class="popup-label">
-Jumlah RT
-</span>
-<span class="popup-value">
-${dusunData.jumlah_rt || 0}
-</span>
-</div>
-
-<div class="popup-row">
-<span class="popup-label">
-Total Warga
-</span>
-<span class="popup-value">
-${dusunData.jumlah_warga || 0}
-</span>
-</div>
-
-<div class="popup-row">
-<span class="popup-label">
-Kategori Dominan
-</span>
-
-<span class="popup-badge"
-style="
-background:${warnaKategori(
-    dusunData.keterampilan_dominan
-)};
-">
-
-${dusunData.keterampilan_dominan || '-'}
-
-</span>
-
-</div>
-
-<div class="popup-row">
-<span class="popup-label">
-Skill Dominan
-</span>
-
-<span class="popup-value">
-${dusunData.nama_keterampilan_dominan || '-'}
-</span>
-</div>
-
-</div>
-
-</div>
-
-`);
-
-        layer.on({
-
-            mouseover: function(e){
-
-                e.target.setStyle({
-                    weight: 5,
-                    fillOpacity: 0.25
-                });
-
-            },
-
-            mouseout: function(e){
-
-                e.target.setStyle({
-                    weight: 3,
-                    fillOpacity: 0.15
-                });
-
-            }
-
-        });
-
-    }
-
-}).addTo(dusunLayer);
-dusunLayer.bringToBack();
-                });
-
             // Load marker RW & RT dari API
             fetch("{{ url('/api/pemetaan') }}")
                 .then(res => res.json())
@@ -3358,6 +3191,179 @@ window.dataDusun = data.dusun;
                         isiFilter(data);
 
                     }
+                    
+                    // Load polygon dusun
+                    fetch("{{ asset('geojson/dusunreal.geojson') }}")
+                        .then(res => res.json())
+                        .then(geoData => {
+
+                          L.geoJSON(geoData, {
+            interactive: true,
+
+            style: function(feature){
+
+                let nama =
+                (
+                    feature.properties.dusunbaru ||
+                    feature.properties.nama_dusun ||
+                    ''
+                ).toLowerCase();
+
+                return {
+
+                    color:
+                        nama.includes('kemped')
+                        ? '#198754'
+                        : '#6f42c1',
+
+                    fillColor:
+                        nama.includes('kemped')
+                        ? '#198754'
+                        : '#6f42c1',
+
+                    weight: 3,
+                    fillOpacity: 0.15
+                };
+            },
+
+            onEachFeature: function(feature, layer){
+
+                const namaDusun =
+                (
+                    feature.properties.dusunbaru ||
+                    feature.properties.nama_dusun ||
+                    ''
+                ).toLowerCase();
+
+                const dusunData =
+                window.dataDusun?.find(d =>
+
+                    d.nama_dusun.toLowerCase()
+                    === namaDusun
+
+                );
+
+                if(!dusunData) return;
+
+                layer.bindPopup(`
+
+        <div class="popup-modern">
+
+        <div class="popup-header"
+        style="
+        background:${warnaKategori(
+            dusunData.keterampilan_dominan
+        )};
+        color:white;
+        ">
+
+        <div class="popup-title">
+        ${dusunData.nama_dusun}
+        </div>
+
+        <div class="popup-subtitle">
+        Wilayah Dusun
+        </div>
+
+        </div>
+
+        <div class="popup-body">
+
+        <div class="popup-row">
+        <span class="popup-label">
+        Jumlah RW
+        </span>
+        <span class="popup-value">
+        ${dusunData.jumlah_rw || 0}
+        </span>
+        </div>
+
+        <div class="popup-row">
+        <span class="popup-label">
+        Jumlah RT
+        </span>
+        <span class="popup-value">
+        ${dusunData.jumlah_rt || 0}
+        </span>
+        </div>
+
+        <div class="popup-row">
+        <span class="popup-label">
+        Total Warga
+        </span>
+        <span class="popup-value">
+        ${dusunData.jumlah_warga || 0}
+        </span>
+        </div>
+
+        <div class="popup-row">
+        <span class="popup-label">
+        Kategori Dominan
+        </span>
+
+        <span class="popup-badge"
+        style="
+        background:${warnaKategori(
+            dusunData.keterampilan_dominan
+        )};
+        ">
+
+        ${dusunData.keterampilan_dominan || '-'}
+
+        </span>
+
+        </div>
+
+        <div class="popup-row">
+        <span class="popup-label">
+        Skill Dominan
+        </span>
+
+        <span class="popup-value">
+        ${dusunData.nama_keterampilan_dominan || '-'}
+        </span>
+        </div>
+
+        </div>
+
+        </div>
+
+        `);
+
+                layer.on({
+
+                    mouseover: function(e){
+
+                        e.target.setStyle({
+                            weight: 5,
+                            fillOpacity: 0.25
+                        });
+
+                    },
+
+                    mouseout: function(e){
+
+                        e.target.setStyle({
+                            weight: 3,
+                            fillOpacity: 0.15
+                        });
+
+                    },
+
+                    click: function(e) {
+                        if (layer.getPopup()) {
+                            layer.bindPopup(layer.getPopup().getContent()).openPopup(e.latlng);
+                        }
+                    }
+
+                });
+
+            }
+
+        }).addTo(dusunLayer);
+        dusunLayer.bringToBack();
+                        });
+                    
                     console.log(data.kategori);
                     data.kategori.forEach(item => {
                         if (
