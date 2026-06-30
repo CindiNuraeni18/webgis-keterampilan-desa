@@ -337,6 +337,58 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
             color: #94a3b8;
 
         }
+        /* ===========================
+   PAGINATION RESPONSIVE
+=========================== */
+
+.pagination-container{
+    width:100%;
+}
+
+@media (max-width:576px){
+
+    .pagination-container{
+
+        overflow-x:auto;
+        overflow-y:hidden;
+
+        -webkit-overflow-scrolling:touch;
+
+        scrollbar-width:none;
+
+    }
+
+    .pagination-container::-webkit-scrollbar{
+        display:none;
+    }
+
+    .pagination-mobile{
+
+        min-width:max-content;
+
+        display:flex !important;
+
+        justify-content:flex-end !important;
+
+    }
+
+    .pagination{
+
+        flex-wrap:nowrap !important;
+
+        width:max-content;
+
+        margin-bottom:8px;
+
+    }
+
+    .pagination .page-item{
+
+        flex:0 0 auto;
+
+    }
+
+}
     </style>
 
     <div class="card border-0 shadow-sm fade-in">
@@ -425,7 +477,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
                 </table>
             </div>
 
-            <div class="mt-3">
+            <div class="mt-3 pagination-container">
                 {{ $kategoris->links() }}
             </div>
 

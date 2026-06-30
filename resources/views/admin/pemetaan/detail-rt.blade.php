@@ -132,6 +132,40 @@
             background: #f8fafc;
             color: #94a3b8;
         }
+        /* ============================
+   RESPONSIVE CHART
+============================ */
+
+.chart-container{
+    position:relative;
+    width:100%;
+    height:340px;
+}
+
+.chart-container canvas{
+    width:100% !important;
+    height:100% !important;
+}
+
+/* Tablet */
+
+@media (max-width:992px){
+
+    .chart-container{
+        height:380px;
+    }
+
+}
+
+/* Mobile */
+
+@media (max-width:768px){
+
+    .chart-container{
+        height:500px;
+    }
+
+}
     </style>
     <div class="card shadow-sm border-0">
         <div class="card-body">
@@ -182,8 +216,8 @@
             @endphp
             <div class="row g-3 mb-4">
 
-                <div class="col-md-4">
-                    <div class="card stat-card border-0 bg-primary text-white">
+                 <div class="col-lg-3 col-md-6">
+                    <div class="card stat-card bg-primary text-white border-0">
                         <div class="card-body text-center">
                             <i class="fas fa-users"></i>
                             <h4>{{ $totalWarga }}</h4>
@@ -192,8 +226,18 @@
                     </div>
                 </div>
 
-                <div class="col-md-4">
-                    <div class="card stat-card border-0 bg-success text-white">
+                <div class="col-lg-3 col-md-6">
+                    <div class="card stat-card bg-success text-white border-0">
+                        <div class="card-body text-center">
+                            <i class="fas fa-user-check"></i>
+                            <h4>{{ $totalWargaTerampil }}</h4>
+                            <small>Warga Memiliki Keterampilan</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="card stat-card bg-info text-white border-0">
                         <div class="card-body text-center">
                             <i class="fas fa-tools"></i>
                             <h4>{{ $totalSkill }}</h4>
@@ -202,20 +246,65 @@
                     </div>
                 </div>
 
-                <div class="col-md-4">
-                    <div class="card stat-card border-0 bg-warning text-white">
+                <div class="col-lg-3 col-md-6">
+                    <div class="card stat-card bg-warning text-dark border-0">
                         <div class="card-body text-center">
-                            <i class="fas fa-trophy"></i>
-                            <h6 class="fw-bold">
-                                {{ $namaKategoriTerbanyak }}
-                            </h6>
-                            <small>
-                                {{ $jumlahKategoriTerbanyak }} Keterampilan
-                            </small>
+
+                            <i class="fas fa-layer-group"></i>
+
+                         @if($namaKategoriDominan == 'Tidak Ada Dominan')
+
+    <h6 class="fw-bold text-danger">
+        Tidak Ada
+        <br>
+        Dominan
+    </h6>
+
+    <small>
+        Semua kategori memiliki jumlah yang sama
+    </small>
+
+@elseif($namaKategoriDominan == 'Belum Ada')
+
+    <h6 class="fw-bold">
+        Belum Ada
+    </h6>
+
+    <small>
+        Belum terdapat data keterampilan
+    </small>
+
+@else
+
+    <h6 class="fw-bold">
+        {{ $namaKategoriDominan }}
+    </h6>
+
+    <small>
+        {{ $jumlahKategoriDominan }} Keterampilan
+    </small>
+
+@endif
                         </div>
                     </div>
                 </div>
 
+            </div>
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-chart-bar me-2"></i>
+                    Grafik Sebaran Kategori Keterampilan
+                </div>
+
+                <div class="card-body">
+
+    <div class="chart-container">
+
+        <canvas id="kategoriChart"></canvas>
+
+    </div>
+
+</div>
             </div>
 
             <div class="table-responsive">
@@ -236,26 +325,163 @@
 
                     <tbody>
 
-                        @php $no = 1; @endphp
+                        @php
+                            $no = $skills->firstItem();
+                        @endphp
 
-                        @foreach ($wargas as $warga)
-                            @foreach ($warga->keterampilans as $skill)
-                                <tr>
-                                    <td class="text-center">{{ $no++ }}</td>
-                                    <td>{{ $warga->nama }}</td>
-                                    <td>{{ $skill->nama_keterampilan }}</td>
-                                    <td>{{ $skill->kategori->nama_kategori }}</td>
-                                    <td>{{ optional($rt->rw->dusun)->nama_dusun }}</td>
-                                </tr>
-                            @endforeach
-                        @endforeach
+                        @forelse($skills as $skill)
+                            <tr>
+
+                                <td class="text-center">
+                                    {{ $no++ }}
+                                </td>
+
+                                <td>
+                                    {{ $skill->warga->nama }}
+                                </td>
+
+                                <td>
+                                    {{ $skill->nama_keterampilan }}
+                                </td>
+
+                                <td>
+                                    {{ $skill->kategori->nama_kategori }}
+                                </td>
+
+                                <td>
+                                    {{ optional($skill->warga->rt->rw->dusun)->nama_dusun }}
+                                </td>
+
+                            </tr>
+
+                        @empty
+
+                            <tr>
+
+                                <td colspan="5" class="text-center">
+                                    Tidak ada data
+                                </td>
+
+                            </tr>
+                        @endforelse
 
                     </tbody>
                 </table>
             </div>
             <div class="mt-3">
-                {{ $wargas->links() }}
+                {{ $skills->links() }}
             </div>
         </div>
     </div>
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
+            const isMobile = window.innerWidth <= 768;
+
+const ctx = document.getElementById('kategoriChart');
+
+new Chart(ctx, {
+
+    type: 'bar',
+
+    data: {
+
+        labels: @json($grafikKategori->keys()),
+
+        datasets: [{
+
+            label: 'Jumlah Keterampilan',
+
+            data: @json($grafikKategori->values()),
+
+            backgroundColor: '#3b82f6',
+
+            borderColor: '#2563eb',
+
+            borderWidth: 1,
+
+            borderRadius: 8,
+
+            maxBarThickness: isMobile ? 20 : 35
+
+        }]
+
+    },
+
+    options: {
+
+        responsive: true,
+
+        maintainAspectRatio: false,
+
+        indexAxis: isMobile ? 'y' : 'x',
+
+        plugins: {
+
+            legend: {
+
+                display: false
+
+            },
+
+            tooltip: {
+
+                enabled: true
+
+            }
+
+        },
+
+        scales: {
+
+            x: {
+
+                beginAtZero: true,
+
+                ticks: {
+
+                    precision: 0,
+
+                    stepSize: 1
+
+                },
+
+                grid: {
+
+                    color: '#eef2f7'
+
+                }
+
+            },
+
+            y: {
+
+                ticks: {
+
+                    autoSkip: false,
+
+                    font: {
+
+                        size: isMobile ? 11 : 12
+
+                    }
+
+                },
+
+                grid: {
+
+                    display: !isMobile
+
+                }
+
+            }
+
+        }
+
+    }
+
+});
+        </script>
+    @endpush
 @endsection

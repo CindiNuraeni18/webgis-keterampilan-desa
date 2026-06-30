@@ -83,9 +83,18 @@
        NAVBAR
     =============================== */
         .navbar {
+            background: rgba(255, 255, 255, 0);
+            backdrop-filter: blur(0px);
+            box-shadow: none;
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+            transition: all 0.4s ease-in-out;
+        }
+
+        .navbar.scrolled {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             padding-top: 0.7rem;
             padding-bottom: 0.7rem;
         }
@@ -158,61 +167,156 @@
         /* ===============================
        HERO SECTION
     =============================== */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            background:
-                linear-gradient(rgba(244, 251, 246, 0.88), rgba(244, 251, 246, 0.96)),
-                url("https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=80") center/cover no-repeat;
-            padding-top: 90px;
-            position: relative;
-            overflow: hidden;
-        }
+        .hero{
 
-        .hero-badge {
-            display: inline-block;
-            padding: 8px 16px;
-            background-color: #e6f7ea;
-            color: var(--primary-dark);
-            border-radius: 999px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
-        }
+position:relative;
 
-        .hero h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 18px;
-            overflow-wrap: break-word;
-        }
+min-height:100vh;
 
-        .hero p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-bottom: 28px;
-            overflow-wrap: break-word;
-        }
+display:flex;
 
-        .btn-main {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-weight: 600;
-            box-shadow: var(--shadow);
-            white-space: normal;
-            text-align: center;
-        }
+align-items:center;
 
-        .btn-main:hover {
-            background: var(--primary-dark);
-            color: white;
-        }
+overflow:hidden;
 
+background:
+linear-gradient(
+90deg,
+rgba(8,35,24,.45),
+rgba(8,35,24,.18),
+rgba(8,35,24,.05)
+),
+
+url("{{ asset('images/bg.png') }}")
+center center/cover no-repeat;
+
+}
+
+.hero::before{
+
+content:'';
+
+position:absolute;
+
+inset:0;
+
+background:
+
+radial-gradient(circle at right top,
+rgba(47,133,90,.25),
+transparent 45%),
+
+linear-gradient(
+180deg,
+rgba(0,0,0,.15),
+rgba(0,0,0,.05)
+);
+
+}
+.hero-content{
+
+position:relative;
+
+z-index:10;
+
+max-width:650px;
+
+}
+      .hero-badge{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:8px;
+
+padding:10px 22px;
+
+border-radius:999px;
+
+background:
+
+rgba(255,255,255,.55);
+
+backdrop-filter:blur(12px);
+
+border:
+
+1px solid rgba(255,255,255,.45);
+
+font-weight:700;
+
+color:#2f855a;
+
+box-shadow:
+
+0 8px 24px rgba(0,0,0,.08);
+
+}
+
+       .hero h1{
+
+font-size:4rem;
+
+font-weight:800;
+
+line-height:1.15;
+
+color:#163020;
+
+letter-spacing:-1px;
+
+text-shadow:
+
+0 2px 12px rgba(255,255,255,.45);
+
+}
+
+       .hero p{
+
+font-size:20px;
+
+color:rgba(255,255,255,.95);
+
+max-width:600px;
+
+line-height:1.8;
+
+}
+
+        .btn-main{
+
+background:
+
+linear-gradient(135deg,
+#2f855a,
+#47b36c);
+
+border:none;
+
+padding:15px 34px;
+
+border-radius:50px;
+
+font-weight:700;
+
+box-shadow:
+
+0 15px 30px rgba(47,133,90,.22);
+
+transition:.35s;
+
+}
+
+.btn-main:hover{
+
+transform:translateY(-4px);
+
+box-shadow:
+
+0 22px 40px rgba(47,133,90,.3);
+
+}
         .btn-outline-custom {
             border: 2px solid var(--primary);
             color: var(--primary);
@@ -1144,28 +1248,27 @@
             margin: 0;
         }
 
-        .hero-stat-card {
-            background: rgba(255, 255, 255, 0.55);
+       .hero-stat-card{
 
-            backdrop-filter: blur(12px);
+background:
 
-            -webkit-backdrop-filter: blur(12px);
+rgba(255,255,255,.35);
 
-            border-radius: 18px;
+backdrop-filter:blur(18px);
 
-            padding: 16px 18px;
+border:
 
-            border-left: 4px solid #2f855a;
+1px solid rgba(255,255,255,.35);
 
-            border: 1px solid rgba(255, 255, 255, 0.35);
+border-radius:24px;
 
-            box-shadow:
-                0 8px 24px rgba(0, 0, 0, 0.05);
+padding:24px;
 
-            transition: all 0.3s ease;
+box-shadow:
 
-            height: 100%;
-        }
+0 20px 45px rgba(0,0,0,.08);
+
+}
 
         .hero-stat-card:hover {
             transform: translateY(-4px);
@@ -1967,9 +2070,9 @@
                     <li class="nav-item"><a class="nav-link" href="#fitur">Pemetaan</a></li>
                     <li class="nav-item"><a class="nav-link" href="#data">Statistik</a></li>
                     <li class="nav-item"><a class="nav-link" href="#kontak">Pengajuan</a></li>
-                    {{-- <li class="nav-item">
+                    <li class="nav-item">
                         <a href="{{ route('login') }}" class="nav-link"> Login</a>
-                    </li> --}}
+                    </li>
                 </ul>
             </div>
         </div>
@@ -1993,7 +2096,7 @@
 
                     <div class="row g-3 mt-3 scroll-animate fade-up delay-3">
 
-                        <div class="col-md-4 col-4">
+                        {{-- <div class="col-md-4 col-4">
                             <div class="hero-stat-card">
                                 <span class="hero-stat-label">Total Kategori Keterampilan</span>
                                 <h2 class="hero-stat-number">{{ $totalKategori }}</h2>
@@ -2005,13 +2108,13 @@
                                 <span class="hero-stat-label">Warga Skill</span>
                                 <h2 class="hero-stat-number">{{ $totalSkill }}</h2>
                             </div>
-                        </div>
+                        </div> --}}
 
                     </div>
                 </div>
 
                 <div class="col-lg-6 scroll-animate fade-right delay-2">
-                    <div class="hero-card" style="padding: 22px;">
+                    {{-- <div class="hero-card" style="padding: 22px;">
 
                         <!-- Foto utama -->
                         <div style="position: relative; border-radius: 14px; overflow: hidden; margin-bottom: 12px;">
@@ -2049,7 +2152,7 @@
                                     style="width: 100%; height: 80px; object-fit: cover; display: block;">
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -3864,6 +3967,19 @@ window.dataDusun = data.dusun;
             });
         </script>
     @endif
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const navbar = document.querySelector(".navbar");
+            window.addEventListener("scroll", function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add("scrolled");
+                } else {
+                    navbar.classList.remove("scrolled");
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

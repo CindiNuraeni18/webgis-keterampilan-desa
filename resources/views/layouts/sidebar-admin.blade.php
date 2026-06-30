@@ -591,11 +591,15 @@
             html,
             body {
                 height: 100%;
-                overflow: hidden;
+                overflow-x: hidden;
+
+                overflow-y: auto;
             }
 
             body {
-                overflow: hidden;
+                overflow-x: hidden;
+
+                overflow-y: auto;
             }
 
             .app-container {
@@ -674,7 +678,9 @@
 
             html,
             body {
-                overflow: hidden;
+                overflow-x: hidden;
+
+                overflow-y: auto;
             }
 
             .app-container {
@@ -949,7 +955,11 @@
 
                     <li class="nav-item">
                         <a href="{{ route('admin.dashboard') }}"
-                            class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                            class="nav-link {{ request()->routeIs('admin.dashboard') ||
+                            request()->routeIs('admin.pemetaan.detail.rt') ||
+                            request()->routeIs('admin.pemetaan.detail.rw')
+                                ? 'active'
+                                : '' }}">
                             <span class="icon-wrap"><i class="bi bi-grid-fill"></i></span>
                             <span class="nav-text">Dashboard</span>
                             <i class="bi bi-chevron-right nav-arrow"></i>
@@ -983,7 +993,7 @@
                         </a>
                     </li>
 
-     <li class="nav-item">
+                    <li class="nav-item">
                         <a href="{{ route('admin.kategori-keterampilan.index') }}"
                             class="nav-link {{ request()->routeIs('admin.kategori-keterampilan.*') ? 'active' : '' }}">
                             <span class="icon-wrap"><i class="bi bi-stars"></i></span>
@@ -1018,7 +1028,14 @@
 
                     <li class="nav-item">
                         <a href="{{ route('admin.pemetaan.index') }}"
-                            class="nav-link {{ request()->routeIs('admin.pemetaan.*') ? 'active' : '' }}">
+class="nav-link {{
+request()->routeIs('admin.pemetaan.index')
+||
+request()->routeIs('admin.pemetaan.detail.dusun')
+||
+request()->routeIs('admin.pemetaan.detail.kategori')
+? 'active' : ''
+}}">
                             <span class="icon-wrap"><i class="bi bi-map-fill"></i></span>
                             <span class="nav-text">Pemetaan</span>
                             <i class="bi bi-chevron-right nav-arrow"></i>
@@ -1047,16 +1064,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-section-title mt-2">Pengaturan</li>
-
-                    <li class="nav-item">
-                        <a href="{{ route('admin.backup.index') }}"
-                            class="nav-link {{ request()->routeIs('admin.backup.*') ? 'active' : '' }}">
-                            <span class="icon-wrap"><i class="bi bi-database-fill-gear"></i></span>
-                            <span class="nav-text">Backup Data</span>
-                            <i class="bi bi-chevron-right nav-arrow"></i>
-                        </a>
-                    </li>
+                    {{-- <li class="nav-section-title mt-2">Pengaturan</li> --}}
 
                     <li class="nav-item">
                         <a href="{{ route('admin.pesan.index') }}"
@@ -1083,8 +1091,16 @@
                             <i class="bi bi-chevron-right nav-arrow"></i>
                         </a>
                     </li>
-
+                    <li class="nav-item">
+                        <a href="{{ route('admin.backup.index') }}"
+                            class="nav-link {{ request()->routeIs('admin.backup.*') ? 'active' : '' }}">
+                            <span class="icon-wrap"><i class="bi bi-database-fill-gear"></i></span>
+                            <span class="nav-text">Backup Data</span>
+                            <i class="bi bi-chevron-right nav-arrow"></i>
+                        </a>
+                    </li>
                 </ul>
+
             </div>
         </aside>
 
@@ -1102,22 +1118,21 @@
                 </div>
 
                 <div class="topbar-actions">
-                    <div class="search-box d-none d-md-flex">
+                    {{-- <div class="search-box d-none d-md-flex">
                         <i class="bi bi-search"></i>
                         <input type="text" placeholder="Cari data warga, laporan, dusun...">
-                    </div>
+                    </div> --}}
 
                     <div class="dropdown">
 
-                        <button class="icon-btn d-none d-sm-inline-flex position-relative" type="button"
-                            data-bs-toggle="dropdown">
+                        <button class="icon-btn d-inline-flex" type="button" data-bs-toggle="dropdown">
 
                             <i class="bi bi-bell"></i>
 
                             @if ($notifPesan > 0)
                                 <span
                                     class="position-absolute top-0 start-100 translate-middle
-            badge rounded-pill bg-danger">
+                                     badge rounded-pill bg-danger">
 
                                     {{ $notifPesan }}
 
@@ -1278,15 +1293,14 @@
             </main>
         </div>
     </div>
-
+    {{-- mobile --}}
     <div class="offcanvas offcanvas-start offcanvas-admin border-0" tabindex="-1" id="mobileMenu">
         <div class="offcanvas-header">
             <a href="#" class="brand-logo">
-                <div class="brand-mark">
-                    <i class="bi bi-cpu-fill"></i>
-                </div>
+                <img src="{{ asset('images/logo-indramayu.png') }}" alt="Logo" class="brand-logo-img">
+
                 <div>
-                    <div>SIPKAR ADMIN</div>
+                    <div>SIKARMAP</div>
                     <div class="brand-subtitle">Desa Karangmulya</div>
                 </div>
             </a>
@@ -1299,8 +1313,12 @@
                 <li class="nav-section-title">Main Menu</li>
 
                 <li class="nav-item">
-                    <a href="{{ route('admin.dashboard') }}"
-                        class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                   <a href="{{ route('admin.dashboard') }}"
+                            class="nav-link {{ request()->routeIs('admin.dashboard') ||
+                            request()->routeIs('admin.pemetaan.detail.rt') ||
+                            request()->routeIs('admin.pemetaan.detail.rw')
+                                ? 'active'
+                                : '' }}">
                         <span class="icon-wrap"><i class="bi bi-grid-fill"></i></span>
                         <span class="nav-text">Dashboard</span>
                         <i class="bi bi-chevron-right nav-arrow"></i>
@@ -1334,10 +1352,10 @@
                     </a>
                 </li>
 
- <li class="nav-item">
+                <li class="nav-item">
                     <a href="{{ route('admin.kategori-keterampilan.index') }}"
                         class="nav-link {{ request()->routeIs('admin.kategori-keterampilan.*') ? 'active' : '' }}">
-                        <span class="icon-wrap"><i class="bi bi-tags-fill"></i></span>
+                        <span class="icon-wrap"><i class="bi bi-stars"></i></span>
                         <span class="nav-text">Kategori Keterampilan</span>
                         <i class="bi bi-chevron-right nav-arrow"></i>
                     </a>
@@ -1352,42 +1370,66 @@
                     </a>
                 </li>
 
-                {{-- <li class="nav-item">
-                    <a href="{{ route('admin.keterampilan.index') }}"
-                        class="nav-link 
-    {{ request()->routeIs('admin.keterampilan.index') ||
-    request()->routeIs('admin.keterampilan.create') ||
-    request()->routeIs('admin.keterampilan.edit') ||
-    request()->routeIs('admin.keterampilan.show')
-        ? 'active'
-        : '' }}">
-                        <span class="icon-wrap"><i class="bi bi-stars"></i></span>
-                        <span class="nav-text">Data Keterampilan</span>
-                        <i class="bi bi-chevron-right nav-arrow"></i>
-                    </a>
-                </li> --}}
-
                 <li class="nav-item">
                     <a href="{{ route('admin.pemetaan.index') }}"
-                        class="nav-link {{ request()->routeIs('admin.pemetaan.*') ? 'active' : '' }}">
+class="nav-link {{
+request()->routeIs('admin.pemetaan.index')
+||
+request()->routeIs('admin.pemetaan.detail.dusun')
+||
+request()->routeIs('admin.pemetaan.detail.kategori')
+? 'active' : ''
+}}">
                         <span class="icon-wrap"><i class="bi bi-map-fill"></i></span>
                         <span class="nav-text">Pemetaan</span>
                         <i class="bi bi-chevron-right nav-arrow"></i>
                     </a>
                 </li>
 
-                <li class="nav-section-title mt-2">Laporan</li>
-
-
                 <li class="nav-item">
-                    <a href="{{ route('admin.keterampilan.statistik') }}"
-                        class="nav-link {{ request()->routeIs('admin.keterampilan.statistik') ? 'active' : '' }}">
+                    <a href="{{ route('admin.keterampilan.laporan') }}"
+                        class="nav-link {{ request()->routeIs('admin.keterampilan.laporan') ? 'active' : '' }}">
 
-                        <span class="icon-wrap"><i class="bi bi-bar-chart-steps"></i></span>
-                        <span class="nav-text">Statistik</span>
+                        <span class="icon-wrap"><i class="bi bi-file-earmark-text-fill"></i></span>
+                        <span class="nav-text">Laporan</span>
                         <i class="bi bi-chevron-right nav-arrow"></i>
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('admin.pesan.index') }}"
+                        class="nav-link {{ request()->routeIs('admin.pesan.*') ? 'active' : '' }}">
+
+                        <span class="icon-wrap">
+                            <i class="bi bi-chat-dots-fill"></i>
+                        </span>
+
+                        <span class="nav-text d-flex align-items-center justify-content-between w-100">
+
+                            Pengajuan Keterampilan
+
+                            @if ($notifPesan > 0)
+                                <span class="badge bg-danger rounded-pill ms-2">
+
+                                    {{ $notifPesan }}
+
+                                </span>
+                            @endif
+
+                        </span>
+
+                        <i class="bi bi-chevron-right nav-arrow"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.backup.index') }}"
+                        class="nav-link {{ request()->routeIs('admin.backup.*') ? 'active' : '' }}">
+                        <span class="icon-wrap"><i class="bi bi-database-fill-gear"></i></span>
+                        <span class="nav-text">Backup Data</span>
+                        <i class="bi bi-chevron-right nav-arrow"></i>
+                    </a>
+                </li>
+            </ul>
 
             </ul>
         </div>

@@ -1123,6 +1123,58 @@
 
     left: 130%;
 }
+/* ===========================
+   PAGINATION RESPONSIVE
+=========================== */
+
+.pagination-container{
+    width:100%;
+}
+
+@media (max-width:576px){
+
+    .pagination-container{
+
+        overflow-x:auto;
+        overflow-y:hidden;
+
+        -webkit-overflow-scrolling:touch;
+
+        scrollbar-width:none;
+
+    }
+
+    .pagination-container::-webkit-scrollbar{
+        display:none;
+    }
+
+    .pagination-mobile{
+
+        min-width:max-content;
+
+        display:flex !important;
+
+        justify-content:flex-end !important;
+
+    }
+
+    .pagination{
+
+        flex-wrap:nowrap !important;
+
+        width:max-content;
+
+        margin-bottom:8px;
+
+    }
+
+    .pagination .page-item{
+
+        flex:0 0 auto;
+
+    }
+
+}
     </style>
 
     <div class="card border-0 shadow-sm">
@@ -1664,7 +1716,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
             <!-- PAGINATION -->
-            <div class="mt-3">
+           <div class="mt-3 pagination-container">
 
                 {{ $wargas->links() }}
 

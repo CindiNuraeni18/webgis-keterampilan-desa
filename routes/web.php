@@ -84,6 +84,10 @@ Route::get(
     '/detail/dusun/{id}',
     [PemetaanController::class,'detailDusun']
 )->name('pemetaan.detail.dusun');
+Route::get(
+    '/detail/kategori/{id}',
+    [PemetaanController::class, 'detailKategori']
+)->name('pemetaan.detail.kategori');
 
     Route::get('/backup', [BackupController::class, 'index'])->name('backup.index');
 Route::post('/backup', [BackupController::class, 'store'])->name('backup.store');

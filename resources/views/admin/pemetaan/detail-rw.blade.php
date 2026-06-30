@@ -132,6 +132,32 @@
             background: #f8fafc;
             color: #94a3b8;
         }
+        .chart-container{
+    position: relative;
+    width: 100%;
+    height: 340px;
+}
+
+.chart-container canvas{
+    width:100% !important;
+    height:100% !important;
+}
+
+@media (max-width:992px){
+
+    .chart-container{
+        height:360px;
+    }
+
+}
+
+@media (max-width:768px){
+
+    .chart-container{
+        height:460px;
+    }
+
+}
     </style>
     <div class="card shadow-sm border-0">
         <div class="card-body">
@@ -186,19 +212,21 @@
                 }
             @endphp
             <div class="row g-3 mb-4">
-
-                <div class="col-md-3">
-                    <div class="card stat-card border-0 bg-info text-white">
+                <div class="col-xl col-lg col-md-6 col-sm-6">
+                    <div class="card stat-card bg-secondary text-white border-0">
                         <div class="card-body text-center">
+
                             <i class="fas fa-map"></i>
-                            <h4>{{ $totalRt }}</h4>
+
+                            <h4>{{ $rw->rts->count() }}</h4>
+
                             <small>Total RT</small>
+
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-3">
-                    <div class="card stat-card border-0 bg-primary text-white">
+                <div class="col-xl col-lg col-md-6 col-sm-6">
+                    <div class="card stat-card bg-primary text-white border-0">
                         <div class="card-body text-center">
                             <i class="fas fa-users"></i>
                             <h4>{{ $totalWarga }}</h4>
@@ -207,8 +235,18 @@
                     </div>
                 </div>
 
-                <div class="col-md-3">
-                    <div class="card stat-card border-0 bg-success text-white">
+                <div class="col-xl col-lg col-md-6 col-sm-6">
+                    <div class="card stat-card bg-success text-white border-0">
+                        <div class="card-body text-center">
+                            <i class="fas fa-user-check"></i>
+                            <h4>{{ $totalWargaTerampil }}</h4>
+                            <small>Warga Memiliki Keterampilan</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl col-lg col-md-6 col-sm-6">
+                    <div class="card stat-card bg-info text-white border-0">
                         <div class="card-body text-center">
                             <i class="fas fa-tools"></i>
                             <h4>{{ $totalSkill }}</h4>
@@ -217,23 +255,64 @@
                     </div>
                 </div>
 
-                <div class="col-md-3">
-                    <div class="card stat-card border-0 bg-warning text-white">
+                <div class="col-xl col-lg col-md-6 col-sm-6">
+                    <div class="card stat-card bg-warning text-dark border-0">
                         <div class="card-body text-center">
-                            <i class="fas fa-trophy"></i>
 
-                            <h6 class="fw-bold">
-                                {{ $namaKategoriTerbanyak }}
-                            </h6>
+                            <i class="fas fa-layer-group"></i>
 
-                            <small>
-                                {{ $jumlahKategoriTerbanyak }} Keterampilan
-                            </small>
+                            @if ($namaKategoriDominan == 'Tidak Ada Dominan')
+                                <h6 class="fw-bold text-danger">
+                                     Tidak Ada
+        <br>
+        Dominan
+    </h6>
+
+    <small>
+        Semua kategori memiliki jumlah yang sama
+    </small>
+                            @elseif($namaKategoriDominan == 'Belum Ada')
+                                <h6 class="fw-bold">
+                                    Belum Ada
+                                </h6>
+
+                                <small>
+                                    Belum terdapat data keterampilan
+                                </small>
+                            @else
+                                <h6 class="fw-bold">
+                                    {{ $namaKategoriDominan }}
+                                </h6>
+
+                                <small>
+                                    {{ $jumlahKategoriDominan }} Keterampilan
+                                </small>
+                            @endif
+
                         </div>
                     </div>
                 </div>
 
             </div>
+           <div class="card shadow-sm border-0 mb-4">
+
+    <div class="card-header bg-primary text-white">
+        <i class="fas fa-chart-bar me-2"></i>
+        Grafik Sebaran Kategori Keterampilan
+    </div>
+
+    <div class="card-body">
+
+        <div class="chart-container">
+
+            <canvas id="kategoriChart"></canvas>
+
+        </div>
+
+    </div>
+
+</div>
+
             <div class="table-responsive">
 
                 <table class="table table-bordered align-middle table-striped table-hover text-nowrap">
@@ -298,5 +377,106 @@
             </div>
         </div>
     </div>
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+        <script>
+           const isMobile = window.innerWidth <= 768;
+
+const ctx = document.getElementById('kategoriChart');
+
+new Chart(ctx, {
+
+    type: 'bar',
+
+    data: {
+
+        labels: @json($grafikKategori->keys()),
+
+        datasets: [{
+
+            label: 'Jumlah Keterampilan',
+
+            data: @json($grafikKategori->values()),
+
+            backgroundColor: '#3b82f6',
+
+            borderColor: '#2563eb',
+
+            borderWidth: 1,
+
+            borderRadius: 8,
+
+            maxBarThickness: isMobile ? 20 : 35
+
+        }]
+
+    },
+
+    options: {
+
+        responsive: true,
+
+        maintainAspectRatio: false,
+
+        indexAxis: isMobile ? 'y' : 'x',
+
+        plugins: {
+
+            legend: {
+                display: false
+            },
+
+            tooltip: {
+                enabled: true
+            }
+
+        },
+
+        scales: {
+
+            x: {
+
+                beginAtZero: true,
+
+                ticks: {
+                    precision: 0,
+                    stepSize: 1
+                },
+
+                grid: {
+                    color: '#f1f5f9'
+                }
+
+            },
+
+            y: {
+
+                ticks: {
+
+                    autoSkip: false,
+
+                    font: {
+
+                        size: isMobile ? 11 : 12
+
+                    }
+
+                },
+
+                grid: {
+
+                    display: !isMobile
+
+                }
+
+            }
+
+        }
+
+    }
+
+});
+        </script>
+    @endpush
 @endsection

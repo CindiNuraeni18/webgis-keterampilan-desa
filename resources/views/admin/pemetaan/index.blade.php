@@ -93,34 +93,44 @@
 
         /* ===== LEGENDA DI KANAN BAWAH (tidak bentrok layer control) ===== */
 
-        #legend-box {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
+        #legend-box{
+    position:absolute;
+    bottom:18px;
+    right:18px;
+    z-index:999;
 
-            z-index: 999;
+    background:#fff;
+    padding:14px 16px;
+    border-radius:14px;
 
-            background: #ffffff;
-            padding: 14px 18px;
+    box-shadow:0 8px 24px rgba(0,0,0,.12);
 
-            border-radius: 12px;
+    width:220px;
+    max-width:calc(100% - 24px);
 
-            box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
+    font-size:13px;
+    line-height:1.5;
 
-            min-width: 180px;
+    transition:.3s ease;
+}
 
-            font-size: 14px;
-            line-height: 1.6;
-        }
+#legend-box h6{
+    margin-bottom:10px;
+    font-size:14px;
+    font-weight:700;
+}
 
-        #legend-box h6 {
-            margin-bottom: 10px;
-        }
+#legend-box p{
+    margin:6px 0;
+}
 
-        #legend-box p {
-            margin-bottom: 8px;
-        }
+#legend-box hr{
+    margin:8px 0;
+}
 
+#legend-box small{
+    color:#6c757d;
+}
         .kotak {
             display: inline-block;
             width: 16px;
@@ -452,6 +462,147 @@
             transform: rotate(-180deg);
 
         }
+        /* ===============================
+   TABLET
+==================================*/
+
+@media (max-width:992px){
+
+    #map{
+        height:420px;
+    }
+
+    #legend-box{
+        width:190px;
+        right:12px;
+        bottom:12px;
+        padding:12px;
+        font-size:12px;
+    }
+
+    .leaflet-control-layers{
+        transform:scale(.95);
+        transform-origin:top right;
+    }
+
+}
+
+
+/* ===============================
+   MOBILE
+==================================*/
+
+@media (max-width:768px){
+
+    #map{
+        height:420px;
+    }
+
+    #legend-box{
+
+        width:160px;
+
+        right:10px;
+
+        bottom:10px;
+
+        padding:10px;
+
+        font-size:11px;
+
+        line-height:1.35;
+
+        border-radius:10px;
+    }
+
+    #legend-box h6{
+
+        font-size:12px;
+
+        margin-bottom:6px;
+
+    }
+
+    .kotak{
+
+        width:12px;
+        height:12px;
+
+        margin-right:5px;
+
+    }
+
+    .besar{
+
+        width:10px;
+        height:10px;
+
+    }
+
+    .leaflet-control-zoom{
+
+        transform:scale(.9);
+
+        transform-origin:top left;
+
+    }
+
+    .leaflet-control-layers{
+
+        transform:scale(.9);
+
+        transform-origin:top right;
+
+    }
+
+}
+
+
+/* ===============================
+   ANDROID KECIL / iPhone SE
+==================================*/
+
+@media (max-width:480px){
+
+    #map{
+
+        height:380px;
+
+    }
+
+    #legend-box{
+
+        width:140px;
+
+        padding:8px;
+
+        right:8px;
+
+        bottom:8px;
+
+        font-size:10px;
+
+    }
+
+    #legend-box h6{
+
+        font-size:11px;
+
+    }
+
+    #legend-box p{
+
+        margin:4px 0;
+
+    }
+
+    #legend-box hr{
+
+        margin:5px 0;
+
+    }
+
+}
     </style>
 
     <div class="card card-map border-0 shadow-sm">
@@ -1093,8 +1244,20 @@ Dusun
 <span class="popup-value">
 ${item.dusun}
 </span>
+
 </div>
 
+<a href="/admin/detail/kategori/${item.id}?rt=${item.rt_id}"
+class="btn-popup"
+style="
+background:${warnaKategori(item.kategori)};
+">
+
+<i class="fa-solid fa-eye me-1"></i>
+
+Lihat Detail Kategori
+
+</a>
 </div>
 
 </div>
