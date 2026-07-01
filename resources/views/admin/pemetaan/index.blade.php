@@ -624,6 +624,15 @@
 
                 </div>
                 <div class="col-lg-3 col-md-6">
+    <div class="filter-group">
+        <i class="fa-solid fa-location-dot filter-icon"></i>
+
+        <select id="filterRt" class="form-select filter-select">
+            <option value="">Semua RT/RW</option>
+        </select>
+    </div>
+</div>
+                <div class="col-lg-3 col-md-6">
 
                     <div class="filter-group">
 
@@ -801,6 +810,42 @@
 
             dusunSelect.value = filterDusun;
 
+           // =====================
+// FILTER RT
+// =====================
+
+const rtSelect = document.getElementById('filterRt');
+
+rtSelect.innerHTML =
+'<option value="">Semua RT/RW</option>';
+
+let rtSet = new Set();
+
+// jika memilih dusun
+let dataRt = filterDusun
+    ? data.rt.filter(rt => rt.nama_dusun === filterDusun)
+    : data.rt;
+
+dataRt.forEach(item => {
+
+   const value =
+    item.nama_rt + "|" + item.nama_rw;
+
+if (!rtSet.has(value)) {
+
+    rtSet.add(value);
+
+    rtSelect.innerHTML += `
+        <option value="${value}">
+            RT ${item.nama_rt} / RW ${item.nama_rw}
+        </option>
+    `;
+
+}
+
+});
+
+rtSelect.value = filterRt;
 
             // =====================
             // FILTER KATEGORI
@@ -840,6 +885,7 @@
 
         let semuaData = null;
         let filterDusun = '';
+        let filterRt = '';
         let filterKategori = '';
         // 3. LOAD DATA API (Dusun, RW, RT)
         function loadData() {
@@ -1100,7 +1146,18 @@ Lihat Detail Dusun
                             ) {
                                 return;
                             }
+if (filterRt) {
 
+   const value =
+    item.rt + "|" + item.rw;
+
+    if (value !== filterRt) {
+
+        return;
+
+    }
+
+}
                             if (
                                 filterKategori &&
                                 item.kategori !== filterKategori
@@ -1123,58 +1180,54 @@ Lihat Detail Dusun
                                 ) * 20
                             );
                             // ======================
-                            // POSISI MARKER AGAR TIDAK BERTUMPUK
-                            // ======================
+// POSISI MARKER AGAR TIDAK BERTUMPUK
+// ======================
 
-                            if (!window.rtPosisi) {
-                                window.rtPosisi = {};
-                            }
+if (!window.rtPosisi) {
+    window.rtPosisi = {};
+}
 
-                            const key =
-                                item.rt + '-' +
-                                item.rw;
+const key = item.rt + '-' + item.rw;
 
-                            if (!window.rtPosisi[key]) {
-                                window.rtPosisi[key] = 0;
-                            }
+if (!window.rtPosisi[key]) {
+    window.rtPosisi[key] = 0;
+}
 
-                            const index =
-                                window.rtPosisi[key];
+const index = window.rtPosisi[key]++;
 
-                            window.rtPosisi[key]++;
+let lat = parseFloat(item.latitude);
+let lng = parseFloat(item.longitude);
 
-                            let lat =
-                                parseFloat(item.latitude);
+// posisi menyebar
+const posisi = [
+    [0, 0],
+    [0.0018, 0],
+    [-0.0018, 0],
+    [0, 0.0018],
+    [0, -0.0018],
+    [0.0015, 0.0015],
+    [-0.0015, -0.0015],
+    [0.0015, -0.0015],
+    [-0.0015, 0.0015],
 
-                            let lng =
-                                parseFloat(item.longitude);
+    [0.0030, 0],
+    [-0.0030, 0],
+    [0, 0.0030],
+    [0, -0.0030],
+    [0.0025, 0.0025],
+    [-0.0025, -0.0025],
+    [0.0025, -0.0025],
+    [-0.0025, 0.0025],
 
-                            const offset = 0.00200;
+    [0.0038, 0.0015],
+    [-0.0038, -0.0015],
+    [0.0015, -0.0038]
+];
 
-                            const posisi = [
+const p = posisi[index % posisi.length];
 
-                                [0, 0],
-
-                                [offset, 0],
-
-                                [-offset, 0],
-
-                                [0, offset],
-
-                                [0, -offset],
-
-                                [offset, offset],
-
-                                [-offset, -offset],
-
-                                [offset, -offset],
-
-                                [-offset, offset]
-
-                            ];
-
-                            lat += posisi[index % posisi.length][0];
-                            lng += posisi[index % posisi.length][1];
+lat += p[0];
+lng += p[1];
                             L.circleMarker(
                                     [lat, lng], {
                                         pane: 'rtPane',
@@ -1276,15 +1329,30 @@ Lihat Detail Kategori
         loadData();
         // setInterval(loadData, 10000); // Sinkronisasi data tiap 10 detik
 
-        document.getElementById(
-            'filterDusun'
-        ).addEventListener('change', function() {
+       document.getElementById('filterDusun')
+.addEventListener('change', function () {
 
-            filterDusun = this.value;
+    filterDusun = this.value;
 
-            loadData();
-        });
+    // reset filter RT
+    filterRt = '';
 
+    document.getElementById('filterRt').value = '';
+
+    loadData();
+
+});
+
+document.getElementById(
+'filterRt'
+)
+.addEventListener('change',function(){
+
+    filterRt=this.value;
+
+    loadData();
+
+});
         document.getElementById(
             'filterKategori'
         ).addEventListener(
@@ -1303,10 +1371,14 @@ Lihat Detail Kategori
         ).addEventListener('click', function() {
 
             filterDusun = '';
+            filterRt='';
             filterKategori = '';
             document.getElementById(
                 'filterDusun'
             ).value = '';
+            document.getElementById(
+'filterRt'
+).value='';
             document.getElementById(
                 'filterKategori'
             ).value = '';

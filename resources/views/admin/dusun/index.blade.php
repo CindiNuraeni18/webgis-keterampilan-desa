@@ -575,6 +575,227 @@
             z-index: 2;
 
         }
+        .btn-delete-swal{
+
+    position: relative;
+
+    overflow: hidden;
+
+    border: none;
+
+    border-radius: 14px;
+
+    padding: 12px 24px;
+
+    background: linear-gradient(
+        135deg,
+        #ef4444,
+        #dc2626
+    );
+
+    color: white;
+
+    font-weight: 600;
+
+    font-size: 15px;
+
+    transition: all .35s ease;
+
+    box-shadow:
+        0 6px 18px rgba(239,68,68,.25);
+
+    margin-left: 10px;
+
+}
+
+
+
+/* EFEK PUTIH BERGERAK */
+.btn-delete-swal::before{
+
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+
+    left: -75%;
+
+    width: 50%;
+
+    height: 100%;
+
+    background: rgba(255,255,255,.25);
+
+    transform: skewX(-25deg);
+
+    transition: .7s;
+
+}
+
+
+
+/* HOVER */
+.btn-delete-swal:hover{
+
+    transform:
+        translateY(-2px)
+        scale(1.04);
+
+    box-shadow:
+        0 10px 22px rgba(239,68,68,.4);
+
+}
+
+
+
+/* GERAK PUTIH */
+.btn-delete-swal:hover::before{
+
+    left: 130%;
+
+}
+
+
+
+/* CANCEL */
+.btn-cancel-swal{
+
+    position: relative;
+
+    overflow: hidden;
+
+    border: none;
+
+    border-radius: 14px;
+
+    padding: 12px 24px;
+
+    background: linear-gradient(
+        135deg,
+        #6b7280,
+        #4b5563
+    );
+
+    color: white;
+
+    font-weight: 600;
+
+    font-size: 15px;
+
+    transition: all .35s ease;
+
+    box-shadow:
+        0 6px 18px rgba(107,114,128,.2);
+
+}
+
+
+
+/* EFEK PUTIH */
+.btn-cancel-swal::before{
+
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+
+    left: -75%;
+
+    width: 50%;
+
+    height: 100%;
+
+    background: rgba(255,255,255,.2);
+
+    transform: skewX(-25deg);
+
+    transition: .7s;
+
+}
+
+
+
+/* HOVER */
+.btn-cancel-swal:hover{
+
+    transform:
+        translateY(-2px)
+        scale(1.04);
+
+    box-shadow:
+        0 10px 22px rgba(107,114,128,.35);
+
+}
+
+
+
+/* GERAK PUTIH */
+.btn-cancel-swal:hover::before{
+
+    left: 130%;
+
+}
+/* ICON ANIMATION */
+.btn-delete-swal i,
+.btn-cancel-swal i{
+
+    transition: .3s ease;
+
+}
+
+.btn-delete-modern{
+    border:none;
+    border-radius:12px;
+    width:38px;
+    height:38px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(
+        135deg,
+        #ef4444,
+        #dc2626
+    );
+    color:white;
+    transition:all .3s ease;
+    box-shadow:0 4px 10px rgba(239,68,68,.2);
+}
+
+.btn-delete-modern:hover{
+    transform:translateY(-2px) scale(1.05);
+    box-shadow:0 8px 18px rgba(239,68,68,.35);
+    color:white;
+}
+
+.btn-delete-modern i{
+    transition:.3s ease;
+}
+
+.btn-delete-modern:hover i{
+    transform:scale(1.12);
+}
+
+/* ICON HOVER */
+.btn-delete-swal:hover i{
+
+    transform: rotate(-10deg);
+
+}
+
+.btn-cancel-swal:hover i{
+
+    transform: scale(1.15);
+
+}
+.swal2-container {
+    z-index: 999999 !important;
+}
+
+.swal2-backdrop-show {
+    z-index: 999998 !important;
+}
     </style>
 
     <div class="card border-0 shadow-sm fade-in">
@@ -612,7 +833,7 @@
                     </form>
 
                     <!-- TAMBAH -->
-                    <a href="{{ route('admin.dusun.create') }}" class="btn btn-save px-4">
+                    <a href="{{ route('admin.dusun.create') }}" class="btn btn-save px-4 search-animate">
                         <i class="fa-solid fa-plus me-2"></i>
                         <span>
                             Tambah
@@ -652,15 +873,23 @@
                                             title="Edit">
                                             <i class="bi bi-pencil-fill"></i>
                                         </a>
-                                        {{-- <form action="{{ route('admin.dusun.destroy', $dusun->id) }}" method="POST"
-                                            class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm" title="Hapus"
-                                                onclick="return confirm('Yakin hapus data?')">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </form> --}}
+                                        <form action="{{ route('admin.dusun.destroy', $dusun->id) }}"
+    method="POST"
+    class="d-inline">
+
+    @csrf
+    @method('DELETE')
+
+    <button type="button"
+        class="btn-delete-modern"
+        title="Hapus"
+        onclick="confirmDelete(this)">
+
+        <i class="bi bi-trash"></i>
+
+    </button>
+
+</form>
 
                                     </div>
 
@@ -684,5 +913,52 @@
 
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
 
+function confirmDelete(button){
+
+    const form = button.closest('form');
+
+    Swal.fire({
+
+        title: 'Hapus Data?',
+
+        text: 'Data dusun yang dihapus tidak dapat dikembalikan.',
+
+        icon: 'warning',
+
+        showCancelButton: true,
+
+        customClass: {
+
+            confirmButton: 'btn-delete-swal',
+
+            cancelButton: 'btn-cancel-swal'
+
+        },
+
+        buttonsStyling: false,
+
+        confirmButtonText:
+        '<i class="fa-solid fa-trash me-2"></i>Ya, Hapus',
+
+        cancelButtonText:
+        '<i class="fa-solid fa-xmark me-2"></i>Batal',
+
+        reverseButtons: true
+
+    }).then((result)=>{
+
+        if(result.isConfirmed){
+
+            form.submit();
+
+        }
+
+    });
+
+}
+
+</script>
 @endsection

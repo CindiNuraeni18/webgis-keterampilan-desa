@@ -386,72 +386,63 @@ foreach ($rts as $rt) {
 
     $kategoriCounter = [];
 
-foreach ($rt->wargas as $warga) {
+    foreach ($rt->wargas as $warga) {
 
-    foreach ($warga->keterampilans as $skill) {
+        foreach ($warga->keterampilans as $skill) {
 
-        $kategori = $skill->kategori->nama_kategori;
+            $kategori = $skill->kategori->nama_kategori;
 
-        $kategoriId = $skill->kategori_keterampilan_id;
+            $kategoriId = $skill->kategori_keterampilan_id;
 
-        if (!isset($kategoriCounter[$kategori])) {
+            if (!isset($kategoriCounter[$kategori])) {
 
-            $kategoriCounter[$kategori] = [
+                $kategoriCounter[$kategori] = [
 
-                'id' => $kategoriId,
+                    'id' => $kategoriId,
+                    'warga' => []
 
-                'warga' => []
+                ];
 
-            ];
+            }
 
+            // supaya 1 warga tidak dihitung dua kali
+            $kategoriCounter[$kategori]['warga'][$warga->id] = true;
         }
-
-        // simpan id warga supaya tidak double
-
-        $kategoriCounter[$kategori]['warga'][$warga->id] = true;
-
     }
 
-}
+    foreach ($kategoriCounter as $kategori => $dataKategori) {
 
- foreach ($kategoriCounter as $kategori => $dataKategori) {
+        $kategoriMap[] = [
 
-    $jumlah = count($dataKategori['warga']);
+            'id' => $dataKategori['id'],
 
-    $idKategori = $dataKategori['id'];
+            'rt_id' => $rt->id,
 
-    if (
-        !isset($kategoriMap[$kategori]) ||
-        $jumlah > $kategoriMap[$kategori]['jumlah_warga']
-    ) {
+            'rw_id' => optional($rt->rw)->id,
 
-        $kategoriMap[$kategori] = [
+            'dusun_id' => optional(optional($rt->rw)->dusun)->id,
 
-            'id'=>$idKategori,
-            'rt_id'=>$rt->id,
-            'rw_id'=>optional($rt->rw)->id,
-            'dusun_id'=>optional(optional($rt->rw)->dusun)->id,
+            'kategori' => $kategori,
 
-            'kategori'=>$kategori,
-            'jumlah_warga'=>$jumlah,
+            'jumlah_warga' => count($dataKategori['warga']),
 
-            'latitude'=>$rt->latitude,
-            'longitude'=>$rt->longitude,
+            'latitude' => $rt->latitude,
 
-            'rt'=>$rt->nomor_rt,
-            'rw'=>optional($rt->rw)->nomor_rw,
-            'dusun'=>optional(optional($rt->rw)->dusun)->nama_dusun,
+            'longitude' => $rt->longitude,
+
+            'rt' => $rt->nomor_rt,
+
+            'rw' => optional($rt->rw)->nomor_rw,
+
+            'dusun' => optional(optional($rt->rw)->dusun)->nama_dusun
 
         ];
 
     }
 
 }
-}
 
-$maxJumlah =
-collect($kategoriMap)
-->max('jumlah_warga');
+$maxJumlah = collect($kategoriMap)->max('jumlah_warga');
 
 return response()->json([
 
