@@ -51,7 +51,7 @@ if ($request->filled('nik')) {
     $totalWarga = Warga::count();
     $totalSkill = Warga::has('keterampilans')->count();
     $totalKategori = KategoriKeterampilan::count();
-
+$totalBelumSkill = Warga::doesntHave('keterampilans')->count();
 
         // statistik kategori
         $kategoriChart = Keterampilan::join(
@@ -67,9 +67,188 @@ if ($request->filled('nik')) {
         ->groupBy('kategori_keterampilans.nama_kategori')
         ->orderByDesc('total')
         ->get();
+         $topSkillChart = Keterampilan::select(
+            'nama_keterampilan',
+            DB::raw('count(*) as total')
+        )
+        ->groupBy('nama_keterampilan')
+        ->orderByDesc('total')
+        ->limit(10)
+        ->get();
 
-        // statistik dusun
-     $statistikDusun = Keterampilan::join(
+        // STATISTIK DUSUN
+        $statistikDusun = Dusun::with(
+            'rws.rts.wargas.keterampilans'
+        )->get();
+
+        // STATISTIK RW
+        $statistikRw = Rw::with(
+            'dusun',
+            'rts.wargas.keterampilans'
+        )->get();
+
+        // STATISTIK RT
+        $statistikRt = Rt::with(
+            'rw.dusun',
+            'wargas.keterampilans'
+        )->get();
+
+$genderSkillChart = Warga::has('keterampilans')
+    ->select(
+        'jenis_kelamin',
+        DB::raw('count(*) as total')
+    )
+    ->groupBy('jenis_kelamin')
+    ->get();
+
+    $grafikRw = Rw::withCount([
+    'rts as total_warga' => function ($q) {
+
+    }
+])->get();
+
+$grafikDusun = Dusun::with(
+    'rws.rts.wargas'
+)->get();
+        $dusunTerampil = Dusun::with('rws.rts.wargas.keterampilans')
+    ->get()
+    ->sortByDesc(function ($dusun) {
+
+        return $dusun->rws->sum(
+
+            fn($rw) =>
+
+            $rw->rts->sum(
+
+                fn($rt) =>
+
+                $rt->wargas
+                    ->filter(
+                        fn($warga) =>
+                        $warga->keterampilans->count() > 0
+                    )
+                    ->count()
+
+            )
+
+        );
+
+    })
+    ->first();
+$rwTerampil = $statistikRw
+    ->sortByDesc(
+
+        fn($rw) =>
+
+        $rw->rts->sum(
+
+            fn($rt) =>
+
+            $rt->wargas
+                ->filter(
+                    fn($warga) =>
+                    $warga->keterampilans->count() > 0
+                )
+                ->count()
+
+        )
+
+    )
+    ->first();
+
+$rtTerampil = $statistikRt
+    ->sortByDesc(
+
+        fn($rt) =>
+
+        $rt->wargas
+            ->filter(
+                fn($warga) =>
+                $warga->keterampilans->count() > 0
+            )
+            ->count()
+
+    )
+    ->first();
+
+    $kategoriTerbanyak = Keterampilan::join(
+    'kategori_keterampilans',
+    'keterampilans.kategori_keterampilan_id',
+    '=',
+    'kategori_keterampilans.id'
+)
+->select(
+    'kategori_keterampilans.nama_kategori',
+    DB::raw('COUNT(*) as total')
+)
+->groupBy('kategori_keterampilans.nama_kategori')
+->orderByDesc('total')
+->first();
+
+$genderTerbanyak = Warga::has('keterampilans')
+    ->select(
+        'jenis_kelamin',
+        DB::raw('count(*) as total')
+    )
+    ->groupBy('jenis_kelamin')
+    ->orderByDesc('total')
+    ->first();
+
+$usiaChart = [
+    '18-25 Tahun' => 0,
+    '26-35 Tahun' => 0,
+    '36-45 Tahun' => 0,
+    '46-55 Tahun' => 0,
+    '56+ Tahun'   => 0,
+];
+
+$wargaSkill = Warga::has('keterampilans')->get();
+
+foreach ($wargaSkill as $warga) {
+
+    if (!$warga->tanggal_lahir) {
+        continue;
+    }
+
+    $usia = \Carbon\Carbon::parse(
+        $warga->tanggal_lahir
+    )->age;
+
+    if ($usia <= 25) {
+
+        $usiaChart['18-25 Tahun']++;
+
+    } elseif ($usia <= 35) {
+
+        $usiaChart['26-35 Tahun']++;
+
+    } elseif ($usia <= 45) {
+
+        $usiaChart['36-45 Tahun']++;
+
+    } elseif ($usia <= 55) {
+
+        $usiaChart['46-55 Tahun']++;
+
+    } else {
+
+        $usiaChart['56+ Tahun']++;
+
+    }
+}
+
+$usiaTerbanyak = collect($usiaChart)
+    ->sortDesc()
+    ->keys()
+    ->first();
+
+$grafikKategoriDusun = Keterampilan::join(
+    'kategori_keterampilans',
+    'keterampilans.kategori_keterampilan_id',
+    '=',
+    'kategori_keterampilans.id'
+)
+->join(
     'wargas',
     'keterampilans.warga_id',
     '=',
@@ -93,29 +272,58 @@ if ($request->filled('nik')) {
     '=',
     'dusuns.id'
 )
-->join(
-    'kategori_keterampilans',
-    'keterampilans.kategori_keterampilan_id',
-    '=',
-    'kategori_keterampilans.id'
-)
-
 ->select(
     'dusuns.nama_dusun',
-    'rts.nomor_rt as rt',
-    'rws.nomor_rw as rw',
     'kategori_keterampilans.nama_kategori',
-    DB::raw('count(keterampilans.id) as total_skill')
+    DB::raw('COUNT(*) as total')
 )
 ->groupBy(
     'dusuns.nama_dusun',
-    'rts.nomor_rt',
-    'rws.nomor_rw',
     'kategori_keterampilans.nama_kategori'
 )
-->orderByDesc('total_skill')
 ->get();
+$skillPerTahun = Warga::has('keterampilans')
+    ->selectRaw('YEAR(created_at) as tahun')
+    ->selectRaw('COUNT(*) as total')
+    ->groupBy('tahun')
+    ->orderBy('tahun')
+    ->get();
+// ===== Grafik Per Dusun (Total Warga vs Punya Keterampilan) =====
+$dusunChart = $statistikDusun->map(function ($dusun) {
+    $totalWarga = $dusun->rws->sum(
+        fn($rw) => $rw->rts->sum(fn($rt) => $rt->wargas->count())
+    );
 
+    $totalSkillWarga = $dusun->rws->sum(
+        fn($rw) => $rw->rts->sum(
+            fn($rt) => $rt->wargas
+                ->filter(fn($w) => $w->keterampilans->count() > 0)
+                ->count()
+        )
+    );
+
+    return (object) [
+        'nama_dusun'  => $dusun->nama_dusun,
+        'total_warga' => $totalWarga,
+        'total_skill' => $totalSkillWarga,
+    ];
+});
+
+// ===== Grafik Per RT/RW (Total Warga vs Punya Keterampilan) =====
+$rtRwChart = $statistikRt->map(function ($rt) {
+    $totalWarga = $rt->wargas->count();
+
+    $totalSkillWarga = $rt->wargas
+        ->filter(fn($w) => $w->keterampilans->count() > 0)
+        ->count();
+
+    return (object) [
+        'rt'          => $rt->nama_rt ?? $rt->nomor_rt ?? $rt->id,
+        'rw'          => optional($rt->rw)->nama_rw ?? optional($rt->rw)->nomor_rw ?? '-',
+        'total_warga' => $totalWarga,
+        'total_skill' => $totalSkillWarga,
+    ];
+});
 $dusuns = Dusun::all();
 
 $rws = Rw::with('dusun')->get();
@@ -124,21 +332,39 @@ $rts = Rt::with('rw.dusun')->get();
 
 $kategoriKeterampilans = KategoriKeterampilan::orderBy('nama_kategori')->get();
 
-        return view('welcome', compact(
-     'totalRw',
-    'totalRt',
-    'totalDusun',
-    'totalWarga',
-    'totalSkill',
-    'totalKategori',
-    'kategoriChart',
-    'statistikDusun',
-    'dusuns',
-    'rws',
-    'rts',
-    'hasil',
-    'jenis',
-     'kategoriKeterampilans'
+       return view('welcome', compact(
+
+'totalRw',
+'totalRt',
+'totalDusun',
+'totalWarga',
+'totalSkill',
+'totalKategori',
+'kategoriChart',
+'statistikDusun',
+'statistikRw',
+'statistikRt',
+'dusuns',
+'rws',
+'rts',
+'hasil',
+'jenis',
+'kategoriKeterampilans',
+'totalBelumSkill',
+'dusunTerampil',
+'rwTerampil',
+'rtTerampil',
+'kategoriTerbanyak',
+'genderTerbanyak',
+'usiaChart',
+'usiaTerbanyak',
+'genderSkillChart',
+'grafikKategoriDusun',
+'topSkillChart',
+'skillPerTahun',
+'dusunChart',  
+'rtRwChart' 
+
 ));
     }
 
